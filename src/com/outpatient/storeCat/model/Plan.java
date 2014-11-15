@@ -3,8 +3,8 @@ package com.outpatient.storeCat.model;
 public class Plan {
 	private int pid;
 	private String name;
-	private int planName;
-	private int date;
+	private int planType;
+	private long date;
 	private int isArch;
 	public int getPid() {
 		return pid;
@@ -18,16 +18,16 @@ public class Plan {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getPlanName() {
-		return planName;
+	public int getPlanType() {
+		return planType;
 	}
-	public void setPlanName(int planName) {
-		this.planName = planName;
+	public void setPlanType(int planType) {
+		this.planType = planType;
 	}
-	public int getDate() {
+	public long getDate() {
 		return date;
 	}
-	public void setDate(int date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 	public int getIsArch() {
@@ -37,11 +37,11 @@ public class Plan {
 		this.isArch = isArch;
 	}
 	
-	public Plan(int pid, String name, int planName, int date, int isArch) {
+	public Plan(int pid, String name, int planType, long date, int isArch) {
 		super();
 		this.pid = pid;
 		this.name = name;
-		this.planName = planName;
+		this.planType = planType;
 		this.date = date;
 		this.isArch = isArch;
 	}
