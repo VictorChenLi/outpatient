@@ -34,7 +34,7 @@ public class Constant {
 			return this.value;
 		}
 	};
-	
+		
 	public enum stageStatus{RUN,COMPLETE};
 	
 	public enum goalStatus{RUN,COMPLETE};

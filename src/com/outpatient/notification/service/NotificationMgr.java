@@ -10,6 +10,7 @@ import com.outpatient.notification.model.RunTask;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
+import com.outpatient.sysUtil.service.TimeHelper;
 
 
 import android.app.Activity;
@@ -17,28 +18,26 @@ import android.content.Context;
 
 public class NotificationMgr {
 	
-	private Activity activity;
+	private Context context;
 	private DBAccessImpl dbAccessImpl;
 	
-	public NotificationMgr(Activity activity)
+	public NotificationMgr(Context context)
 	{
-		this.activity=activity;
-		dbAccessImpl=DBAccessImpl.getInstance(activity);
-	}
-	
-	public static void runTask(RunTask runTask,String taskTag,long delay)
-	{
-		if(null!=TaskMapMgr.getTaskByTaskId(taskTag))
-		{
-			TaskMapMgr.removeTask(taskTag);
-		}
-		TaskMapMgr.registTask(taskTag, runTask);
-		ExecutorServiceHelper.schedule(runTask, delay,TimeUnit.MILLISECONDS);
+		this.context=context;
+		dbAccessImpl=DBAccessImpl.getInstance(context);
 	}
 	
 	public void resumeAllReminder()
 	{
-		
+		List<Task> taskList = dbAccessImpl.queryShowTaskList();
+		for(Task task : taskList)
+		{
+			Reminder reminder = dbAccessImpl.getReminderByTid(task.getTid());
+			if(null!=reminder)
+			{
+				this.resumeReminder(reminder.getRid());
+			}
+		}
 	}
 	
 	public void resumeReminder(int rid)
@@ -49,17 +48,53 @@ public class NotificationMgr {
 		Long currentTime = Calendar.getInstance().getTimeInMillis();
 		if(currentTime<reminder.getStartTime())
 		{
-			NotificationHelper.setNotification(activity, task.getName(), task.getDes());
+			NotificationHelper.setNotificationReminder(context, task, reminder.getStartTime());
 		}
 		else if(currentTime<reminder.getEndTime())
 		{
 			if(1==reminder.getIsRoutine())
 			{
-				// means everyday will notify 1 time at same start time
+				// means every certain days will reminder 1 time at same start time
 				if(1==reminder.getRepeatingTimes())
 				{
-//					Long nextNotifyTime = currentTime+
-//					while()
+					//add repeating days to the start time
+					String timeInterval = String.valueOf(reminder.getRepeatingDays())+"d";
+					Long nextNotifyTime = reminder.getStartTime();
+					while(nextNotifyTime<currentTime)
+					{
+						// if the next notify time is earlier than current time keep moving to the next
+						nextNotifyTime = nextNotifyTime+TimeHelper.getPlainTimeInMillis(timeInterval);
+					}// will exit when the next notify time later than current time
+					
+					// if the next notify time is earlier than the end time
+					// we could set it as our next notification
+					if(nextNotifyTime<reminder.getEndTime())
+					{
+						NotificationHelper.setNotificationReminder(context, task,nextNotifyTime);
+					}
+				}
+				else //means everyday have certain times reminder
+				{
+					// we divide the 12 day hour with daily repeat times
+					// we reminder every certain hours
+					int repeatTimes = 1;
+					String timeInterval = String.valueOf(12/reminder.getRepeatingTimes())+"h";
+					Long nextIndexTime = TimeHelper.getDayTime(reminder.getStartTime());
+					Long nextNotifyTime = reminder.getStartTime();
+					while(nextIndexTime<TimeHelper.getDayTime(currentTime))
+					{
+						// if the next notify time is earlier than current time keep moving to the next
+						nextNotifyTime = nextNotifyTime+TimeHelper.getPlainTimeInMillis(timeInterval);
+						nextIndexTime = nextIndexTime +TimeHelper.getPlainTimeInMillis(timeInterval);
+						repeatTimes++;
+					}// will exit when the next notify time later than current time
+					
+					// if the repeat times not larger than reminder daily repeating time
+					// we could set it as our next notification
+					if(repeatTimes<=reminder.getRepeatingTimes())
+					{
+						NotificationHelper.setNotificationReminder(context, task,nextNotifyTime);
+					}
 				}
 			}
 		}

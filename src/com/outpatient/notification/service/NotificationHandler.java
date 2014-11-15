@@ -5,6 +5,7 @@ import com.example.outpatient.PlanFragment;
 import com.example.outpatient.R;
 import com.example.outpatient.TabsAdapter;
 import com.example.outpatient.TaskFragment;
+import com.outpatient.sysUtil.model.Constant;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -15,8 +16,8 @@ public class NotificationHandler extends Activity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        NotificationMgr notifyMgr = new NotificationMgr(this);
-        notifyMgr.resumeAllReminder();
+        String notificationTitle = this.getIntent().getExtras().getString("NotificationTitle");
+        String notificationContent = this.getIntent().getExtras().getString("NotificationContent");
+        NotificationHelper.setNotification(this, notificationTitle, notificationContent);
     }
 }

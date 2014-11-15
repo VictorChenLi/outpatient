@@ -50,18 +50,23 @@ public class TimeHelper {
 		return data.getTimeInMillis();
 	}
 	
+	// 5m, 5h, 5d
 	public static long getPlainTimeInMillis(String str_time)
 	{
-		long investTime;
+		long investTime = 0;
 		if(str_time.equals(""))
 			return 0;
 		
 		int time_value = Integer.valueOf(str_time.substring(0, str_time.length()-1));
-		if(str_time.contains("h"))
+		if(str_time.contains("d"))
+		{
+			investTime = time_value*1000*24*60*60L;
+		}
+		else if(str_time.contains("h"))
 		{
 			investTime = time_value*1000*60*60L;
 		}
-		else
+		else if(str_time.contains("m"))
 		{
 			investTime = time_value*1000*60L;
 		}
@@ -92,6 +97,14 @@ public class TimeHelper {
 		if(cur.getTimeInMillis()>deadline)
 			return 1;
 		return (double)(cur.getTimeInMillis()-startTime)/(deadline-startTime);
+	}
+	
+	public static Long getDayTime(Long targetTime)
+	{
+		Calendar targetCal = Calendar.getInstance();
+		targetCal.setTimeInMillis(targetTime);
+		targetCal.set(0, 0, 0);
+		return targetCal.getTimeInMillis();
 	}
 	
 	public static long[] generatePeriodTime(long startTime, long endTime, viewModel model)
