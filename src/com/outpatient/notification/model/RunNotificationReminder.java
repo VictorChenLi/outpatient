@@ -23,10 +23,17 @@ public class RunNotificationReminder extends RunTask {
 	public void run()
 	{
 		Log.v("reminder", "RunNotificationReminder:"+String.valueOf(title));
-		Intent intent = new Intent(target, NotificationHandler.class);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		Intent intent = new Intent(target.getApplicationContext(), NotificationHandler.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("NotificationTitle", title);
 		intent.putExtra("NotificationContent", content);
-		target.startActivity(intent);
+		try{
+			target.startActivity(intent);
+		}
+		catch(Exception ee)
+		{
+			Log.v("reminder", ee.getStackTrace().toString());
+		}
+		Log.v("reminder", "RunNotificationReminder end");
 	}
 }
