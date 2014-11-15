@@ -55,7 +55,7 @@ public class OutPatientService extends Service {
 		
 //		Log.v("reminder", cal.getTime().toString());
 		resumeAllReminder();
-		Toast.makeText(this, "OutPatient Service is Created", Toast.LENGTH_LONG).show();
+//		Toast.makeText(this, "OutPatient Service is Created", Toast.LENGTH_LONG).show();
 	}
 
 }

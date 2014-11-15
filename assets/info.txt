@@ -204,6 +204,4 @@ Ask your doctor whether you need to use oxygen during your activities. Also ask 
 12. Your skin color is more blueish than usual.
 13. You are running out of the medicine you take for breathing.
 14. You are anxious, uneasy, fearful, or restless.
-15. You have a fever.",
-,,,,
-,,,,
+15. You have a fever."

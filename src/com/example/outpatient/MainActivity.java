@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import com.outpatient.sysUtil.service.OutPatientService;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -36,6 +38,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity{
@@ -47,6 +50,8 @@ public class MainActivity extends FragmentActivity{
 	// this is to identify receiving data update from the EditTaskActivity
 	private static final int EDIT_TASK_RESULT = 1001;
 	
+	//Time out for the "choose from address book" button
+	private static final int LOADING_SCREEN_RESULT = 2002;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,83 +70,12 @@ public class MainActivity extends FragmentActivity{
 		mTabsAdapter.addTab(bar.newTab().setText("Info").setIcon(R.drawable.ic_launcher), InfoFragment.class, null);
 		mTabsAdapter.addTab(bar.newTab().setText("Plan").setIcon(R.drawable.ic_launcher), PlanFragment.class, null);
         
-		NotificationHelper.setNotification(this, "outpatient", "Let's win this");
 		startService();
-		
-	    
-	    
-	    ArrayList<Info> info_list = new ArrayList<Info>();
-	    
-		try {
-			
-			int cursor = 0; //set cursor to 0
-			
-			InputStream input = getAssets().open("info.txt");
-		    String str = convertStreamToString(input);
-		    String[] infoArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-		    
-		    while (cursor < infoArray.length){
-				int iid = 0;
-				int pid = 0;
-				String que;
-				String ans;
-				
-				iid = Integer.parseInt(infoArray[cursor].replace("\"", "")); //reading iid
-				cursor++; // move to the next
-				
-				pid = Integer.parseInt(infoArray[cursor].replace("\"", "")); //reading pid
-				cursor++; // move to the next
-				
-				que = infoArray[cursor].replace("\"", ""); //read que
-				cursor++; // move to the next
-				
-				ans = infoArray[cursor].replace("\"", "");//read que
-				cursor++; // move to the next
-				
-				info_list.add(new Info(iid, que, ans, pid));
-				
-				Log.v("debugtag",info_list.get(0).toString());
-			}
-		    
-		    
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-		
-		
-	
+//		
+//		Intent i = new Intent(MainActivity.this, LoadingScreen.class);
+//		startActivityForResult(i, LOADING_SCREEN_RESULT);
 		
     }
-
-   
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-    
-    
-    
     
     
     public void startService()
@@ -169,6 +103,24 @@ public class MainActivity extends FragmentActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == LOADING_SCREEN_RESULT) {
+	        // Make sure the request was successful
+	        if (resultCode == RESULT_OK && data!=null) {
+	        	
+	        		Toast.makeText(MainActivity.this, "Load Data Succeess!", Toast.LENGTH_LONG).show();
+	        	 
+	             }else{Log.w("debugtag", "Warning: activity result not ok");}
+		} else {
+	        Log.w("debugtag", "Warning: no activity result found");
+	    }
+	}
+    
+    
     
 
 }
