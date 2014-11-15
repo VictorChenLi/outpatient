@@ -1,7 +1,5 @@
 package com.outpatient.sysUtil.frameWork;
 
-
-
 import com.outpatient.sysUtil.service.OutPatientService;
 
 import android.content.BroadcastReceiver;

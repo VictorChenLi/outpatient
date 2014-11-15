@@ -72,6 +72,12 @@ public class Task {
 	public Task() {
 		super();
 	}
+	@Override
+	public String toString() {
+		return "Task [tid=" + tid + ", pid=" + pid + ", name=" + name
+				+ ", notes=" + notes + ", taskType=" + taskType + ", des="
+				+ des + ", isArch=" + isArch + ", date=" + date + "]";
+	}
 	
 	
 }
