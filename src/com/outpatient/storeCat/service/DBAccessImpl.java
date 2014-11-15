@@ -230,6 +230,14 @@ public class DBAccessImpl implements DBAccess {
         return fillPlanList(cursor);
     }
     
+    public List<Plan> queryShowPlanList()
+    {
+    	String strSql="Select * from [tbl_plan] where isArch=0";
+    	Cursor cursor = rdb.rawQuery(strSql,null);
+        List<Plan> list=new ArrayList<Plan>();
+        return fillPlanList(cursor);
+    }
+    
     public List<Plan> queryArchPlanList()
     {
     	String strSql="Select * from [tbl_plan] where isArch=1";
@@ -237,6 +245,8 @@ public class DBAccessImpl implements DBAccess {
         List<Plan> list=new ArrayList<Plan>();
         return fillPlanList(cursor);
     }
+    
+    
     
     /********************************** Plan Operation********************************/
     
