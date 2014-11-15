@@ -8,7 +8,7 @@ public class Task {
 	private int taskType;
 	private String des;
 	private int isArch;
-	private int date;
+	private long date;
 	public int getTid() {
 		return tid;
 	}
@@ -51,14 +51,14 @@ public class Task {
 	public void setIsArch(int isArch) {
 		this.isArch = isArch;
 	}
-	public int getDate() {
+	public long getDate() {
 		return date;
 	}
-	public void setDate(int date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 	public Task(int tid, int pid, String name, String notes, int taskType,
-			String des, int isArch, int date) {
+			String des, int isArch, long date) {
 		super();
 		this.tid = tid;
 		this.pid = pid;

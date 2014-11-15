@@ -3,9 +3,9 @@ package com.outpatient.storeCat.model;
 public class Reminder {
 	private int rid;
 	private int tid;
-	private int startTime;
+	private long startTime;
 	private int isRoutine;
-	private int endTime;
+	private long endTime;
 	private int repeatingDays;
 	private int repeatingTimes;
 	public int getRid() {
@@ -20,10 +20,10 @@ public class Reminder {
 	public void setTid(int tid) {
 		this.tid = tid;
 	}
-	public int getStartTime() {
+	public long getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(int startTime) {
+	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}
 	public int getIsRoutine() {
@@ -32,10 +32,10 @@ public class Reminder {
 	public void setIsRoutine(int isRoutine) {
 		this.isRoutine = isRoutine;
 	}
-	public int getEndTime() {
+	public long getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(int endTime) {
+	public void setEndTime(long endTime) {
 		this.endTime = endTime;
 	}
 	public int getRepeatingDays() {
@@ -50,8 +50,8 @@ public class Reminder {
 	public void setRepeatingTimes(int repeatingTimes) {
 		this.repeatingTimes = repeatingTimes;
 	}
-	public Reminder(int rid, int tid, int startTime, int isRoutine,
-			int endTime, int repeatingDays, int repeatingTimes) {
+	public Reminder(int rid, int tid, long startTime, int isRoutine,
+			long endTime, int repeatingDays, int repeatingTimes) {
 		super();
 		this.rid = rid;
 		this.tid = tid;
