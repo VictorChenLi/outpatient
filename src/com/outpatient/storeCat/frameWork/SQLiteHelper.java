@@ -25,7 +25,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String Pid="pid";
 	public static final String Str_Name="name";
 	public static final String Int_PlanType="planType";
-	public static final String Long_Date="planType";
+	public static final String Long_Date="date";
 	public static final String Int_IsArch="isArch";
 	
 	public static final String TB_Task="tbl_task";

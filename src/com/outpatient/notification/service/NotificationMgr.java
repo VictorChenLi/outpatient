@@ -55,7 +55,12 @@ public class NotificationMgr {
 		{
 			if(1==reminder.getIsRoutine())
 			{
-				
+				// means everyday will notify 1 time at same start time
+				if(1==reminder.getRepeatingTimes())
+				{
+//					Long nextNotifyTime = currentTime+
+//					while()
+				}
 			}
 		}
 	}
