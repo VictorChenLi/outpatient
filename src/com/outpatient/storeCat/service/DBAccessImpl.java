@@ -114,6 +114,14 @@ public class DBAccessImpl implements DBAccess {
     	return fillTaskList(cursor);
     }
     
+    public List<Task> queryTaskListByPid(int pid)
+    {
+    	String strSql="Select * from [tbl_task] where pid=?";
+    	String[] bindArgs ={String.valueOf(pid)};
+    	Cursor cursor = rdb.rawQuery(strSql,bindArgs);
+    	return fillTaskList(cursor);
+    }
+    
     public Task describeTask(int taskId)
     {
     	String strSql="Select * from [tbl_task] where tid=?";
