@@ -1,5 +1,11 @@
 package com.example.outpatient;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.NotificationManager;
+import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.view.LayoutInflater;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -52,6 +58,5 @@ public class MainActivity extends FragmentActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }
