@@ -2,7 +2,9 @@ package com.example.outpatient;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.NotificationManager;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +58,21 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            int mNotificationId = 001;
+            NotificationCompat.Builder mBuilder =
+            	    new NotificationCompat.Builder(this.getActivity())
+            	    .setSmallIcon(R.drawable.ic_launcher)
+            	    .setContentTitle("My notification")
+            	    .setContentText("Hello World!")
+            	    .addAction(R.drawable.ic_launcher, "Call", null)
+				    .addAction(R.drawable.ic_launcher, "More", null)
+				    .addAction(R.drawable.ic_launcher, "And more", null);
+            
+            NotificationManager mNotifyMgr = 
+                    (NotificationManager) this.getActivity().getSystemService(NOTIFICATION_SERVICE);
+            
+            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+            
             return rootView;
         }
     }
