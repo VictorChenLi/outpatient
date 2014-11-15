@@ -15,6 +15,7 @@ import com.outpatient.sysUtil.service.TimeHelper;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 public class NotificationMgr {
 	
@@ -29,7 +30,9 @@ public class NotificationMgr {
 	
 	public void resumeAllReminder()
 	{
+		Log.v("reminder", "in resumeAllReminder");
 		List<Task> taskList = dbAccessImpl.queryShowTaskList();
+		Log.v("reminder", "tasklist:"+String.valueOf(taskList.size()));
 		for(Task task : taskList)
 		{
 			Reminder reminder = dbAccessImpl.getReminderByTid(task.getTid());
@@ -42,21 +45,25 @@ public class NotificationMgr {
 	
 	public void resumeReminder(int rid)
 	{
+		Log.v("reminder", "in resumeReminder:"+rid);
 		Reminder reminder = dbAccessImpl.describeReminder(rid);
 		Task task = dbAccessImpl.describeTask(reminder.getTid());
 		
 		Long currentTime = Calendar.getInstance().getTimeInMillis();
 		if(currentTime<reminder.getStartTime())
 		{
+			Log.v("reminder", "currentTime<reminder.getStartTime");
 			NotificationHelper.setNotificationReminder(context, task, reminder.getStartTime());
 		}
 		else if(currentTime<reminder.getEndTime())
 		{
+			Log.v("reminder", "currentTime>reminder.getStartTime");
 			if(1==reminder.getIsRoutine())
 			{
 				// means every certain days will reminder 1 time at same start time
 				if(1==reminder.getRepeatingTimes())
 				{
+					Log.v("reminder", "1==reminder.getRepeatingTimes");
 					//add repeating days to the start time
 					String timeInterval = String.valueOf(reminder.getRepeatingDays())+"d";
 					Long nextNotifyTime = reminder.getStartTime();

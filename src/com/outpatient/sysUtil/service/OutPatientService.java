@@ -44,13 +44,16 @@ public class OutPatientService extends Service {
 	@Override
 	public void onCreate(){
 		demo=this;
-//		DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(demo);
-//		dbAccessImpl.InsertPlan(new Plan(1, "wounds", 1, 1416076378000L, 0));
-//		dbAccessImpl.InsertTask(new Task(1, 1, "take pill", "tttsetse", 1,
-//				"difsidfsidf", 0, 1416076378000L));
-//		dbAccessImpl.InsertReminder(new Reminder(1, 1, 1416231958000L, 1,
-//				1416229258000L, 1, 3));
-//		dbAccessImpl.queryTaskList()
+		DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(demo);
+//		dbAccessImpl.InsertPlan(new Plan(0, "wounds", 1, 1416076378000L, 0));
+		int tid = dbAccessImpl.InsertTask(new Task(0, 1, "take pill", "tttsetse", 1,
+				"difsidfsidf", 0, 1416076378000L));
+		int rid = dbAccessImpl.InsertReminder(new Reminder(0, tid, 1416067198000L, 1,
+				1416232498000L, 1, 3));
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(1416061258000L);
+		
+		Log.v("reminder", cal.getTime().toString());
 		resumeAllReminder();
 		Toast.makeText(this, "OutPatient Service is Created", Toast.LENGTH_LONG).show();
 	}

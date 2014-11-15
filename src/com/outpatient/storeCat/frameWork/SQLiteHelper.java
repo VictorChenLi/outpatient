@@ -67,7 +67,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		arg0.execSQL(strCreatParam);
 		
 		//Create tbl_reminder
-		strCreatParam="CREATE TABLE IF NOT EXISTS "+TB_Reminder+" ("+Rid+" INTEGER PRIMARY KEY, "+Tid+" INTEGER NOT NULL, "+Long_StartTime+" VARCHAR, "+Int_IsRoutine+" INTEGER, "+Long_EndTime+" INTEGER, "+Int_RepeatingDays+" INTEGER, "+Int_RepeatingTimes+" INTEGER)";
+		strCreatParam="CREATE TABLE IF NOT EXISTS "+TB_Reminder+" ("+Rid+" INTEGER PRIMARY KEY, "+Tid+" INTEGER NOT NULL, "+Long_StartTime+" INTEGER, "+Int_IsRoutine+" INTEGER, "+Long_EndTime+" INTEGER, "+Int_RepeatingDays+" INTEGER, "+Int_RepeatingTimes+" INTEGER)";
 		arg0.execSQL(strCreatParam);
 		
 	}

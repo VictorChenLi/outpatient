@@ -13,13 +13,14 @@ import com.outpatient.storeCat.model.Task;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DBAccessImpl implements DBAccess {
 	
 	private static DBAccessImpl dbAccessImpl=null;
 	
 	public static final String DB_NAME="HitMe.db";
-	public static final int VERSION=1;
+	public static final int VERSION=3;
 	public Context udcontext;
 	
 	SQLiteHelper m_Helper;
@@ -41,14 +42,14 @@ public class DBAccessImpl implements DBAccess {
 	}
 	
 	/********************************** Task Operation********************************/
-    public synchronized int InsertTask(Task task)
+    public int InsertTask(Task task)
     {
     	String strSql = "select tid from tbl_task ORDER BY tid desc LIMIT 0,1";
     	int nextId=0;
     	Cursor cursor = rdb.rawQuery(strSql, null);
     	if(cursor.moveToNext())
     		nextId = cursor.getInt(0);
-    	strSql="Insert into [tbl_task](tid,pid,name,notes,taskType,des,isArch,date) VALUES (?,?,?,?,?,?,?,?)";
+    	strSql="Insert into [tbl_task](pid,name,notes,taskType,des,isArch,date) VALUES (?,?,?,?,?,?,?)";
     	Object[] bindArgs = { task.getPid(),task.getName(),task.getNotes(),task.getTaskType(),task.getDes(),task.getIsArch(),task.getDate()};
     	wdb.execSQL(strSql,bindArgs);
     	return ++nextId;
@@ -85,6 +86,7 @@ public class DBAccessImpl implements DBAccess {
     
     public List<Task> queryTaskList()
     {
+    	Log.v("reminder", "queryTaskList");
     	String strSql="Select * from [tbl_task]";
     	Cursor cursor = rdb.rawQuery(strSql,null);
         return fillTaskList(cursor);
@@ -118,7 +120,8 @@ public class DBAccessImpl implements DBAccess {
     	Task task =null;
     	String[] bindArgs ={String.valueOf(taskId)};
     	Cursor cursor = rdb.rawQuery(strSql,bindArgs);
-        return fillTaskList(cursor).get(0);
+    	List<Task> list = fillTaskList(cursor);
+        return list.size()>0?list.get(0):null;
     }
     /********************************** Task Operation********************************/
     
@@ -131,7 +134,7 @@ public class DBAccessImpl implements DBAccess {
     	if(cursor.moveToNext())
     		nextId = cursor.getInt(0);
     	
-    	strSql="Insert into [tbl_reminder](tid,startTime,isRoutine,endTime,repeatingDays,repeatingTimes) VALUES (?,?,?,?,?,?)";
+    	strSql="Insert into [tbl_reminder] (tid,startTime,isRoutine,endTime,repeatingDays,repeatingTimes) VALUES (?,?,?,?,?,?)";
     	Object[] bindArgs = { reminder.getTid(),reminder.getStartTime(),reminder.getIsRoutine(),reminder.getEndTime(),reminder.getRepeatingDays(),reminder.getRepeatingTimes()};
     	wdb.execSQL(strSql,bindArgs);
     	return ++nextId;
@@ -165,15 +168,17 @@ public class DBAccessImpl implements DBAccess {
     	Reminder reminder =null;
     	String[] bindArgs ={String.valueOf(rid)};
     	Cursor cursor = rdb.rawQuery(strSql,bindArgs);
-        return fillReminderList(cursor).get(0);
+    	List<Reminder> list = fillReminderList(cursor);
+        return list.size()>0?list.get(0):null;
     }
     
     public Reminder getReminderByTid(int tid)
     {
-    	String strSql="Select * from [tbl_stage] where tid=?";
+    	String strSql="Select * from [tbl_reminder] where tid=? ";
     	String[] bindArgs ={String.valueOf(tid)};
     	Cursor cursor = rdb.rawQuery(strSql,bindArgs);
-        return fillReminderList(cursor).get(0);
+    	List<Reminder> list = fillReminderList(cursor);
+        return list.size()>0?list.get(0):null;
     }
     /********************************** Reminder Operation********************************/
     
@@ -219,7 +224,8 @@ public class DBAccessImpl implements DBAccess {
     	Plan plan =null;
     	String[] bindArgs ={String.valueOf(pid)};
     	Cursor cursor = rdb.rawQuery(strSql,bindArgs);
-    	return fillPlanList(cursor).get(0);
+    	List<Plan> list = fillPlanList(cursor);
+        return list.size()>0?list.get(0):null;
     }
     
     public List<Plan> queryPlanList()
@@ -282,7 +288,8 @@ public class DBAccessImpl implements DBAccess {
     	Info info =null;
     	String[] bindArgs ={String.valueOf(iid)};
     	Cursor cursor = rdb.rawQuery(strSql,bindArgs);
-        return fillInfoList(cursor).get(0);
+    	List<Info> list = fillInfoList(cursor);
+        return list.size()>0?list.get(0):null;
     }
     public List<Info> queryInfoListByPid(int pid)
     {

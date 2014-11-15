@@ -15,6 +15,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 public class NotificationHelper {
 	
@@ -30,6 +31,7 @@ public class NotificationHelper {
 	
 	public static void setNotificationReminder(Context context, Task task, Long targetTime)
 	{
+		Log.v("reminder", "setNotificationReminder:"+String.valueOf(targetTime));
 		Long delay = targetTime - Calendar.getInstance().getTimeInMillis();
 		RunNotificationReminder runNotifi = new RunNotificationReminder(context, task.getName(),task.getDes());
 		NotificationHelper.runTask(runNotifi, String.valueOf(task.getTid()),delay );

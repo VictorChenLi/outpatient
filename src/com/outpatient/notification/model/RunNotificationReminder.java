@@ -2,6 +2,7 @@ package com.outpatient.notification.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.outpatient.notification.service.NotificationHandler;
 
@@ -21,8 +22,9 @@ public class RunNotificationReminder extends RunTask {
 	
 	public void run()
 	{
+		Log.v("reminder", "RunNotificationReminder:"+String.valueOf(title));
 		Intent intent = new Intent(target, NotificationHandler.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra("NotificationTitle", title);
 		intent.putExtra("NotificationContent", content);
 		target.startActivity(intent);

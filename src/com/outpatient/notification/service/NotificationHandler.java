@@ -11,6 +11,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 public class NotificationHandler extends Activity {
 	@Override
@@ -18,6 +19,7 @@ public class NotificationHandler extends Activity {
         super.onCreate(savedInstanceState);
         String notificationTitle = this.getIntent().getExtras().getString("NotificationTitle");
         String notificationContent = this.getIntent().getExtras().getString("NotificationContent");
+        Log.v("reminder", "success notification");
         NotificationHelper.setNotification(this, notificationTitle, notificationContent);
     }
 }
