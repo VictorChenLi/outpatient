@@ -6,23 +6,36 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
+import android.app.ActionBar;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends FragmentActivity{
+	
+	private ViewPager pager;
+	private TabsAdapter mTabsAdapter;
+	
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+        
+		pager = new ViewPager(this);
+		pager.setId(R.id.pager);
+		setContentView(pager);
+		
+		final ActionBar bar = getActionBar();
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		
+		mTabsAdapter = new TabsAdapter(this, pager);
+		mTabsAdapter.addTab(bar.newTab().setText("Tasks").setIcon(R.drawable.ic_launcher), TaskFragment.class, null);
+		mTabsAdapter.addTab(bar.newTab().setText("Info").setIcon(R.drawable.ic_launcher), InfoFragment.class, null);
+		mTabsAdapter.addTab(bar.newTab().setText("Plan").setIcon(R.drawable.ic_launcher), PlanFragment.class, null);
+        
     }
 
 
@@ -44,37 +57,6 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            int mNotificationId = 001;
-            NotificationCompat.Builder mBuilder =
-            	    new NotificationCompat.Builder(this.getActivity())
-            	    .setSmallIcon(R.drawable.ic_launcher)
-            	    .setContentTitle("My notification")
-            	    .setContentText("Hello World!")
-            	    .addAction(R.drawable.ic_launcher, "Call", null)
-				    .addAction(R.drawable.ic_launcher, "More", null)
-				    .addAction(R.drawable.ic_launcher, "And more", null);
-            
-            NotificationManager mNotifyMgr = 
-                    (NotificationManager) this.getActivity().getSystemService(NOTIFICATION_SERVICE);
-            
-            mNotifyMgr.notify(mNotificationId, mBuilder.build());
-            
-            return rootView;
-        }
     }
 
 }
