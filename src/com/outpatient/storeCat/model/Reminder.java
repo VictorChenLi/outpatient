@@ -66,6 +66,12 @@ public class Reminder {
 		super();
 	}
 	
+	public String toString(){
+		
+		if(repeatingDays == 1)return repeatingTimes+" times daily";
+		if(repeatingTimes == 1)return "Once every "+repeatingDays + " days";
+		else {return "NOREMINDER";}
+	}
 	
 	
 }

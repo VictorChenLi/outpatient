@@ -6,6 +6,7 @@
 	
     <LinearLayout
     	android:id="@+id/title_area"
+    	android:layout_alignParentTop="true"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="20dp"
@@ -33,9 +34,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Remind me" />
-    
      </LinearLayout>
 
+    
+  <ScrollView
+      	android:id="@+id/remind_area_scroll"
+      	android:fadeScrollbars="false"
+      	android:layout_marginBottom="50dp"
+      	android:layout_below="@id/title_area"
+      	android:layout_width="match_parent"
+      	android:layout_height="match_parent"
+      	android:animateLayoutChanges="true">
+        
    	<LinearLayout
     	android:id="@+id/remind_area"
     	android:layout_below="@id/title_area"
@@ -81,69 +91,124 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-   	    
+   	
    	<LinearLayout
-    	android:id="@+id/times_days_area"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
         >
-   	    
-   	    <EditText
-   	        android:id="@+id/routine_times"
+       
+   	    <RadioGroup
    	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-   	        />
+       		android:layout_height="match_parent"
+       		android:layout_gravity="center_vertical"
+        	android:orientation="vertical"
+   	        >
+   	    	
+   	        <RadioButton
+   	            android:id="@+id/radiobutton_daily"
+   	            android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
+   	            />
    	        
-   	    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="times, every " />
+   	        <RadioButton
+   	            android:id="@+id/radiobutton_repeatday"
+	       		android:layout_marginTop="20dp"
+   	            android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
+   	            />
+   	    </RadioGroup>
    	    
-   	     <EditText
-   	        android:id="@+id/routine_days"
-   	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-   	        />
+		   	<LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		   	    android:orientation="vertical"
+		   	    android:layout_gravity="center_vertical"
+		   	    >
    	    
-   	    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="days" />
-   	    
-   	 </LinearLayout>
+			   		<LinearLayout
+			   		    android:id="@+id/Xtimes_daily_area"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:orientation="horizontal"
+			        >
+			   	    
+			   	     <Spinner
+			   	        android:id="@+id/routine_times"
+			   	        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+			   	        />
+			   	    
+			   	    <TextView
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=" times daily" />
+			   	    
+			   	 	</LinearLayout>
    	 
-   	 <LinearLayout
-    	android:id="@+id/end_date_area"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp"
-        >
+				   	<LinearLayout
+				   	    android:id="@+id/onceXdays_area"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:orientation="horizontal"
+	       				android:layout_marginTop="20dp"
+				        >
+				   	    
+				   	    <TextView
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Once every "/>
+				   	    
+				   	    <Spinner
+			   	        android:id="@+id/routine_days"
+			   	        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+			   	        />
+				   	    
+				   	    <TextView
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=" days" />
    	    
-   	 <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="End at:" />
-   	    
-   	    <TextView
-        android:id="@+id/end_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="date" />
-   	    
-   	 		</LinearLayout>  	 
-   		</LinearLayout>
-    </LinearLayout>
-    
+	   	 			  </LinearLayout>
+   	 			</LinearLayout>  
+   	 		</LinearLayout>
+   	 		
+   	
+	   	<LinearLayout
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       android:orientation="horizontal"
+	       android:layout_marginTop="20dp"
+	       >
+				   	    
+	   	 <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="End at:" />
+	   	    
+	   	    <TextView
+	        android:id="@+id/end_date"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="date" />
+
+  			</LinearLayout>
+   	
+    	</LinearLayout>
+	
+   	</LinearLayout>
+   	
+   	</ScrollView>
+   	
     <Button
         android:id="@+id/confirm_button"
+        android:paddingTop="10dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Button" />
-
 
 </RelativeLayout>

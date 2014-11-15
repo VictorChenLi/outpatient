@@ -17,9 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -34,12 +37,12 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 	private TextView task_title;
 	private TextView task_description;
 	private CheckBox remind_check;
-	private LinearLayout remind_area;
+	private ScrollView remind_area;
 	private TextView start_date;
 	private CheckBox routine_check;
 	private LinearLayout routine_area;
-	private EditText routine_times;
-	private EditText routine_days;
+	private Spinner routine_times;
+	private Spinner routine_days;
 	private TextView end_date;
 	
 	private boolean isRemind = false;
@@ -55,15 +58,30 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
         task_title = (TextView)findViewById(R.id.task_title);
         task_description = (TextView)findViewById(R.id.task_description);
         remind_check = (CheckBox)findViewById(R.id.remind_check);
-        remind_area = (LinearLayout)findViewById(R.id.remind_area);
+        remind_area = (ScrollView)findViewById(R.id.remind_area);
         start_date = (TextView)findViewById(R.id.start_date);
         routine_check = (CheckBox)findViewById(R.id.routine_check);
         routine_area = (LinearLayout)findViewById(R.id.routine_area);
-        routine_times = (EditText)findViewById(R.id.routine_times);
-        routine_days = (EditText)findViewById(R.id.routine_days);
+        routine_times = (Spinner)findViewById(R.id.routine_times);
+        routine_days = (Spinner)findViewById(R.id.routine_days);
         end_date = (TextView)findViewById(R.id.end_date);
         
         
+	    // Create an ArrayAdapter using the string array and a default spinner layout
+	    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+	            R.array.routine_list, android.R.layout.simple_spinner_item);
+	    
+	    // Specify the layout to use when the list of choices appears
+	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    
+	    // Apply the adapter to the spinner
+	    routine_times.setAdapter(adapter);
+	    
+	    // Apply the adapter to the spinner
+	    routine_days.setAdapter(adapter);
+	    
+	    
+	    
         remind_area.setVisibility(View.GONE);
         routine_area.setVisibility(View.GONE);
         
@@ -71,7 +89,7 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
         confirmBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				
 				// will close this activity and lauch main activity
 				Intent resultIntent = new Intent(EditTaskActivity.this, MainActivity.class);
 				setResult(Activity.RESULT_OK, resultIntent);
@@ -113,17 +131,6 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
             }
         });
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
         
     }
 

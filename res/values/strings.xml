@@ -5,16 +5,18 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     
-    <string-array name="list">
-        <item>Item 1</item>
-        <item>Item 2</item>
-        <item>Item 3</item>
-        <item>Item 4</item>
-        <item>Item 5</item>
-        <item>Item 6</item>
-        <item>Item 7</item>
-        <item>Item 8</item>
+   <string-array name="routine_list">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
     </string-array>
+    
     <string name="setting_alertMusic">alertMusic</string>
     <string-array name="setting_alertMusic_key">
  	    <item>Default</item>
@@ -22,6 +24,7 @@
         <item>Vibrator only</item>
         <item>Silence</item>
  	</string-array>
+ 	
  	<string-array name="setting_alertMusic_value">
  	    <item>MUSIC</item>
         <item>BOTH</item>
