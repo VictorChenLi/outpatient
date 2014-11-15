@@ -15,6 +15,17 @@
         <item>Item 7</item>
         <item>Item 8</item>
     </string-array>
-    
-
+    <string name="setting_alertMusic">alertMusic</string>
+    <string-array name="setting_alertMusic_key">
+ 	    <item>Default</item>
+        <item>Vibrator and music</item>
+        <item>Vibrator only</item>
+        <item>Silence</item>
+ 	</string-array>
+ 	<string-array name="setting_alertMusic_value">
+ 	    <item>MUSIC</item>
+        <item>BOTH</item>
+        <item>VIBRATOR</item>
+        <item>SILENCE</item>
+ 	</string-array>
 </resources>

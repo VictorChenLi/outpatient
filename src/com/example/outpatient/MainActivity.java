@@ -1,5 +1,8 @@
 package com.example.outpatient;
 
+import com.outpatient.notification.service.NotificationHelper;
+import com.outpatient.sysUtil.service.OutPatientService;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.NotificationManager;
@@ -7,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -36,8 +40,15 @@ public class MainActivity extends FragmentActivity{
 		mTabsAdapter.addTab(bar.newTab().setText("Info").setIcon(R.drawable.ic_launcher), InfoFragment.class, null);
 		mTabsAdapter.addTab(bar.newTab().setText("Plan").setIcon(R.drawable.ic_launcher), PlanFragment.class, null);
         
+		NotificationHelper.setNotification(this, "outpatient", "Let's win this");
+		startService();
     }
 
+    public void startService()
+	{
+		Intent serviceIntent = new Intent(this,OutPatientService.class);
+		this.startService(serviceIntent);
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
