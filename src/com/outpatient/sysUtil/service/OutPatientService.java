@@ -2,6 +2,9 @@ package com.outpatient.sysUtil.service;
 
 import java.util.Calendar;
 
+import com.outpatient.notification.service.NotificationHandler;
+import com.outpatient.notification.service.NotificationMgr;
+
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +23,12 @@ public class OutPatientService extends Service {
 		return null;
 	}
 	
-	
+	public void taskJobs()
+	{
+		Intent intent = new Intent(this, NotificationHandler.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		getApplication().startActivity(intent);
+	}
 	
 	@Override
 	public void onStart(Intent intent, int startId) {

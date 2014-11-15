@@ -7,18 +7,23 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.outpatient.notification.model.RunTask;
+import com.outpatient.storeCat.model.Reminder;
+import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 public class NotificationMgr {
 	
-	private Context context;
+	private Activity activity;
+	private DBAccessImpl dbAccessImpl;
 	
-	public NotificationMgr(Context context)
+	public NotificationMgr(Activity activity)
 	{
-		this.context=context;
+		this.activity=activity;
+		dbAccessImpl=DBAccessImpl.getInstance(activity);
 	}
 	
 	public static void runTask(RunTask runTask,String taskTag,long delay)
@@ -29,6 +34,30 @@ public class NotificationMgr {
 		}
 		TaskMapMgr.registTask(taskTag, runTask);
 		ExecutorServiceHelper.schedule(runTask, delay,TimeUnit.MILLISECONDS);
+	}
+	
+	public void resumeAllReminder()
+	{
+		
+	}
+	
+	public void resumeReminder(int rid)
+	{
+		Reminder reminder = dbAccessImpl.describeReminder(rid);
+		Task task = dbAccessImpl.describeTask(reminder.getTid());
+		
+		Long currentTime = Calendar.getInstance().getTimeInMillis();
+		if(currentTime<reminder.getStartTime())
+		{
+			NotificationHelper.setNotification(activity, task.getName(), task.getDes());
+		}
+		else if(currentTime<reminder.getEndTime())
+		{
+			if(1==reminder.getIsRoutine())
+			{
+				
+			}
+		}
 	}
 	
 }

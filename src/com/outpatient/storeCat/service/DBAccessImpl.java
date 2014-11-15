@@ -61,10 +61,17 @@ public class DBAccessImpl implements DBAccess {
     	wdb.execSQL(strSql,bindArgs);
     }
     
-    public void deletTask(int id)
+    public void deletTask(int tid)
     {
     	String strSql="Delete * from [tbl_task] where tid=?";
-    	Object[] bindArgs ={id};
+    	Object[] bindArgs ={tid};
+    	rdb.execSQL(strSql,bindArgs);
+    }
+    
+    public void ArchTask(int tid)
+    {
+    	String strSql="Update [tbl_task] set isArch=1 where tid=?";
+    	Object[] bindArgs ={tid};
     	rdb.execSQL(strSql,bindArgs);
     }
     
@@ -188,6 +195,12 @@ public class DBAccessImpl implements DBAccess {
     public void deletPlan(int pid)
     {
     	String strSql="Delete * from [tbl_plan] where pid=?";
+    	Object[] bindArgs ={pid};
+    	rdb.execSQL(strSql,bindArgs);
+    }
+    public void ArchPlan(int pid)
+    {
+    	String strSql="Update [tbl_plan] set isArch=1 where pid=?";
     	Object[] bindArgs ={pid};
     	rdb.execSQL(strSql,bindArgs);
     }
