@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.app.ActionBar;
 import android.content.Intent;
@@ -21,6 +22,10 @@ public class MainActivity extends FragmentActivity{
 	
 	private ViewPager pager;
 	private TabsAdapter mTabsAdapter;
+	
+
+	// this is to identify receiving data update from the EditTaskActivity
+	private static final int EDIT_TASK_RESULT = 1001;
 	
 	
     @Override
@@ -69,5 +74,6 @@ public class MainActivity extends FragmentActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+    
 
 }
