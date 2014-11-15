@@ -71,9 +71,9 @@ public class MainActivity extends FragmentActivity{
 		mTabsAdapter.addTab(bar.newTab().setText("Plan").setIcon(R.drawable.ic_launcher), PlanFragment.class, null);
         
 		startService();
-//		
-//		Intent i = new Intent(MainActivity.this, LoadingScreen.class);
-//		startActivityForResult(i, LOADING_SCREEN_RESULT);
+		
+		Intent i = new Intent(MainActivity.this, LoadingScreen.class);
+		startActivityForResult(i, LOADING_SCREEN_RESULT);
 		
     }
     
