@@ -42,6 +42,11 @@ public class Info {
 	{
 		super();
 	}
+	@Override
+	public String toString() {
+		return "Info [iid=" + iid + ", que=" + que + ", ans=" + ans + ", pid="
+				+ pid + "]";
+	}
 	
 	
 

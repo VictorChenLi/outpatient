@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class TaskListAdapter extends ArrayAdapter<Task> {
  
         private final Context context;
-        private final ArrayList<Task> itemsArrayList;
+        private final ArrayList<Task> tasksArrayList;
         private DBAccessImpl dbhandler;
  
         public TaskListAdapter(Context context, ArrayList<Task> itemsArrayList) {
@@ -25,7 +25,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             super(context, R.layout.listview_item, itemsArrayList);
  
             this.context = context;
-            this.itemsArrayList = itemsArrayList;
+            this.tasksArrayList = itemsArrayList;
         }
  
         @Override
@@ -43,9 +43,9 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             TextView valueView = (TextView) rowView.findViewById(R.id.value);
             
             // 4. Set the text for textView 
-            labelView.setText(itemsArrayList.get(position).getName());
+            labelView.setText(tasksArrayList.get(position).getName());
             
-            int tid = itemsArrayList.get(position).getTid();
+            int tid = tasksArrayList.get(position).getTid();
             
             // try to get the reminder for that task
             try{

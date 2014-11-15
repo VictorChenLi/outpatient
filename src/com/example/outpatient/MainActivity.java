@@ -1,6 +1,24 @@
 package com.example.outpatient;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.outpatient.notification.service.NotificationHelper;
+import com.outpatient.storeCat.model.Info;
 import com.outpatient.sysUtil.service.OutPatientService;
 
 import android.app.Activity;
@@ -12,11 +30,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+
 
 public class MainActivity extends FragmentActivity{
 	
@@ -47,8 +67,83 @@ public class MainActivity extends FragmentActivity{
         
 		NotificationHelper.setNotification(this, "outpatient", "Let's win this");
 		startService();
+		
+	    
+	    
+	    ArrayList<Info> info_list = new ArrayList<Info>();
+	    
+		try {
+			
+			int cursor = 0; //set cursor to 0
+			
+			InputStream input = getAssets().open("info.txt");
+		    String str = convertStreamToString(input);
+		    String[] infoArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+		    
+		    while (cursor < infoArray.length){
+				int iid = 0;
+				int pid = 0;
+				String que;
+				String ans;
+				
+				iid = Integer.parseInt(infoArray[cursor].replace("\"", "")); //reading iid
+				cursor++; // move to the next
+				
+				pid = Integer.parseInt(infoArray[cursor].replace("\"", "")); //reading pid
+				cursor++; // move to the next
+				
+				que = infoArray[cursor].replace("\"", ""); //read que
+				cursor++; // move to the next
+				
+				ans = infoArray[cursor].replace("\"", "");//read que
+				cursor++; // move to the next
+				
+				info_list.add(new Info(iid, que, ans, pid));
+				
+				Log.v("debugtag",info_list.get(0).toString());
+			}
+		    
+		    
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		
+	
+		
     }
 
+   
+    private String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
+    
+    
+    
+    
+    
     public void startService()
 	{
 		Intent serviceIntent = new Intent(this,OutPatientService.class);

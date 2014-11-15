@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -38,15 +40,23 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 	private TextView task_description;
 	private CheckBox remind_check;
 	private ScrollView remind_area;
-	private TextView start_date;
+	private Button start_date;
 	private CheckBox routine_check;
 	private LinearLayout routine_area;
 	private Spinner routine_times;
 	private Spinner routine_days;
-	private TextView end_date;
+	private Button end_date;
+	private RadioButton selectTimes;
+	private RadioButton selectDays;
+	
 	
 	private boolean isRemind = false;
 	private boolean isRoutine = false;
+	
+	//these are the data read from the user input ui
+	private String start_date_text;
+	private String end_date_text;
+	private String which_date_setting;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +68,15 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
         task_title = (TextView)findViewById(R.id.task_title);
         task_description = (TextView)findViewById(R.id.task_description);
         remind_check = (CheckBox)findViewById(R.id.remind_check);
-        remind_area = (ScrollView)findViewById(R.id.remind_area);
-        start_date = (TextView)findViewById(R.id.start_date);
+        remind_area = (ScrollView)findViewById(R.id.remind_area_scroll);
+        start_date = (Button)findViewById(R.id.start_date);
         routine_check = (CheckBox)findViewById(R.id.routine_check);
         routine_area = (LinearLayout)findViewById(R.id.routine_area);
         routine_times = (Spinner)findViewById(R.id.routine_times);
         routine_days = (Spinner)findViewById(R.id.routine_days);
-        end_date = (TextView)findViewById(R.id.end_date);
+        end_date = (Button)findViewById(R.id.end_date);
+        selectTimes = (RadioButton)findViewById(R.id.radiobutton_daily);
+        selectDays = (RadioButton)findViewById(R.id.radiobutton_repeatday);
         
         
 	    // Create an ArrayAdapter using the string array and a default spinner layout
@@ -80,11 +92,9 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 	    // Apply the adapter to the spinner
 	    routine_days.setAdapter(adapter);
 	    
-	    
-	    
         remind_area.setVisibility(View.GONE);
         routine_area.setVisibility(View.GONE);
-        
+       
         
         confirmBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -99,8 +109,6 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 				
 			}
 		});
-        
-        
         
         
         //listener for the check box to enable remind
@@ -131,6 +139,30 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
             }
         });
         
+        start_date.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+				dateTimePicker = new DateTimePicker(EditTaskActivity.this, EditTaskActivity.this);
+			    dateTimePicker.set24HourFormat(true);
+				dateTimePicker.showDialog();
+				which_date_setting = "start";
+				
+			}
+		});
+        
+        
+        end_date.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+				dateTimePicker = new DateTimePicker(EditTaskActivity.this, EditTaskActivity.this);
+			    dateTimePicker.set24HourFormat(true);
+				dateTimePicker.showDialog();
+		        which_date_setting = "end";
+				
+			}
+		});
         
     }
 
@@ -139,7 +171,24 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 			String monthFullName, String monthShortName, int monthNumber,
 			int date, String weekDayFullName, String weekDayShortName,
 			int hour24, int hour12, int min, int sec, String AM_PM) {
-		// TODO Auto-generated method stub
+			// TODO Auto-generated method stub
+			
+			//setting the start date
+			if(which_date_setting.equals("start")){
+				
+				start_date.setText(DateFormat.format("yyyy-MM-dd hh:mm",dateSelected));
+
+				
+			// else if setting the end date
+			}else if(which_date_setting.equals("end")){
+				
+				end_date.setText(dateSelected.toString());
+				
+			}
+			
+		
+		
+		
 		
 	}
 
