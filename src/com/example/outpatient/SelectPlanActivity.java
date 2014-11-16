@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.outpatient.storeCat.model.Plan;
+import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
 
@@ -16,30 +17,29 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AbsListView.MultiChoiceModeListener;
 
 public class SelectPlanActivity extends Activity{
-	
-	// shared preference used to retrieve app status
-	private SharedPreferences appinfo = null;
 	
 	private Button addBtn;
 	private PlanListAdapter planListAdapter; 
 	private ArrayList<Plan> planList;
-	private ArrayList<Integer> selectedPlan;
 	private ListView plan_listview;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_plan);
-        
-        //the following decided if the app runs for the first time and show consent form
-      	appinfo = getSharedPreferences("plans", Context.MODE_PRIVATE);
         
 		addBtn = (Button)findViewById(R.id.add_button);
 		plan_listview = (ListView)findViewById(R.id.plan_listview);
@@ -58,88 +58,87 @@ public class SelectPlanActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 					
-				//changing activation status to activated
-				Editor editor = appinfo.edit();
-				
-				String planString = "";
-				
-				for (int i = 0; i < selectedPlan.size(); i++){
-					
-					if(i != selectedPlan.size()-1)planString = planString + selectedPlan.get(i) +",";
-					else {planString = planString + selectedPlan.get(i);}
-					
-				}
-				
-				// use has selected, go on
-				if(planString!=""){
-				
-					//saving the pid and did to app settings for future use
-					editor.putString("plans",planString);
-					editor.commit();
-					
-					for(int i = 0; i < GlobalVar.plan_list.size(); i++){
-						
-						for (int j = 0; j < selectedPlan.size(); i ++){
-								
-								//if found a selected plan, add to the database
-								if(GlobalVar.plan_list.get(i).getPid() == selectedPlan.get(j))
-								DBAccessImpl.getInstance(getApplicationContext()).InsertPlan(GlobalVar.plan_list.get(i));
-								
-							}
-					
-					}
-					
-					Intent resultIntent = new Intent(SelectPlanActivity.this, MainActivity.class);
-					setResult(Activity.RESULT_OK, resultIntent);
-					
-					// close this activity
-					finish();
-				
-				}else {
-					
-					Toast.makeText(SelectPlanActivity.this, "Please select at least one plan.", Toast.LENGTH_SHORT).show();
-					
-				}
+//				SparseBooleanArray selected = planListAdapter.getSelectedIds();
+                // Captures all selected ids with a loop
+//                for (int i = (selected.size() - 1); i >= 0; i--) {
+//                    if (selected.valueAt(i)) {
+//                    	
+//                        Plan selecteditem = planListAdapter.getItem(selected.keyAt(i));
+//                        // Remove selected items following the ids
+//                        DBAccessImpl.getInstance(getApplicationContext()).InsertPlan(selecteditem);
+//                        
+//                    }
+//                }
 					
 			}
 			
         });
         
-        
-        
-        
-        
+     
         // set on click listener for the list items
- 	   plan_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+ 	   plan_listview.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+
            @Override
-           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               try{
-            	   		
-            	   		//if selected then cancel
-            	   		if(selectedPlan.contains(planList.get(i).getPid())){
-            	   			
-            	   			plan_listview.getChildAt(i).setBackgroundColor(Color.WHITE);
-            	   			selectedPlan.remove(planList.get(i).getPid());
-            	   			planListAdapter.notifyDataSetChanged();
-            	   		
-            	   		}
-            	   		else {
-            	   			
-            	   			plan_listview.getChildAt(i).setBackgroundColor(Color.BLACK);
-                        	selectedPlan.add(planList.get(i).getPid());
-                        	planListAdapter.notifyDataSetChanged();
-            	   		
-            	   		}
-            	   
-            	   Log.v("debugtag","selected="+selectedPlan.toString());	
-            	   
+           public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                                 long id, boolean checked) {
+               // Here you can do something when items are selected/de-selected,
+               // such as update the title in the CAB
+           	
+           	// Capture total checked items
+               final int checkedCount = plan_listview.getCheckedItemCount();
+               // Set the CAB title according to total checked items
+               mode.setTitle(checkedCount + " Selected");
+               // Calls toggleSelection method from ListViewAdapter Class
+//               planListAdapter.toggleSelection(position);
+           	
+           }
+
+           @Override
+           public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+               // Respond to clicks on the actions in the CAB
+               switch (item.getItemId()) {
+                   case R.id.action_delete:
                        
-                }
-               
-               catch (Exception e){
-                   e.printStackTrace();
+//                   	 SparseBooleanArray selected = planListAdapter.getSelectedIds();
+//		                 // Captures all selected ids with a loop
+//		                 for (int i = (selected.size() - 1); i >= 0; i--) {
+//		                     if (selected.valueAt(i)) {
+//		                         Plan selecteditem = planListAdapter.getItem(selected.keyAt(i));
+//		                         // Remove selected items following the ids
+//		                         planListAdapter.remove(selecteditem);
+//		                     }
+//		                 }
+//                   	
+//                       mode.finish(); // Action picked, so close the CAB
+                       return true;
+                   default:
+                       return false;
                }
            }
+
+           @Override
+           public void onDestroyActionMode(ActionMode mode) {
+               // Here you can make any necessary updates to the activity when
+               // the CAB is removed. By default, selected items are deselected/unchecked.
+        	   plan_listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+           }
+
+           @Override
+           public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+               // Here you can perform updates to the CAB due to
+               // an invalidate() request
+               return false;
+           }
+
+
+			@Override
+			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+				MenuInflater inflater = mode.getMenuInflater();
+			      // assumes that you have "contexual.xml" menu resources
+			      inflater.inflate(R.menu.delete_menu, menu);
+			      return true;
+			}
+
        });
 
     }

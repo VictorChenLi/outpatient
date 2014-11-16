@@ -3,12 +3,7 @@ package com.example.outpatient.fragment.adapters;
 import java.util.ArrayList;
 
 import com.example.outpatient.R;
-import com.example.outpatient.R.id;
-import com.example.outpatient.R.layout;
 import com.outpatient.storeCat.model.Info;
-import com.outpatient.storeCat.model.Plan;
-import com.outpatient.storeCat.model.Reminder;
-import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 
 import android.content.Context;
@@ -19,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
  
-public class InfoListAdapter extends ArrayAdapter<Plan> {
+public class InfoListAdapter extends ArrayAdapter<Info> {
  
         private final Context context;
         private ArrayList<Info> infoArrayList;
@@ -27,14 +22,14 @@ public class InfoListAdapter extends ArrayAdapter<Plan> {
  
         public InfoListAdapter(Context context, ArrayList<Info> itemsArrayList) {
  
-            super(context, R.layout.info_item);
+            super(context, R.layout.info_item,itemsArrayList);
  
             this.context = context;
             this.infoArrayList = itemsArrayList;
         }
  
         
-        public void refreshTaskList(ArrayList<Info> newList){
+        public void refreshList(ArrayList<Info> newList){
         	
         	infoArrayList = newList;
         	notifyDataSetChanged();
@@ -48,7 +43,7 @@ public class InfoListAdapter extends ArrayAdapter<Plan> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
  
             // 2. Get rowView from inflater
-            View rowView = inflater.inflate(R.layout.plan_item, parent, false);
+            View rowView = inflater.inflate(R.layout.info_item, parent, false);
  
             // 3. Get the two text view from the rowView
             TextView labelView = (TextView) rowView.findViewById(R.id.label);
