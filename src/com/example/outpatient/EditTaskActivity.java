@@ -253,6 +253,7 @@ public class EditTaskActivity extends Activity implements
 			public void onNothingSelected(AdapterView<?> parent) {
 				// TODO Auto-generated method stub
 				
+
 			}
 			
 		});
@@ -293,6 +294,35 @@ public class EditTaskActivity extends Activity implements
 							editingTask.setTaskType(typeID);
 							editingTask.setNotes(notes_edit.getText().toString());
 							editingTask.setPid(pid);
+
+				//error control for task title
+				if(taskTitleText.length()>1){
+					
+					//setting the task title
+					addedTask.setName(taskTitleText);
+					
+					String taskType = task_type.getSelectedItem().toString();
+					
+					int typeID = 1;
+					
+					//setting the task type
+					if(taskType.equals("General"))typeID = 1;
+					if(taskType.equals("Medication"))typeID = 2;
+					if(taskType.equals("Appointment/Contact"))typeID = 3;
+					
+					addedTask.setTaskType(typeID);
+					addedTask.setNotes(notes_edit.getText().toString());
+					addedTask.setDate(Calendar.getInstance().getTimeInMillis());
+//					addedTask.setPid(pid);
+					//there is a remind
+					if(isRemind){
+						
+						if(end_date.after(start_date)){
+							
+							Log.v("debugtag",addedTask.toString());
+							
+							// insert the task to database 
+							int new_tid = DBAccessImpl.getInstance(getApplicationContext()).InsertTask(addedTask);
 							
 							if(0==editingTask.getTid())
 							{
@@ -378,8 +408,31 @@ public class EditTaskActivity extends Activity implements
 											.UpdateReminder(editingTaskReminder);
 								}
 
+							
+							if(start_date.getTime()!= 0)taskReminder.setStartTime(start_date.getTime());
+							
+							if(end_date.getTime()!= 0) taskReminder.setEndTime(end_date.getTime());
+							
+							// INSERT THE NEW REMINDER
+							DBAccessImpl.getInstance(getApplicationContext()).InsertReminder(taskReminder);
+					
+							Log.v("debugtag",taskReminder.toString());
+							
+						}else{
+							
+							Toast.makeText(EditTaskActivity.this, "End Date has to be after Start Date.", Toast.LENGTH_SHORT).show();
+							
 							}
 						}
+
+					
+						}	else{
+						
+						Toast.makeText(EditTaskActivity.this, "Please enter the task title.", Toast.LENGTH_SHORT).show();
+						
+						}
+						
+						Log.v("debugtag","edited task");
 
 						// will close this activity and lauch main activity
 						Intent resultIntent = new Intent(EditTaskActivity.this,
@@ -399,6 +452,112 @@ public class EditTaskActivity extends Activity implements
 						// close this activity
 						finish();
 					}
+					
+				// HANDLE THE EDIT TASK ACTIVITY
+				}else {
+					
+					
+					// Try Catch to handle exception
+					try{
+						
+						Task updatedTask = DBAccessImpl.getInstance(getApplicationContext()).describeTask(passed_tid);
+						
+						String taskTitleText = task_title.getText().toString();
+						
+					//error control for task title
+					if(taskTitleText.length()>1){
+						
+						//setting the task title
+						updatedTask.setName(taskTitleText);
+						
+						String taskType = task_type.getSelectedItem().toString();
+						
+						int typeID = 1;
+						
+						//setting the task type
+						if(taskType.equals("General"))typeID = 1;
+						if(taskType.equals("Medication"))typeID = 2;
+						if(taskType.equals("Appointment/Contact"))typeID = 3;
+						
+						updatedTask.setTaskType(typeID);
+						updatedTask.setNotes(notes_edit.getText().toString());
+						
+						//CHECK IF HAS REMIND
+						Reminder testRmd = DBAccessImpl.getInstance(getApplicationContext()).getReminderByTid(passed_tid);
+						
+						Log.v("debugtag",testRmd.toString());
+						Log.v("debugtag",updatedTask.toString());
+						
+						if(testRmd!=null)isRemind = true;else {isRemind = false;}
+						
+						//there is a remind
+						if(isRemind){
+							
+							if(end_date.after(start_date)){
+								
+								// insert the task to database 
+								DBAccessImpl.getInstance(getApplicationContext()).UpdateTask(updatedTask);
+								
+								// THE FOLLOWING GET'S PARAMETERS FOR THE NEW REMIND
+								Reminder taskReminder = DBAccessImpl.getInstance(getApplicationContext()).getReminderByTid(passed_tid);
+								
+								int routineInt = (isRoutine) ? 1 : 0;
+										
+								taskReminder.setIsRoutine(routineInt);
+								
+									//IF SET ROUTINE, THEN UPDATE REMINDER WITH TIMES AND DAYS
+								
+									if(isRoutine){
+										
+										//if has routine then check the input box
+										if(selectTimes.isChecked())
+											taskReminder.setRepeatingTimes(Integer.parseInt(routine_times.getSelectedItem().toString()));
+										
+										else if(selectDays.isChecked())
+											taskReminder.setRepeatingDays(Integer.parseInt(routine_days.getSelectedItem().toString()));
+										
+									}
+								
+								if(start_date.getTime()!= 0)taskReminder.setStartTime(start_date.getTime());
+								
+								if(end_date.getTime()!= 0) taskReminder.setEndTime(end_date.getTime());
+								
+								// INSERT THE NEW REMINDER
+								DBAccessImpl.getInstance(getApplicationContext()).InsertReminder(taskReminder);
+							
+							}else{
+								
+								Toast.makeText(EditTaskActivity.this, "End Date has to be after Start Date.", Toast.LENGTH_SHORT).show();
+								
+								}
+								
+							}else{
+							
+								// insert the task to database 
+								DBAccessImpl.getInstance(getApplicationContext()).UpdateTask(updatedTask);
+							
+							}
+						}else{
+							Toast.makeText(EditTaskActivity.this, "Please enter the task title.", Toast.LENGTH_SHORT).show();
+							}
+						
+								// will close this activity and lauch main activity
+								Intent resultIntent = new Intent(EditTaskActivity.this, MainActivity.class);
+								setResult(Activity.RESULT_OK, resultIntent);
+								
+								// close this activity
+								finish();
+						
+						}catch(Exception e){
+							
+							//Failed to add
+							// will close this activity and lauch main activity
+							Intent resultIntent = new Intent(EditTaskActivity.this, MainActivity.class);
+							
+							// close this activity
+							finish();
+						}
+					
 				}
 		});
 

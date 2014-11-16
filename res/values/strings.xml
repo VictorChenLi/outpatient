@@ -48,4 +48,6 @@
  	<string name="snooze">Snooze</string>
  	<string name="notification">Notification</string>
  	<string name="snoozeReminder">The task will snooze 5 mins</string>
+ 	<string name="selectPlan">Please select your plan</string>
+ 	<string name="delete">Delete</string>
 </resources>

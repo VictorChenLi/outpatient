@@ -6,26 +6,35 @@ import com.example.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class TaskFragment extends Fragment{
+public class TaskFragment extends Fragment implements Callback{
 	
 	private DBAccessImpl dbhandler;
 	private Button addBtn;
 	private TaskListAdapter taskListAdapter; 
 	private ArrayList<Task> task_list;
 	private ListView task_listview;
+	private ActionMode mActionMode;
 	
 	
 	// this is to identify receiving data update from the EditTaskActivity
@@ -40,7 +49,7 @@ public class TaskFragment extends Fragment{
 		View rootView = inflater.inflate(R.layout.task_fragment, container, false);
 		
 		addBtn = (Button) rootView.findViewById(R.id.add_button);
-		task_listview = (ListView) rootView.findViewById(R.id.task_listview);
+		task_listview = (ListView)rootView.findViewById(R.id.task_listview);
 		
 		 // 1. pass context and data to the custom adapter
 		taskListAdapter = new TaskListAdapter(getActivity(), generateData());
@@ -48,6 +57,9 @@ public class TaskFragment extends Fragment{
         // 2. setListAdapter
 		task_listview.setAdapter(taskListAdapter);
         
+		task_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+		
+		
         // On click listener for the Add button, add tasks and then refresh the task list
         addBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -80,6 +92,89 @@ public class TaskFragment extends Fragment{
 	    		
 			}
         });
+        
+        
+        task_listview.setOnLongClickListener(new View.OnLongClickListener() {
+            // Called when the user long-clicks on someView
+            public boolean onLongClick(View view) {
+                if (mActionMode != null) {
+                    return false;
+                }
+
+                // Start the CAB using the ActionMode.Callback defined above
+                mActionMode = getActivity().startActionMode(TaskFragment.this);
+                view.setSelected(true);
+                task_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+                
+                return true;
+            }
+        });
+        
+        task_listview.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                                  long id, boolean checked) {
+                // Here you can do something when items are selected/de-selected,
+                // such as update the title in the CAB
+            	
+            	// Capture total checked items
+                final int checkedCount = task_listview.getCheckedItemCount();
+                // Set the CAB title according to total checked items
+                mode.setTitle(checkedCount + " Selected");
+                // Calls toggleSelection method from ListViewAdapter Class
+                taskListAdapter.toggleSelection(position);
+            	
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                // Respond to clicks on the actions in the CAB
+                switch (item.getItemId()) {
+                    case R.id.action_delete:
+                        
+                    	 SparseBooleanArray selected = taskListAdapter.getSelectedIds();
+		                 // Captures all selected ids with a loop
+		                 for (int i = (selected.size() - 1); i >= 0; i--) {
+		                     if (selected.valueAt(i)) {
+		                         Task selecteditem = taskListAdapter.getItem(selected.keyAt(i));
+		                         // Remove selected items following the ids
+		                         taskListAdapter.remove(selecteditem);
+		                     }
+		                 }
+                    	
+                        mode.finish(); // Action picked, so close the CAB
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                // Here you can make any necessary updates to the activity when
+                // the CAB is removed. By default, selected items are deselected/unchecked.
+            	task_listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                // Here you can perform updates to the CAB due to
+                // an invalidate() request
+                return false;
+            }
+
+
+			@Override
+			public boolean onCreateActionMode(ActionMode arg0, Menu menu) {
+				getActivity().getMenuInflater().inflate(R.menu.delete_menu, menu);
+                return true;
+			}
+
+        });
+        
+        
+        
          
 		return rootView;
 	}
@@ -134,5 +229,33 @@ public class TaskFragment extends Fragment{
      	   
         }
     }
+
+
+	@Override
+	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void onDestroyActionMode(ActionMode mode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+		// TODO Auto-generated method stub
+		return false;
+	}
     
 }
