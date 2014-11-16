@@ -2,31 +2,33 @@ package com.outpatient.notification.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.outpatient.notification.service.NotificationHandler;
 
 public class RunNotificationReminder extends RunTask {
-	private String title =null;
-	private String content =null;
 	private Context target;
+	private int mrid;
 	
 	
-	public RunNotificationReminder(Context context, String notificationTitle, String notificationContent)
+	public RunNotificationReminder(Context context, int rid)
 	{
 		super();
-		title = notificationTitle;
-		content = notificationContent;
 		target = context;
+		mrid=rid;
 	}
 	
 	public void run()
 	{
-		Log.v("reminder", "RunNotificationReminder:"+String.valueOf(title));
-		Intent intent = new Intent(target.getApplicationContext(), NotificationHandler.class);
+		Intent intent = new Intent(target, NotificationHandler.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.putExtra("NotificationTitle", title);
-		intent.putExtra("NotificationContent", content);
+		intent.putExtra("rid", mrid);
+		intent.putExtra("action", "Notify");
+//		Bundle mBundle = new Bundle();
+//		mBundle.putInt("rid", mrid);
+//		mBundle.putString("action", "Notify");
+//		intent.putExtras(mBundle);
 		try{
 			target.startActivity(intent);
 		}
@@ -34,6 +36,5 @@ public class RunNotificationReminder extends RunTask {
 		{
 			Log.v("reminder", ee.getStackTrace().toString());
 		}
-		Log.v("reminder", "RunNotificationReminder end");
 	}
 }

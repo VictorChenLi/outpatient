@@ -10,6 +10,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.Vibrator;
@@ -19,6 +21,7 @@ public class PlayAlarmMusic extends Service {
 
 	private MediaPlayer myMediaPlayer;
 	private Vibrator vibrator;
+	private Handler handler = new Handler();
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -56,13 +59,36 @@ public class PlayAlarmMusic extends Service {
 		{
 			myMediaPlayer.start();
 			myMediaPlayer.setLooping(true);
+			handler.postDelayed(stopMedia, 1000*60);
 		}
 		if(alertmusic.equals(Constant.alertMusic.VIBRATOR)||alertmusic.equals(Constant.alertMusic.BOTH))
 		{
 			long[] pattern = {1000, 2000, 1000, 2000}; // OFF/ON/OFF/ON...
 	        vibrator.vibrate(pattern, 0);
+
+	    	handler.postDelayed(stopVibrator, 1000*60);
 		}
 		super.onStart(intent, startId);
 	}
-
+	
+	private Runnable stopMedia = new Runnable() {
+	   @Override
+	   public void run() {
+	      /* do what you need to do */
+		   myMediaPlayer.stop();
+	      /* and here comes the "trick" */
+	      handler.postDelayed(this, 100);
+	   }
+	};
+	
+	private Runnable stopVibrator = new Runnable() {
+		   @Override
+		   public void run() {
+		      /* do what you need to do */
+			   vibrator.cancel();
+		      /* and here comes the "trick" */
+		      handler.postDelayed(this, 100);
+		   }
+		};
+	
 }

@@ -53,7 +53,7 @@ public class NotificationMgr {
 		if(currentTime<reminder.getStartTime())
 		{
 			Log.v("reminder", "currentTime<reminder.getStartTime");
-			NotificationHelper.setNotificationReminder(context, task, reminder.getStartTime());
+			NotificationHelper.setNotificationReminder(context, rid, reminder.getStartTime());
 		}
 		else if(currentTime<reminder.getEndTime())
 		{
@@ -77,7 +77,7 @@ public class NotificationMgr {
 					// we could set it as our next notification
 					if(nextNotifyTime<reminder.getEndTime())
 					{
-						NotificationHelper.setNotificationReminder(context, task,nextNotifyTime);
+						NotificationHelper.setNotificationReminder(context, rid,nextNotifyTime);
 					}
 				}
 				else //means everyday have certain times reminder
@@ -100,7 +100,7 @@ public class NotificationMgr {
 					// we could set it as our next notification
 					if(repeatTimes<=reminder.getRepeatingTimes())
 					{
-						NotificationHelper.setNotificationReminder(context, task,nextNotifyTime);
+						NotificationHelper.setNotificationReminder(context, rid,nextNotifyTime);
 					}
 				}
 			}
