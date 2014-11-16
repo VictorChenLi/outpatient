@@ -191,11 +191,18 @@ public class DBAccessImpl implements DBAccess {
     /********************************** Reminder Operation********************************/
     
     /********************************** Plan Operation********************************/
-    public void InsertPlan(Plan plan)
+    public int InsertPlan(Plan plan)
     {
-    	String strSql="Insert into [tbl_plan](name,planType,date,isArch) VALUES (?,?,?,?)";
+    	String strSql = "select pid from tbl_plan ORDER BY pid desc LIMIT 0,1";
+    	int nextId=0;
+    	Cursor cursor = rdb.rawQuery(strSql, null);
+    	if(cursor.moveToNext())
+    		nextId = cursor.getInt(0);
+    	
+    	strSql="Insert into [tbl_plan](name,planType,date,isArch) VALUES (?,?,?,?)";
     	Object[] bindArgs = { plan.getName(),plan.getPlanType(),plan.getDate(),plan.getIsArch()};
     	wdb.execSQL(strSql,bindArgs);
+    	return ++nextId;
     }
     
     public void UpdatePlan(Plan plan)

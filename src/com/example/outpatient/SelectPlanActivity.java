@@ -2,9 +2,12 @@ package com.example.outpatient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
+import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
+import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
@@ -35,7 +38,8 @@ public class SelectPlanActivity extends Activity{
 	private PlanListAdapter planListAdapter; 
 	private ArrayList<Plan> planList;
 	private ListView plan_listview;
-	
+	private ArrayList<Integer> selectedList;	
+	private DBAccessImpl dbAccessImpl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,8 @@ public class SelectPlanActivity extends Activity{
         
 		addBtn = (Button)findViewById(R.id.add_button);
 		plan_listview = (ListView)findViewById(R.id.plan_listview);
+		selectedList = new ArrayList<Integer>();
+		dbAccessImpl = DBAccessImpl.getInstance(this);
 		
 		 // 1. pass context and data to the custom adapter
 		planListAdapter = new PlanListAdapter(getApplicationContext(), generateData());
@@ -88,6 +94,7 @@ public class SelectPlanActivity extends Activity{
                final int checkedCount = plan_listview.getCheckedItemCount();
                // Set the CAB title according to total checked items
                mode.setTitle(checkedCount + " Selected");
+               selectedList.add(position);
                // Calls toggleSelection method from ListViewAdapter Class
 //               planListAdapter.toggleSelection(position);
            	
@@ -120,7 +127,38 @@ public class SelectPlanActivity extends Activity{
            public void onDestroyActionMode(ActionMode mode) {
                // Here you can make any necessary updates to the activity when
                // the CAB is removed. By default, selected items are deselected/unchecked.
-        	   plan_listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+//        	   plan_listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        	   for(int i :selectedList)
+        	   {
+        		   int pid = dbAccessImpl.InsertPlan(planList.get(i));
+        		   //save the pre-setting task list
+        		   ArrayList<Task> taskList = GlobalVar.plan_task_list.get(planList.get(i).getPid());
+        		   for(Task task:taskList)
+        		   {
+        			   task.setPid(pid);
+        			   int tid = dbAccessImpl.InsertTask(task);
+        			   Reminder reminder = GlobalVar.task_reminder_list.get(task.getTid());
+        			   if(null!=reminder)
+        			   {
+        				   reminder.setTid(tid);
+        				   dbAccessImpl.InsertReminder(reminder);
+        			   }
+        		   }
+        		   //save the pre-setting info list
+        		   ArrayList<Info> infoList = GlobalVar.plan_info_list.get(planList.get(i).getPid());
+        		   for(Info info:infoList)
+        		   {
+        			   info.setPid(pid);
+        			   dbAccessImpl.InsertInfo(info);
+        		   }
+        	   }
+        	   
+    		   Intent resultIntent = new Intent(SelectPlanActivity.this, MainActivity.class);
+    		   setResult(Activity.RESULT_OK, resultIntent);
+				
+				// close this activity
+    		   SelectPlanActivity.this.finish();
+        	   
            }
 
            @Override
@@ -144,10 +182,18 @@ public class SelectPlanActivity extends Activity{
     }
 	
 		private ArrayList<Plan> generateData(){
-		    
-		    //read the plan list from the global variable 
+		    ArrayList<Plan> preSetPlanList = new ArrayList<Plan>(GlobalVar.plan_list);
+			List<Plan> savedPlanList = dbAccessImpl.queryShowPlanList();
+			//read the plan list from the global variable 
 			planList = GlobalVar.plan_list;
-		    
+		    for(Plan preSetPlan : preSetPlanList)
+		    {
+		    	for(Plan savedPlan:savedPlanList)
+		    	{
+		    		if(savedPlan.getName().equals(preSetPlan.getName()))
+		    			planList.remove(savedPlan);
+		    	}
+		    }
 		    return planList;
 		}
 		
