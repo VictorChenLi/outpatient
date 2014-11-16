@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.example.outpatient.R;
 import com.outpatient.storeCat.model.Info;
+import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.service.DBAccessImpl;
+import com.outpatient.sysUtil.model.GlobalVar;
 
 import android.content.Context;
 import android.util.Log;
@@ -27,12 +29,36 @@ public class InfoListAdapter extends ArrayAdapter<Info> {
             this.context = context;
             this.infoArrayList = itemsArrayList;
         }
+        
+        public InfoListAdapter(Context context)
+        {
+        	super(context, R.layout.info_item);
+            this.context = context;
+            this.infoArrayList = this.generateData();
+        }
  
         
         public void refreshList(ArrayList<Info> newList){
         	
         	infoArrayList = newList;
         	notifyDataSetChanged();
+        }
+        
+        private ArrayList<Info> generateData(){
+        	
+        	
+        	ArrayList<Info> infoList = new ArrayList<Info>();
+        	
+        	DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(context);
+
+
+        	for(Plan plan :dbAccessImpl.queryShowPlanList())
+        	{	
+        		if(plan!=null && GlobalVar.plan_info_list.get(plan.getPid())!=null)
+        			infoList.addAll(GlobalVar.plan_info_list.get(plan.getPid()));
+        	}
+    	    	
+        	return infoList;
         }
         
         @Override

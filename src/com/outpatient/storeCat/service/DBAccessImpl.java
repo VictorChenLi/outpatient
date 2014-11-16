@@ -315,12 +315,12 @@ public class DBAccessImpl implements DBAccess {
     	List<Info> list = fillInfoList(cursor);
         return list.size()>0?list.get(0):null;
     }
-    public List<Info> queryShowInfoList()
-    {
-    	String strSql="Select * from [tbl_info] where isArch=1";
-    	Cursor cursor = rdb.rawQuery(strSql,null);
-        return fillInfoList(cursor);
-    }
+//    public List<Info> queryShowInfoList()
+//    {
+//    	String strSql="Select * from [tbl_info] where isArch=0";
+//    	Cursor cursor = rdb.rawQuery(strSql,null);
+//        return fillInfoList(cursor);
+//    }
     public List<Info> queryInfoListByPid(int pid)
     {
     	String strSql="Select * from [tbl_info] where pid=?";

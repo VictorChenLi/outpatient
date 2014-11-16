@@ -34,12 +34,32 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             this.context = context;
             this.tasksArrayList = itemsArrayList;
         }
+        
+        public TaskListAdapter(Context context) {
+        	 
+            super(context, R.layout.task_item);
+ 
+            this.context = context;
+            this.tasksArrayList = generateData();
+        }
  
         
         public void refreshTaskList(ArrayList<Task> newList){
         	
         	tasksArrayList = newList;
         	notifyDataSetChanged();
+        }
+        
+        private ArrayList<Task> generateData(){
+            
+            //read the tasks from database and add them to the list
+        	ArrayList<Task> task_list ;
+            dbhandler = DBAccessImpl.getInstance(context);
+            
+            //query all the tasks to be shown in the task list 
+            task_list = (ArrayList<Task>) dbhandler.queryShowTaskList();
+            
+            return task_list;
         }
         
         private class ViewHolder {

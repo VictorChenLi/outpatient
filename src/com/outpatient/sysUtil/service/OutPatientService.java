@@ -2,6 +2,9 @@ package com.outpatient.sysUtil.service;
 
 import java.util.Calendar;
 
+import com.example.outpatient.fragment.adapters.InfoListAdapter;
+import com.example.outpatient.fragment.adapters.PlanListAdapter;
+import com.example.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.notification.service.NotificationHandler;
 import com.outpatient.notification.service.NotificationMgr;
 import com.outpatient.storeCat.model.Plan;
@@ -36,6 +39,8 @@ public class OutPatientService extends Service {
 		notifyMgr.resumeAllReminder();
 	}
 	
+	
+	
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
@@ -45,7 +50,6 @@ public class OutPatientService extends Service {
 	@Override
 	public void onCreate(){
 		demo=this;
-		
 //		DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(demo);
 //		dbAccessImpl.InsertPlan(new Plan(0, "wounds", 1, 1416076378000L, 0));
 //		int tid = dbAccessImpl.InsertTask(new Task(0, 1, "take pill", "tttsetse", 1,

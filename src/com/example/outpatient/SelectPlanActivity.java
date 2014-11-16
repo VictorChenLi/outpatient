@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class SelectPlanActivity extends Activity{
 	private ListView plan_listview;
 	private Boolean[] selectedList;	
 	private DBAccessImpl dbAccessImpl;
+	private Boolean flag=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,27 +59,7 @@ public class SelectPlanActivity extends Activity{
         // 2. setListAdapter
 		plan_listview.setAdapter(planListAdapter);
 		
-        
-        // On click listener for the Add button, add tasks and then refresh the task list
-        addBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-					
-//				SparseBooleanArray selected = planListAdapter.getSelectedIds();
-                // Captures all selected ids with a loop
-//                for (int i = (selected.size() - 1); i >= 0; i--) {
-//                    if (selected.valueAt(i)) {
-//                    	
-//                        Plan selecteditem = planListAdapter.getItem(selected.keyAt(i));
-//                        // Remove selected items following the ids
-//                        DBAccessImpl.getInstance(getApplicationContext()).InsertPlan(selecteditem);
-//                        
-//                    }
-//                }
-					
-			}
-			
-        });
+		flag=true;
         
        plan_listview.setOnItemClickListener(new OnItemClickListener()
        {
@@ -90,6 +72,8 @@ public class SelectPlanActivity extends Activity{
 				plan_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 //				SelectPlanActivity.this.startActionMode(new ActionBarCallBack());
 				plan_listview.setItemChecked(position,true);
+				
+				
 	    		
 			}
        });
@@ -111,7 +95,66 @@ public class SelectPlanActivity extends Activity{
                selectedList[position]=checked;
                // Calls toggleSelection method from ListViewAdapter Class
 //               planListAdapter.toggleSelection(position);
-           	
+           		if(flag)
+           		{
+           			flag=false;
+           			int doneButtonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
+                    View doneButton = SelectPlanActivity.this.findViewById(doneButtonId);
+                    doneButton.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                     	// To save the plan, info, task and reminder
+                     	   for(int i=0;i<selectedList.length;i++)
+                     	   {
+                     		   if(selectedList[i])
+                     		   {
+                     			   int pid = dbAccessImpl.InsertPlan(planList.get(i));
+                     			   //save the pre-setting task list
+                         		   ArrayList<Task> taskList = GlobalVar.plan_task_list.get(planList.get(i).getPid());
+                         		   for(Task task:taskList)
+                         		   {
+                         			   task.setPid(pid);
+                         			   int tid = dbAccessImpl.InsertTask(task);
+                         			   Reminder reminder = GlobalVar.task_reminder_list.get(task.getTid());
+                         			   if(null!=reminder)
+                         			   {
+                         				   reminder.setTid(tid);
+                         				   dbAccessImpl.InsertReminder(reminder);
+                         			   }
+                         		   }
+                         		   //save the pre-setting info list
+                         		   ArrayList<Info> infoList = GlobalVar.plan_info_list.get(planList.get(i).getPid());
+                         		   for(Info info:infoList)
+                         		   {
+                         			   info.setPid(pid);
+                         			   dbAccessImpl.InsertInfo(info);
+                         		   }
+                     		   }
+                     	   }
+                     	   List<Plan> planList = dbAccessImpl.queryShowPlanList();
+                     	   GlobalVar.planAdapter.refreshPlanList((ArrayList<Plan>) planList);
+                     	   List<Info> InfoList = new ArrayList<Info>();
+                     	   for(Plan plan : planList)
+                     	   {
+                     		   List<Info> temList = dbAccessImpl.queryInfoListByPid(plan.getPid());
+                     		   if(null!=temList&&0!=temList.size())
+                     		   {
+                     			   InfoList.addAll(temList);
+                     		   }
+                     	   }
+                     	   GlobalVar.infoAdapter.refreshList((ArrayList<Info>) InfoList);
+                     	   List<Task> taskList = dbAccessImpl.queryShowTaskList();
+                     	   GlobalVar.taskAdapter.refreshTaskList((ArrayList<Task>) taskList);
+                     	   
+                 		   Intent resultIntent = new Intent(SelectPlanActivity.this, MainActivity.class);
+                 		   setResult(Activity.RESULT_OK, resultIntent);
+             				
+             				// close this activity
+                 		   SelectPlanActivity.this.finish();
+                        }
+                    });
+           		}
            }
 
            @Override
@@ -120,48 +163,7 @@ public class SelectPlanActivity extends Activity{
         	   Log.v("CAB", String.valueOf(item.getItemId()));
                switch (item.getItemId()) {
                    case R.id.action_confirm:
-                	   // To save the plan, info, task and reminder
-                	   for(int i=0;i<selectedList.length;i++)
-                	   {
-                		   if(selectedList[i])
-                		   {
-                			   int pid = dbAccessImpl.InsertPlan(planList.get(i));
-                			   //save the pre-setting task list
-                    		   ArrayList<Task> taskList = GlobalVar.plan_task_list.get(planList.get(i).getPid());
-                    		   for(Task task:taskList)
-                    		   {
-                    			   task.setPid(pid);
-                    			   int tid = dbAccessImpl.InsertTask(task);
-                    			   Reminder reminder = GlobalVar.task_reminder_list.get(task.getTid());
-                    			   if(null!=reminder)
-                    			   {
-                    				   reminder.setTid(tid);
-                    				   dbAccessImpl.InsertReminder(reminder);
-                    			   }
-                    		   }
-                    		   //save the pre-setting info list
-                    		   ArrayList<Info> infoList = GlobalVar.plan_info_list.get(planList.get(i).getPid());
-                    		   for(Info info:infoList)
-                    		   {
-                    			   info.setPid(pid);
-                    			   dbAccessImpl.InsertInfo(info);
-                    		   }
-                		   }
-                	   }
-                	   List<Plan> planList = dbAccessImpl.queryShowPlanList();
-                	   GlobalVar.planAdapter.refreshPlanList((ArrayList<Plan>) planList);
-                	   List<Info> InfoList = dbAccessImpl.queryShowInfoList();
-                	   GlobalVar.infoAdapter.refreshList((ArrayList<Info>) InfoList);
-                	   List<Task> taskList = dbAccessImpl.queryShowTaskList();
-                	   GlobalVar.taskAdapter.refreshTaskList((ArrayList<Task>) taskList);
-                	   
-            		   Intent resultIntent = new Intent(SelectPlanActivity.this, MainActivity.class);
-            		   setResult(Activity.RESULT_OK, resultIntent);
-        				
-        				// close this activity
-            		   SelectPlanActivity.this.finish();
-//                   	
-//                       mode.finish(); // Action picked, so close the CAB
+                	  
                        return true;
                    default:
                        return false;
@@ -173,6 +175,7 @@ public class SelectPlanActivity extends Activity{
                // Here you can make any necessary updates to the activity when
                // the CAB is removed. By default, selected items are deselected/unchecked.
         	   
+//               mode.finish(); // Action picked, so close the CAB
         	   
            }
 
@@ -180,19 +183,21 @@ public class SelectPlanActivity extends Activity{
            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                // Here you can perform updates to the CAB due to
                // an invalidate() request
+        	   
                return false;
            }
 
 
 			@Override
 			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-				MenuInflater inflater = mode.getMenuInflater();
-			      inflater.inflate(R.menu.action_menu, menu);
+//				MenuInflater inflater = mode.getMenuInflater();
+//			      inflater.inflate(R.menu.action_menu, menu);
 			      return true;
 			}
 
        });
     }
+    
 	
 		private ArrayList<Plan> generateData(){
 		    ArrayList<Plan> preSetPlanList = new ArrayList<Plan>(GlobalVar.plan_list);
@@ -208,6 +213,9 @@ public class SelectPlanActivity extends Activity{
 		    	}
 		    }
 		    selectedList = new Boolean[planList.size()];
+		    for(int i=0;i<planList.size();i++)
+		    	selectedList[i]=false;
+		    	
 		    return planList;
 		}
 		
@@ -235,7 +243,7 @@ public class SelectPlanActivity extends Activity{
 	        @Override
 	        public void onDestroyActionMode(ActionMode mode) {
 	            // TODO Auto-generated method stub
-	 
+	        	
 	        }
 	 
 	        @Override

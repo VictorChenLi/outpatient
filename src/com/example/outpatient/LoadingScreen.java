@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.example.outpatient.fragment.adapters.InfoListAdapter;
+import com.example.outpatient.fragment.adapters.PlanListAdapter;
+import com.example.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
@@ -41,6 +44,22 @@ public class LoadingScreen extends Activity {
 	public void onBackPressed() {
 		
 		//Simply disable back button
+	}
+	
+	public void initGlobaAdapterl()
+	{
+		if(null==GlobalVar.infoAdapter)
+		{
+			GlobalVar.infoAdapter = new InfoListAdapter(this);
+		}
+		if(null==GlobalVar.planAdapter)
+		{
+			GlobalVar.planAdapter = new PlanListAdapter(this);
+		}
+		if(null==GlobalVar.taskAdapter)
+		{
+			GlobalVar.taskAdapter = new TaskListAdapter(this);
+		}
 	}
 
 	@Override
@@ -171,6 +190,9 @@ public class LoadingScreen extends Activity {
 			
 			if(result.equals("ok")){
 			
+				// when date is ready we loading it to the global adapter
+				initGlobaAdapterl();
+				
 				// After completing http call
 				// will close this activity and lauch main activity
 				Intent resultIntent = new Intent(LoadingScreen.this, MainActivity.class);

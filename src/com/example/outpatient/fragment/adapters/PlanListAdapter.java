@@ -33,12 +33,27 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
             this.context = context;
             this.planArrayList = itemsArrayList;
         }
+        
+        public PlanListAdapter(Context context) {
+        	super(context, R.layout.plan_item);
+        	 
+            this.context = context;
+            this.planArrayList = this.generateData();
+        }
  
         
         public void refreshPlanList(ArrayList<Plan> newList){
         	
         	planArrayList = newList;
         	notifyDataSetChanged();
+        }
+        
+        private ArrayList<Plan> generateData(){
+        	ArrayList<Plan> planList;
+        	DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(context);
+        	planList = (ArrayList<Plan>) dbAccessImpl.queryShowPlanList();
+            
+            return planList;
         }
         
         private class ViewHolder {
