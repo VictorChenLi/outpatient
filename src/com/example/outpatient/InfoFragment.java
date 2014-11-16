@@ -37,11 +37,10 @@ public class InfoFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
 		View rootView = inflater.inflate(R.layout.info_fragment, container, false);
-<<<<<<< HEAD
+
 //		list_items = getResources().getStringArray(R.array.routine_list);
 //		setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list_items));
-=======
->>>>>>> 2d5142ecac986898064288fa575b2a93ed559e66
+
 		
 		info_listview = (ListView) rootView.findViewById(R.id.info_listview);
 		

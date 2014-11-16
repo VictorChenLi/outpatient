@@ -71,14 +71,14 @@ public class EditTaskActivity extends Activity implements
 
 	private Button end_date_button;
 
-//	private RadioButton selectTimes;
-//	private RadioButton selectDays;
-//
-//	private RadioGroup selectTimeDayGroup;
+	// private RadioButton selectTimes;
+	// private RadioButton selectDays;
+	//
+	// private RadioGroup selectTimeDayGroup;
 
-//	private NumberPicker frequencyPicker;
-//	private NumberPicker intervalPicker;
-	
+	// private NumberPicker frequencyPicker;
+	// private NumberPicker intervalPicker;
+
 	// holds information of the current editing task
 	private Task editingTask;
 	private Reminder editingTaskReminder;
@@ -91,11 +91,11 @@ public class EditTaskActivity extends Activity implements
 	// stores the current date
 	private Date start_date;
 	private Date end_date;
-	
-	private int ReturnCode=0;
+
+	private int ReturnCode = 0;
 
 	private int passed_tid = 0;
-	private int pid=0;
+	private int pid = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,17 +114,18 @@ public class EditTaskActivity extends Activity implements
 		routine_area = (LinearLayout) findViewById(R.id.routine_area);
 
 		plan_select = (Spinner) findViewById(R.id.plan_select);
-		
+
 		routine_frequency = (Spinner) findViewById(R.id.routine_frequency);
 		routine_interval = (Spinner) findViewById(R.id.routine_interval);
-//		frequencyPicker = (NumberPicker) findViewById(R.id.frequencyPicker);
-//		intervalPicker = (NumberPicker) findViewById(R.id.intervalPicker);
+		// frequencyPicker = (NumberPicker) findViewById(R.id.frequencyPicker);
+		// intervalPicker = (NumberPicker) findViewById(R.id.intervalPicker);
 		task_type = (Spinner) findViewById(R.id.task_type);
 
 		end_date_button = (Button) findViewById(R.id.end_date);
-//		selectTimes = (RadioButton) findViewById(R.id.radiobutton_daily);
-//		selectDays = (RadioButton) findViewById(R.id.radiobutton_repeatday);
-//		selectTimeDayGroup = (RadioGroup) findViewById(R.id.selectTimesOrDaysGroup);
+		// selectTimes = (RadioButton) findViewById(R.id.radiobutton_daily);
+		// selectDays = (RadioButton) findViewById(R.id.radiobutton_repeatday);
+		// selectTimeDayGroup = (RadioGroup)
+		// findViewById(R.id.selectTimesOrDaysGroup);
 
 		notes_edit = (EditText) findViewById(R.id.notes_edit);
 
@@ -138,89 +139,89 @@ public class EditTaskActivity extends Activity implements
 
 	private void addListener() {
 		// Radio button checked listener for Repeating TODO change to two picker
-		routine_frequency.setOnItemSelectedListener(new OnItemSelectedListener(){
+		routine_frequency
+				.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				String frequency =routine_frequency.getItemAtPosition(position).toString();
-				if(frequency.equals("Hourly"))
-					tv_interval.setText("hour(s)");
-				if(frequency.equals("Daily"))
-					tv_interval.setText("day(s)");
-				if(frequency.equals("Weekly"))
-					tv_interval.setText("week(s)");
-				if(null!=editingTaskReminder)
-				{
-					editingTaskReminder.setRepeatingDays(position+1);
-				}
-			}
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						String frequency = routine_frequency.getItemAtPosition(
+								position).toString();
+						if (frequency.equals("Hourly"))
+							tv_interval.setText("hour(s)");
+						if (frequency.equals("Daily"))
+							tv_interval.setText("day(s)");
+						if (frequency.equals("Weekly"))
+							tv_interval.setText("week(s)");
+						if (null != editingTaskReminder) {
+							editingTaskReminder.setRepeatingDays(position + 1);
+						}
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				
-			}
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						// TODO Auto-generated method stub
 
-			
-		});
-		
-		routine_interval.setOnItemSelectedListener(new OnItemSelectedListener(){
+					}
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				if(null!=editingTaskReminder)
-				{
-					editingTaskReminder.setRepeatingTimes(position+1);
-				}
-			}
+				});
 
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				
-			}
+		routine_interval
+				.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			
-		});
-		
-//		selectTimeDayGroup
-//				.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//
-//					@Override
-//					public void onCheckedChanged(RadioGroup group, int checkedId) {
-//						// TODO Auto-generated method stub
-//
-//						// get selected radio button from radioGroup
-//						int selectedId = selectTimeDayGroup
-//								.getCheckedRadioButtonId();
-//
-//						RadioButton selectedButton = (RadioButton) findViewById(selectedId);
-//
-//						if (selectedButton != null) {
-//
-//							if (selectedButton == selectTimes) {
-//
-//								Log.v("debugtag", "clicked times");
-//								routine_times.setEnabled(true);
-//								routine_days.setEnabled(false);
-//
-//							} else if (selectedButton == selectDays) {
-//
-//								Log.v("debugtag", "clicked days");
-//								routine_times.setEnabled(false);
-//								routine_days.setEnabled(true);
-//
-//							}
-//
-//						} else {
-//							Log.v("schoice", "NONE QUESTION");
-//						}
-//
-//					}
-//
-//				});
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						if (null != editingTaskReminder) {
+							editingTaskReminder.setRepeatingTimes(position + 1);
+						}
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						// TODO Auto-generated method stub
+
+					}
+
+				});
+
+		// selectTimeDayGroup
+		// .setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+		// {
+		//
+		// @Override
+		// public void onCheckedChanged(RadioGroup group, int checkedId) {
+		// // TODO Auto-generated method stub
+		//
+		// // get selected radio button from radioGroup
+		// int selectedId = selectTimeDayGroup
+		// .getCheckedRadioButtonId();
+		//
+		// RadioButton selectedButton = (RadioButton) findViewById(selectedId);
+		//
+		// if (selectedButton != null) {
+		//
+		// if (selectedButton == selectTimes) {
+		//
+		// Log.v("debugtag", "clicked times");
+		// routine_times.setEnabled(true);
+		// routine_days.setEnabled(false);
+		//
+		// } else if (selectedButton == selectDays) {
+		//
+		// Log.v("debugtag", "clicked days");
+		// routine_times.setEnabled(false);
+		// routine_days.setEnabled(true);
+		//
+		// }
+		//
+		// } else {
+		// Log.v("schoice", "NONE QUESTION");
+		// }
+		//
+		// }
+		//
+		// });
 
 		// listener for the check box to enable remind
 		remind_check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -238,330 +239,181 @@ public class EditTaskActivity extends Activity implements
 
 			}
 		});
-		
+
 		// TODO When the plan list done
-		plan_select.setOnItemSelectedListener(new OnItemSelectedListener(){
+		plan_select.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				String planName =plan_select.getItemAtPosition(position).toString();
-				pid = DBAccessImpl.getInstance(getApplicationContext()).GetPlanByName(planName).getPid();
+				String planName = plan_select.getItemAtPosition(position)
+						.toString();
+				pid = DBAccessImpl.getInstance(getApplicationContext())
+						.GetPlanByName(planName).getPid();
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
 				// TODO Auto-generated method stub
-				
 
 			}
-			
+
 		});
-		
+
 		confirmBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-					String taskTitleText = task_title.getText().toString();
+				String taskTitleText = task_title.getText().toString();
 
-					// Try Catch to handle exception
-					try {
+				// error control for task title
+				if (taskTitleText.trim().length() == 0) {
+					Toast.makeText(EditTaskActivity.this,
+							"Please enter the task title.", Toast.LENGTH_SHORT)
+							.show();
+				} else {
 
-						// error control for task title
-						if(taskTitleText.trim().length()==0) {
-							Toast.makeText(EditTaskActivity.this,
-									"Please enter the task title.",
-									Toast.LENGTH_SHORT).show();
-						}
-						else {
+					// setting the task title
+					editingTask.setName(taskTitleText);
 
-							// setting the task title
-							editingTask.setName(taskTitleText);
-
-							String taskType = task_type.getSelectedItem()
-									.toString();
-
-							int typeID = 1;
-
-							// setting the task type
-							if (taskType.equals("General"))
-								typeID = 1;
-							if (taskType.equals("Medication"))
-								typeID = 2;
-							if (taskType.equals("Appointment/Contact"))
-								typeID = 3;
-
-							editingTask.setTaskType(typeID);
-							editingTask.setNotes(notes_edit.getText().toString());
-							editingTask.setPid(pid);
-
-				//error control for task title
-				if(taskTitleText.length()>1){
-					
-					//setting the task title
-					addedTask.setName(taskTitleText);
-					
 					String taskType = task_type.getSelectedItem().toString();
-					
+
 					int typeID = 1;
-					
-					//setting the task type
-					if(taskType.equals("General"))typeID = 1;
-					if(taskType.equals("Medication"))typeID = 2;
-					if(taskType.equals("Appointment/Contact"))typeID = 3;
-					
-					addedTask.setTaskType(typeID);
-					addedTask.setNotes(notes_edit.getText().toString());
-					addedTask.setDate(Calendar.getInstance().getTimeInMillis());
-//					addedTask.setPid(pid);
-					//there is a remind
-					if(isRemind){
-						
-						if(end_date.after(start_date)){
-							
-							Log.v("debugtag",addedTask.toString());
-							
-							// insert the task to database 
-							int new_tid = DBAccessImpl.getInstance(getApplicationContext()).InsertTask(addedTask);
-							
-							if(0==editingTask.getTid())
-							{
-								// insert the task to database
-								int new_tid = DBAccessImpl.getInstance(
-										getApplicationContext())
-										.InsertTask(editingTask);
-								editingTask.setTid(new_tid);
-							}
-							else
-							{
-								// updating the task
-								DBAccessImpl.getInstance(
-										getApplicationContext())
-										.UpdateTask(editingTask);
-							}
-							
-							Reminder editingTaskReminder = new Reminder();
-							// there is a remind
-							if (isRemind) {
 
-								if (!end_date.after(start_date)) {
+					// setting the task type
+					if (taskType.equals("General"))
+						typeID = 1;
+					if (taskType.equals("Medication"))
+						typeID = 2;
+					if (taskType.equals("Appointment/Contact"))
+						typeID = 3;
 
+					editingTask.setTaskType(typeID);
+					editingTask.setNotes(notes_edit.getText().toString());
+					editingTask.setPid(pid);
+
+					// error control for task title
+					if (taskTitleText.length() > 1) {
+
+						// there is a remind
+						if (isRemind) {
+
+							if (end_date.after(start_date)) {
+
+								if (0 == editingTask.getTid()) {
+									// insert the task to database
+									int new_tid = DBAccessImpl.getInstance(
+											getApplicationContext())
+											.InsertTask(editingTask);
+									editingTask.setTid(new_tid);
+								} else {
+									// updating the task
+									DBAccessImpl.getInstance(
+											getApplicationContext())
+											.UpdateTask(editingTask);
+								}
+
+								Reminder editingTaskReminder = new Reminder();
+								// there is a remind
+								if (isRemind) {
+
+									if (!end_date.after(start_date)) {
+
+										Toast.makeText(
+												EditTaskActivity.this,
+												"End Date has to be after Start Date.",
+												Toast.LENGTH_SHORT).show();
+									} else {
+										// THE FOLLOWING GET'S PARAMETERS FOR
+										// THE
+										// NEW REMIND
+
+										editingTaskReminder.setTid(editingTask
+												.getTid());
+
+										int routineInt = (isRoutine) ? 1 : 0;
+
+										editingTaskReminder
+												.setIsRoutine(routineInt);
+
+										// IF SET ROUTINE, THEN UPDATE REMINDER
+										// WITH
+										// TIMES AND DAYS
+
+										if (isRoutine) {
+
+											// TODO change to two picker
+											// taskReminder.setRepeatingDays(1);
+											// taskReminder.setRepeatingTimes(1);
+											// if (selectTimes.isChecked())
+											// taskReminder.setRepeatingTimes(Integer
+											// .parseInt(routine_times
+											// .getSelectedItem()
+											// .toString()));
+											//
+											// else if (selectDays.isChecked())
+											// taskReminder.setRepeatingDays(Integer
+											// .parseInt(routine_days
+											// .getSelectedItem()
+											// .toString()));
+
+										}
+
+										if (start_date.getTime() != 0)
+											editingTaskReminder
+													.setStartTime(start_date
+															.getTime());
+
+										if (end_date.getTime() != 0)
+											editingTaskReminder
+													.setEndTime(end_date
+															.getTime());
+
+									}
+
+									// it means we create a new reminder
+									if (0 == editingTaskReminder.getRid()) {
+										// INSERT THE NEW REMINDER
+										DBAccessImpl.getInstance(
+												getApplicationContext())
+												.InsertReminder(
+														editingTaskReminder);
+									} else {
+										DBAccessImpl.getInstance(
+												getApplicationContext())
+												.UpdateReminder(
+														editingTaskReminder);
+									}
+
+								} else
 									Toast.makeText(
 											EditTaskActivity.this,
 											"End Date has to be after Start Date.",
 											Toast.LENGTH_SHORT).show();
-								}
-								else {
-									// THE FOLLOWING GET'S PARAMETERS FOR THE
-									// NEW REMIND
-									
-									editingTaskReminder.setTid(editingTask.getTid());
 
-									int routineInt = (isRoutine) ? 1 : 0;
-
-									editingTaskReminder.setIsRoutine(routineInt);
-
-									// IF SET ROUTINE, THEN UPDATE REMINDER WITH
-									// TIMES AND DAYS
-
-									if (isRoutine) {
-
-										// TODO change to two picker
-//											taskReminder.setRepeatingDays(1);
-//											taskReminder.setRepeatingTimes(1);
-//											if (selectTimes.isChecked())
-//												taskReminder.setRepeatingTimes(Integer
-//														.parseInt(routine_times
-//																.getSelectedItem()
-//																.toString()));
-//
-//											else if (selectDays.isChecked())
-//												taskReminder.setRepeatingDays(Integer
-//														.parseInt(routine_days
-//																.getSelectedItem()
-//																.toString()));
-
-									}
-
-									if (start_date.getTime() != 0)
-										editingTaskReminder.setStartTime(start_date
-												.getTime());
-
-									if (end_date.getTime() != 0)
-										editingTaskReminder.setEndTime(end_date
-												.getTime());
-
-								}
-								
-								// it means we create a new reminder
-								if(0==editingTaskReminder.getRid())
-								{
-									// INSERT THE NEW REMINDER
-									DBAccessImpl.getInstance(
-										getApplicationContext())
-										.InsertReminder(editingTaskReminder);
-								}
-								else
-								{
-									DBAccessImpl.getInstance(
-											getApplicationContext())
-											.UpdateReminder(editingTaskReminder);
-								}
-
-							
-							if(start_date.getTime()!= 0)taskReminder.setStartTime(start_date.getTime());
-							
-							if(end_date.getTime()!= 0) taskReminder.setEndTime(end_date.getTime());
-							
-							// INSERT THE NEW REMINDER
-							DBAccessImpl.getInstance(getApplicationContext()).InsertReminder(taskReminder);
-					
-							Log.v("debugtag",taskReminder.toString());
-							
-						}else{
-							
-							Toast.makeText(EditTaskActivity.this, "End Date has to be after Start Date.", Toast.LENGTH_SHORT).show();
-							
 							}
+
 						}
 
-					
-						}	else{
-						
-						Toast.makeText(EditTaskActivity.this, "Please enter the task title.", Toast.LENGTH_SHORT).show();
-						
-						}
-						
-						Log.v("debugtag","edited task");
+					} else
+						Toast.makeText(EditTaskActivity.this,
+								"Please enter the task title.",
+								Toast.LENGTH_SHORT).show();
 
-						// will close this activity and lauch main activity
-						Intent resultIntent = new Intent(EditTaskActivity.this,
-								TaskFragment.class);
-						setResult(Activity.RESULT_OK, resultIntent);
+					Log.v("debugtag", "edited task");
 
-						// close this activity
-						finish();
+					// will close this activity and lauch main activity
+					Intent resultIntent = new Intent(EditTaskActivity.this,
+							TaskFragment.class);
+					setResult(Activity.RESULT_OK, resultIntent);
 
-					} catch (Exception e) {
+					// close this activity
+					finish();
 
-						// Failed to add
-						// will close this activity and lauch main activity
-						Intent resultIntent = new Intent(EditTaskActivity.this,
-								MainActivity.class);
-
-						// close this activity
-						finish();
-					}
-					
-				// HANDLE THE EDIT TASK ACTIVITY
-				}else {
-					
-					
-					// Try Catch to handle exception
-					try{
-						
-						Task updatedTask = DBAccessImpl.getInstance(getApplicationContext()).describeTask(passed_tid);
-						
-						String taskTitleText = task_title.getText().toString();
-						
-					//error control for task title
-					if(taskTitleText.length()>1){
-						
-						//setting the task title
-						updatedTask.setName(taskTitleText);
-						
-						String taskType = task_type.getSelectedItem().toString();
-						
-						int typeID = 1;
-						
-						//setting the task type
-						if(taskType.equals("General"))typeID = 1;
-						if(taskType.equals("Medication"))typeID = 2;
-						if(taskType.equals("Appointment/Contact"))typeID = 3;
-						
-						updatedTask.setTaskType(typeID);
-						updatedTask.setNotes(notes_edit.getText().toString());
-						
-						//CHECK IF HAS REMIND
-						Reminder testRmd = DBAccessImpl.getInstance(getApplicationContext()).getReminderByTid(passed_tid);
-						
-						Log.v("debugtag",testRmd.toString());
-						Log.v("debugtag",updatedTask.toString());
-						
-						if(testRmd!=null)isRemind = true;else {isRemind = false;}
-						
-						//there is a remind
-						if(isRemind){
-							
-							if(end_date.after(start_date)){
-								
-								// insert the task to database 
-								DBAccessImpl.getInstance(getApplicationContext()).UpdateTask(updatedTask);
-								
-								// THE FOLLOWING GET'S PARAMETERS FOR THE NEW REMIND
-								Reminder taskReminder = DBAccessImpl.getInstance(getApplicationContext()).getReminderByTid(passed_tid);
-								
-								int routineInt = (isRoutine) ? 1 : 0;
-										
-								taskReminder.setIsRoutine(routineInt);
-								
-									//IF SET ROUTINE, THEN UPDATE REMINDER WITH TIMES AND DAYS
-								
-									if(isRoutine){
-										
-										//if has routine then check the input box
-										if(selectTimes.isChecked())
-											taskReminder.setRepeatingTimes(Integer.parseInt(routine_times.getSelectedItem().toString()));
-										
-										else if(selectDays.isChecked())
-											taskReminder.setRepeatingDays(Integer.parseInt(routine_days.getSelectedItem().toString()));
-										
-									}
-								
-								if(start_date.getTime()!= 0)taskReminder.setStartTime(start_date.getTime());
-								
-								if(end_date.getTime()!= 0) taskReminder.setEndTime(end_date.getTime());
-								
-								// INSERT THE NEW REMINDER
-								DBAccessImpl.getInstance(getApplicationContext()).InsertReminder(taskReminder);
-							
-							}else{
-								
-								Toast.makeText(EditTaskActivity.this, "End Date has to be after Start Date.", Toast.LENGTH_SHORT).show();
-								
-								}
-								
-							}else{
-							
-								// insert the task to database 
-								DBAccessImpl.getInstance(getApplicationContext()).UpdateTask(updatedTask);
-							
-							}
-						}else{
-							Toast.makeText(EditTaskActivity.this, "Please enter the task title.", Toast.LENGTH_SHORT).show();
-							}
-						
-								// will close this activity and lauch main activity
-								Intent resultIntent = new Intent(EditTaskActivity.this, MainActivity.class);
-								setResult(Activity.RESULT_OK, resultIntent);
-								
-								// close this activity
-								finish();
-						
-						}catch(Exception e){
-							
-							//Failed to add
-							// will close this activity and lauch main activity
-							Intent resultIntent = new Intent(EditTaskActivity.this, MainActivity.class);
-							
-							// close this activity
-							finish();
-						}
-					
 				}
-		});
 
-		
+			}
+		});
 
 		// listener for the check box to enable remind
 		routine_check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -611,7 +463,7 @@ public class EditTaskActivity extends Activity implements
 
 	// initial the entity and controller
 	private void inital(int tid) {
-		
+
 		// Create an ArrayAdapter using the string array and a default spinner
 		// layout
 		ArrayAdapter<CharSequence> frequency_adapter = ArrayAdapter
@@ -622,8 +474,10 @@ public class EditTaskActivity extends Activity implements
 						android.R.layout.simple_spinner_item);
 
 		// Specify the layout to use when the list of choices appears
-		frequency_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		interval_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		frequency_adapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		interval_adapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		// Apply the adapter to the spinner
 		routine_frequency.setAdapter(frequency_adapter);
@@ -635,10 +489,8 @@ public class EditTaskActivity extends Activity implements
 		routine_area.setVisibility(View.GONE);
 
 		// set the two spinners disabled first
-//		routine_times.setEnabled(false);
-//		routine_days.setEnabled(false);
-		
-		
+		// routine_times.setEnabled(false);
+		// routine_days.setEnabled(false);
 
 		// SETTING UP THE TASK TYPE SPINNER
 
@@ -658,19 +510,17 @@ public class EditTaskActivity extends Activity implements
 		Log.v("debugtag", "tid opened:" + passed_tid);
 
 		// if tid!=0 means we are updating
-		if (0 != passed_tid)
-		{
+		if (0 != passed_tid) {
 			ReturnCode = TaskFragment.EDIT_TASK_RESULT;
 			editingTask = DBAccessImpl.getInstance(getApplicationContext())
 					.describeTask(passed_tid);
-		}
-		else
+		} else
 			ReturnCode = TaskFragment.ADD_TASK_RESULT;
 
 		if (editingTask != null) {
 			// if updating, put the value into the controller
 			pid = editingTask.getPid();
-			
+
 			// SETTING UP THE PLAN SELECTOR by existing pid
 			List<String> spinnerArray = new ArrayList<String>();
 
@@ -679,18 +529,17 @@ public class EditTaskActivity extends Activity implements
 
 			int curPos = 1;
 			for (int i = 0; i < currentPlan.size(); i++) {
-				if(currentPlan.get(i).getPid()==pid)
-					curPos=i;
-				spinnerArray.add( currentPlan.get(i).getName());
+				if (currentPlan.get(i).getPid() == pid)
+					curPos = i;
+				spinnerArray.add(currentPlan.get(i).getName());
 			}
 
-			task_type.setSelection(editingTask.getTaskType()+1);
+			task_type.setSelection(editingTask.getTaskType() + 1);
 			notes_edit.setText(editingTask.getNotes());
-			
 
 			ArrayAdapter<String> plan_spinner_adapter = new ArrayAdapter<String>(
 					this, android.R.layout.simple_spinner_item, spinnerArray);
-			
+
 			plan_select.setAdapter(plan_spinner_adapter);
 			plan_select.setSelection(curPos);
 
@@ -716,8 +565,10 @@ public class EditTaskActivity extends Activity implements
 				// set startTime
 				start_date_button.setText(getDate(sdate, "yyyy-MM-dd hh:mm a"));
 				end_date_button.setText(getDate(edate, "yyyy-MM-dd hh:mm a"));
-				routine_frequency.setSelection(editingTaskReminder.getRepeatingDays()-1);
-				routine_interval.setSelection(editingTaskReminder.getRepeatingTimes()-1);
+				routine_frequency.setSelection(editingTaskReminder
+						.getRepeatingDays() - 1);
+				routine_interval.setSelection(editingTaskReminder
+						.getRepeatingTimes() - 1);
 
 				int isRoutine = editingTaskReminder.getIsRoutine();
 
@@ -751,19 +602,6 @@ public class EditTaskActivity extends Activity implements
 			// in this case means we creating task
 			// and inital the editingTask
 			editingTask = new Task();
-
-			// initiate current date and time
-			// SimpleDateFormat sdf = new
-			// SimpleDateFormat("yyyy-MM-dd hh:mm a");
-			// String currentDateandTime = sdf.format(new Date());
-			// start_date_button.setText(currentDateandTime);
-
-			// try {
-			// start_date = sdf.parse(currentDateandTime);
-			// } catch (ParseException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
 
 		}
 	}
