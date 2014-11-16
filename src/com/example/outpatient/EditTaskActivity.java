@@ -514,32 +514,37 @@ public class EditTaskActivity extends Activity implements
 			ReturnCode = TaskFragment.EDIT_TASK_RESULT;
 			editingTask = DBAccessImpl.getInstance(getApplicationContext())
 					.describeTask(passed_tid);
+			
 		} else
 			ReturnCode = TaskFragment.ADD_TASK_RESULT;
 
 		if (editingTask != null) {
 			// if updating, put the value into the controller
 			pid = editingTask.getPid();
-
+			
+			Log.v("debugtag","retrieved= tid"+passed_tid);
+			
 			// SETTING UP THE PLAN SELECTOR by existing pid
 			List<String> spinnerArray = new ArrayList<String>();
 
 			List<Plan> currentPlan = DBAccessImpl.getInstance(
 					getApplicationContext()).queryShowPlanList();
 
-			int curPos = 1;
+			int curPos = 0;
 			for (int i = 0; i < currentPlan.size(); i++) {
-				if (currentPlan.get(i).getPid() == pid)
-					curPos = i;
+				
 				spinnerArray.add(currentPlan.get(i).getName());
+				
+				if (currentPlan.get(i).getPid() == pid)curPos = i;
+				
 			}
 
-			task_type.setSelection(editingTask.getTaskType() + 1);
+			task_type.setSelection(editingTask.getTaskType());
 			notes_edit.setText(editingTask.getNotes());
-
+			
 			ArrayAdapter<String> plan_spinner_adapter = new ArrayAdapter<String>(
 					this, android.R.layout.simple_spinner_item, spinnerArray);
-
+			
 			plan_select.setAdapter(plan_spinner_adapter);
 			plan_select.setSelection(curPos);
 

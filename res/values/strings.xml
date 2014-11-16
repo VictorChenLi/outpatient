@@ -24,7 +24,7 @@
     </string-array>
     
    <string-array name="task_type_list">
-        <item>General</item>
+        <item>General Task</item>
         <item>Medication</item>
         <item>Appointment/Contact</item>
     </string-array>
