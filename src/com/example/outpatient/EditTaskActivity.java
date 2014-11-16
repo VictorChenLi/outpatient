@@ -421,6 +421,10 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 						
 						//CHECK IF HAS REMIND
 						Reminder testRmd = DBAccessImpl.getInstance(getApplicationContext()).getReminderByTid(passed_tid);
+						
+						Log.v("debugtag",testRmd.toString());
+						Log.v("debugtag",updatedTask.toString());
+						
 						if(testRmd!=null)isRemind = true;else {isRemind = false;}
 						
 						//there is a remind
