@@ -1,11 +1,13 @@
 package com.example.outpatient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.outpatient.fragment.adapters.InfoListAdapter;
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
+import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
 
 import android.content.Context;
@@ -68,14 +70,21 @@ public class InfoFragment extends Fragment{
     private ArrayList<Info> generateData(){
     	
     	//the following decided if the app runs for the first time and show consent form
-    	appinfo = getActivity().getSharedPreferences("appinfo", Context.MODE_PRIVATE);
-    	String[] planString = appinfo.getString("plans", "0").split(",");
-    	
-    	infoList = GlobalVar.plan_info_list.get("0");
-        
-        //read the plan list from the global variable 
-    	
-        return infoList;
+//    	appinfo = getActivity().getSharedPreferences("appinfo", Context.MODE_PRIVATE);
+//    	String[] planString = appinfo.getString("plans", "0").split(",");
+//    	
+//    	infoList = GlobalVar.plan_info_list.get("0");
+//        
+//        //read the plan list from the global variable 
+//    	
+//        return infoList;
+    	ArrayList<Info> infoList = new ArrayList<Info>();
+    	DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(getActivity());
+    	for(Plan plan :dbAccessImpl.queryShowPlanList())
+    	{
+    		infoList.addAll(GlobalVar.plan_info_list.get(plan.getPid()));
+    	}
+    	return infoList;
     }
     
     

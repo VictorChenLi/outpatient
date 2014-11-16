@@ -51,14 +51,20 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
      
         public View getView(int position, View view, ViewGroup parent) {
             final ViewHolder holder;
+            
             if (view == null) {
+            	
                 holder = new ViewHolder();
                 view = inflater.inflate(R.layout.task_item, null);
+                
                 // Locate the TextViews in listview_item.xml
+                
                 holder.title = (TextView) view.findViewById(R.id.title);
                 holder.notion = (TextView) view.findViewById(R.id.notion);
                 holder.icon = (ImageView) view.findViewById(R.id.icon);
+                
                 // Locate the ImageView in listview_item.xml
+                
                 holder.flag = (ImageView) view.findViewById(R.id.flag);
                 view.setTag(holder);
             } else {

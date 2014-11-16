@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.outpatient.fragment.adapters.TabsAdapter;
+import com.example.outpatient.infopage.InfoExpandingFragment;
 import com.outpatient.notification.service.NotificationHelper;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.sysUtil.service.OutPatientService;
@@ -131,7 +132,7 @@ public class MainActivity extends FragmentActivity{
 		    			
 //		    			Intent planInt = new Intent(MainActivity.this, SelectPlanActivity.class);
 //		    			startActivityForResult(planInt, SELECT_PLAN_RESULT);
-//		    			
+		    			
 		    		}
 	        		
 	        		Toast.makeText(MainActivity.this, "Load Data Succeess!", Toast.LENGTH_LONG).show();

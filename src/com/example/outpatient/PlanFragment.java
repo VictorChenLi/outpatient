@@ -31,6 +31,7 @@ public class PlanFragment extends Fragment{
 	private PlanListAdapter planListAdapter; 
 	private ArrayList<Plan> planList;
 	private ListView plan_listview;
+	private int ADD_PLAN_RESULT = 2001;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
@@ -50,8 +51,8 @@ public class PlanFragment extends Fragment{
         addBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
-				
+				Intent mIntent = new Intent(getActivity(), SelectPlanActivity.class);
+				startActivityForResult(mIntent, ADD_PLAN_RESULT);
 			}
 		});
         
@@ -76,7 +77,9 @@ public class PlanFragment extends Fragment{
     private ArrayList<Plan> generateData(){
         
         //read the plan list from the global variable 
-    	planList = GlobalVar.plan_list;
+//    	planList = GlobalVar.plan_list;
+    	DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(getActivity());
+    	planList = (ArrayList<Plan>) dbAccessImpl.queryShowPlanList();
         
         return planList;
     }
@@ -85,7 +88,21 @@ public class PlanFragment extends Fragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
-       
+    	if(requestCode == ADD_PLAN_RESULT){
+      	   
+      	   // this handles the event when successfully edited a task
+      	   if(resultCode == Activity.RESULT_OK){
+      		   
+      		   Log.v("debugtag","successfully added plan!");
+      		   
+      		   //reload the database
+      		   generateData();
+      		   
+      		   planListAdapter.refreshTaskList(planList);
+      		   
+      	   }
+      	   
+         }
     	
     }
 }

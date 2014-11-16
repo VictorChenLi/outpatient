@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
  
 public class PlanListAdapter extends ArrayAdapter<Plan> {
@@ -23,6 +24,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
         private final Context context;
         private ArrayList<Plan> planArrayList;
         private DBAccessImpl dbhandler;
+        private LayoutInflater inflater;
  
         public PlanListAdapter(Context context, ArrayList<Plan> itemsArrayList) {
  
@@ -39,25 +41,33 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
         	notifyDataSetChanged();
         }
         
+        private class ViewHolder {
+            TextView tv_planName;
+            TextView tv_planId;
+        }
+        
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
- 
-            // 1. Create inflater 
-            LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
- 
-            // 2. Get rowView from inflater
-            View rowView = inflater.inflate(R.layout.plan_item, parent, false);
- 
-            // 3. Get the two text view from the rowView
-            TextView labelView = (TextView) rowView.findViewById(R.id.label);
-            TextView valueView = (TextView) rowView.findViewById(R.id.value);
+        	final ViewHolder holder;
             
-            // 4. Set the text for textView 
-            labelView.setText(planArrayList.get(position).getName());
-            
-            
+            if (convertView == null) {
+            	
+                holder = new ViewHolder();
+                convertView = LayoutInflater.from(context).inflate(R.layout.plan_item, parent, false);
+                
+                // save the holder at view
+                holder.tv_planName = (TextView) convertView.findViewById(R.id.plan_name);
+                holder.tv_planId = (TextView) convertView.findViewById(R.id.plan_id);
+                convertView.setTag(holder);
+                
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            // Set the text for textView 
+            holder.tv_planName.setText(planArrayList.get(position).getName());
+            holder.tv_planId.setText(String.valueOf(planArrayList.get(position).getPid()));
+                       
             // 5. return rowView
-            return rowView;
+            return convertView;
         }
 }

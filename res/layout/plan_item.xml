@@ -5,7 +5,7 @@
      >
  
     <TextView
-        android:id="@+id/label"
+        android:id="@+id/plan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -17,7 +17,8 @@
     </TextView>
  
      <TextView
-        android:id="@+id/value"
+        android:id="@+id/plan_id"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
