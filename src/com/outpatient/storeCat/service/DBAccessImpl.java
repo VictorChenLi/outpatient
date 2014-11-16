@@ -151,7 +151,7 @@ public class DBAccessImpl implements DBAccess {
     public void UpdateReminder(Reminder reminder)
     {
     	String strSql="Update [tbl_reminder] set tid=?, startTime=?, isRoutine=?, endTime=?, repeatingDays=?, repeatingTimes=? where rid=?";
-    	Object[] bindArgs = { reminder.getTid(),reminder.getStartTime(),reminder.getIsRoutine(),reminder.getEndTime(),reminder.getRepeatingDays(),reminder.getRepeatingTimes()};
+    	Object[] bindArgs = { reminder.getTid(),reminder.getStartTime(),reminder.getIsRoutine(),reminder.getEndTime(),reminder.getRepeatingDays(),reminder.getRepeatingTimes(),reminder.getRid()};
     	wdb.execSQL(strSql,bindArgs);
     }
     

@@ -80,6 +80,13 @@ public class TimeHelper {
 		
 	}
 	
+	public static String getPaintStrFromTimeMillis(long date)
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(date);
+		return cal.getTime().toString();
+	}
+	
 	public static int compareTimeFromMillis(long dateA, long dateB, int field)
 	{
 		Calendar targetA =Calendar.getInstance();

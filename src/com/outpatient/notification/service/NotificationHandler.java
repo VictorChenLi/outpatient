@@ -16,24 +16,30 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 public class NotificationHandler extends FragmentActivity {
+	
+	private int rid;
+	private String action;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String action = this.getIntent().getExtras().getString("action");
-        int rid = this.getIntent().getExtras().getInt("rid");
+//        this.getIntent().getBundleExtra("action")
+        rid =  getIntent().getIntExtra("rid", 0);
+        action = getIntent().getStringExtra("action");
         
-        if("Notify"==action)
+        if("Notify".equals(action))
         {
 	        NotificationHelper.setNotification(this, rid);
-	        NotificationHelper.setAlert(this, rid);
         }
-        if("Dismiss"==action)
+        if("Dismiss".equals(action))
         {
         	NotificationHelper.dismissNotificationReminder(this, rid);
+        	this.finish();
         }
-        if("Snooze"==action)
+        if("Snooze".equals(action))
         {
         	NotificationHelper.snoozeNotification(this, rid);
+        	this.finish();
         }
     }
 }

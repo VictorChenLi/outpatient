@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.widget.Toast;
 
 public class NotificationDialogFragment extends DialogFragment {
 	@Override
@@ -18,12 +19,14 @@ public class NotificationDialogFragment extends DialogFragment {
                .setPositiveButton(R.string.dismiss, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        NotificationHelper.dismissNotificationReminder(getActivity(), rid);
+                       getActivity().finish();
                    }
                })
                .setNegativeButton(R.string.snooze, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        // User cancelled the dialog
-                	   NotificationHelper.dismissNotificationReminder(getActivity(), rid);
+                	   NotificationHelper.snoozeNotification(getActivity(), rid);
+                	   getActivity().finish();
                    }
                });
         // Create the AlertDialog object and return it
