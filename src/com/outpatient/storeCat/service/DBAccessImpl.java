@@ -19,8 +19,8 @@ public class DBAccessImpl implements DBAccess {
 	
 	private static DBAccessImpl dbAccessImpl=null;
 	
-	public static final String DB_NAME="HitMe.db";
-	public static final int VERSION=3;
+	public static final String DB_NAME="outpatient.db";
+	public static final int VERSION=4;
 	public Context udcontext;
 	
 	SQLiteHelper m_Helper;
@@ -242,6 +242,15 @@ public class DBAccessImpl implements DBAccess {
     	Cursor cursor = rdb.rawQuery(strSql,null);
         List<Plan> list=new ArrayList<Plan>();
         return fillPlanList(cursor);
+    }
+    
+    public Plan GetPlanByName(String name)
+    {
+    	String strSql="Select * from [tbl_plan] where name=?";
+    	String[] bindArgs ={name};
+    	Cursor cursor = rdb.rawQuery(strSql,bindArgs);
+        List<Plan> list=fillPlanList(cursor);
+        return list.size()>0?list.get(0):null;
     }
     
     public List<Plan> queryShowPlanList()

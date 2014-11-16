@@ -29,11 +29,11 @@ public class TaskFragment extends Fragment{
 	
 	
 	// this is to identify receiving data update from the EditTaskActivity
-	private static final int EDIT_TASK_RESULT = 1001;
+	public static final int EDIT_TASK_RESULT = 1001;
 	
 	
 	// this is to identify receiving data update from the EditTaskActivity
-	private static final int ADD_TASK_RESULT = 1005;
+	public static final int ADD_TASK_RESULT = 1005;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		

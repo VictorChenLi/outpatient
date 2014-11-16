@@ -116,7 +116,8 @@ public class MainActivity extends FragmentActivity{
 	        		Toast.makeText(MainActivity.this, "Load Data Succeess!", Toast.LENGTH_LONG).show();
 	        	 
 	             }else{Log.w("debugtag", "Warning: activity result not ok");}
-		} else {
+		} 
+		else {
 	        Log.w("debugtag", "Warning: no activity result found");
 	    }
 	}

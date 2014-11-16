@@ -34,6 +34,7 @@ public class Constant {
 			return this.value;
 		}
 	};
+	public enum frequency {Hourly,Daily,Weekly};
 		
 	public enum stageStatus{RUN,COMPLETE};
 	

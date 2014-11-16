@@ -13,8 +13,8 @@ public class InfoFragment extends ListFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
 		View rootView = inflater.inflate(R.layout.info_fragment, container, false);
-		list_items = getResources().getStringArray(R.array.routine_list);
-		setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list_items));
+//		list_items = getResources().getStringArray(R.array.routine_list);
+//		setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list_items));
 		
 		return rootView;
 	}

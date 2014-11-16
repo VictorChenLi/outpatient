@@ -60,48 +60,65 @@ public class NotificationMgr {
 			Log.v("reminder", "currentTime>reminder.getStartTime");
 			if(1==reminder.getIsRoutine())
 			{
-				// means every certain days will reminder 1 time at same start time
-				if(1==reminder.getRepeatingTimes())
+				String timeInterval=null;
+				// means will repeat every "RepeatingTimes" hours
+				if(1==reminder.getRepeatingDays())
 				{
-					Log.v("reminder", "1==reminder.getRepeatingTimes");
+					Log.v("reminder", "1==reminder.getRepeatingDays");
 					//add repeating days to the start time
-					String timeInterval = String.valueOf(reminder.getRepeatingDays())+"d";
-					Long nextNotifyTime = reminder.getStartTime();
-					while(nextNotifyTime<currentTime)
-					{
-						// if the next notify time is earlier than current time keep moving to the next
-						nextNotifyTime = nextNotifyTime+TimeHelper.getPlainTimeInMillis(timeInterval);
-					}// will exit when the next notify time later than current time
+					timeInterval = String.valueOf(reminder.getRepeatingTimes())+"h";
 					
-					// if the next notify time is earlier than the end time
-					// we could set it as our next notification
-					if(nextNotifyTime<reminder.getEndTime())
-					{
-						NotificationHelper.setNotificationReminder(context, rid,nextNotifyTime);
-					}
 				}
-				else //means everyday have certain times reminder
+				// means will repeat every "RepeatingTimes" days
+				if(2==reminder.getRepeatingDays())
 				{
-					// we divide the 12 day hour with daily repeat times
-					// we reminder every certain hours
-					int repeatTimes = 1;
-					String timeInterval = String.valueOf(12/reminder.getRepeatingTimes())+"h";
-					Long nextIndexTime = TimeHelper.getDayTime(reminder.getStartTime());
-					Long nextNotifyTime = reminder.getStartTime();
-					while(nextIndexTime<TimeHelper.getDayTime(currentTime))
-					{
-						// if the next notify time is earlier than current time keep moving to the next
-						nextNotifyTime = nextNotifyTime+TimeHelper.getPlainTimeInMillis(timeInterval);
-						nextIndexTime = nextIndexTime +TimeHelper.getPlainTimeInMillis(timeInterval);
-						repeatTimes++;
-					}// will exit when the next notify time later than current time
-					
-					// if the repeat times not larger than reminder daily repeating time
-					// we could set it as our next notification
-					if(repeatTimes<=reminder.getRepeatingTimes())
-					{
-						NotificationHelper.setNotificationReminder(context, rid,nextNotifyTime);
-					}
+					Log.v("reminder", "1==reminder.getRepeatingDays");
+					//add repeating days to the start time
+					timeInterval = String.valueOf(reminder.getRepeatingTimes())+"d";
+				}
+				// means will repeat every "RepeatingTimes" weeks
+				if(3==reminder.getRepeatingDays())
+				{
+					Log.v("reminder", "1==reminder.getRepeatingDays");
+					//add repeating days to the start time
+					timeInterval = String.valueOf(reminder.getRepeatingTimes()*7)+"d";
+				}
+//				else //means everyday have certain times reminder
+//				{
+//					// we divide the 12 day hour with daily repeat times
+//					// we reminder every certain hours
+//					int repeatTimes = 1;
+//					String timeInterval = String.valueOf(12/reminder.getRepeatingTimes())+"h";
+//					Long nextIndexTime = TimeHelper.getDayTime(reminder.getStartTime());
+//					Long nextNotifyTime = reminder.getStartTime();
+//					while(nextIndexTime<TimeHelper.getDayTime(currentTime))
+//					{
+//						// if the next notify time is earlier than current time keep moving to the next
+//						nextNotifyTime = nextNotifyTime+TimeHelper.getPlainTimeInMillis(timeInterval);
+//						nextIndexTime = nextIndexTime +TimeHelper.getPlainTimeInMillis(timeInterval);
+//						repeatTimes++;
+//					}// will exit when the next notify time later than current time
+//					
+//					// if the repeat times not larger than reminder daily repeating time
+//					// we could set it as our next notification
+//					if(repeatTimes<=reminder.getRepeatingTimes())
+//					{
+//						NotificationHelper.setNotificationReminder(context, rid,nextNotifyTime);
+//					}
+//				}
+				
+				Long nextNotifyTime = reminder.getStartTime();
+				while(nextNotifyTime<currentTime)
+				{
+					// if the next notify time is earlier than current time keep moving to the next
+					nextNotifyTime = nextNotifyTime+TimeHelper.getPlainTimeInMillis(timeInterval);
+				}// will exit when the next notify time later than current time
+				
+				// if the next notify time is earlier than the end time
+				// we could set it as our next notification
+				if(nextNotifyTime<reminder.getEndTime())
+				{
+					NotificationHelper.setNotificationReminder(context, rid,nextNotifyTime);
 				}
 			}
 		}
