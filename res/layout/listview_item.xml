@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/label"
         android:textSize="12sp"
+        android:text="testing"
         android:paddingLeft="5dp"
         >
     </TextView>

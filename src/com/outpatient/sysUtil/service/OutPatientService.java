@@ -44,6 +44,7 @@ public class OutPatientService extends Service {
 	@Override
 	public void onCreate(){
 		demo=this;
+		
 		DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(demo);
 ////		dbAccessImpl.InsertPlan(new Plan(0, "wounds", 1, 1416076378000L, 0));
 		int tid = dbAccessImpl.InsertTask(new Task(0, 1, "take pill", "tttsetse", 1,

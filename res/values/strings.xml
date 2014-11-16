@@ -17,6 +17,12 @@
         <item>9</item>
     </string-array>
     
+   <string-array name="task_type_list">
+        <item>General</item>
+        <item>Medication</item>
+        <item>Appointment/Contact</item>
+    </string-array>
+    
     <string name="setting_alertMusic">alertMusic</string>
     <string-array name="setting_alertMusic_key">
  	    <item>Default</item>

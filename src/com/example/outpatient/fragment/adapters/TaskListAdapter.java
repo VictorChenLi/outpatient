@@ -1,7 +1,10 @@
-package com.example.outpatient;
+package com.example.outpatient.fragment.adapters;
 
 import java.util.ArrayList;
 
+import com.example.outpatient.R;
+import com.example.outpatient.R.id;
+import com.example.outpatient.R.layout;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
@@ -17,7 +20,7 @@ import android.widget.TextView;
 public class TaskListAdapter extends ArrayAdapter<Task> {
  
         private final Context context;
-        private final ArrayList<Task> tasksArrayList;
+        private ArrayList<Task> tasksArrayList;
         private DBAccessImpl dbhandler;
  
         public TaskListAdapter(Context context, ArrayList<Task> itemsArrayList) {
@@ -28,6 +31,13 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             this.tasksArrayList = itemsArrayList;
         }
  
+        
+        public void refreshTaskList(ArrayList<Task> newList){
+        	
+        	tasksArrayList = newList;
+        	notifyDataSetChanged();
+        }
+        
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
  
@@ -49,13 +59,15 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             
             // try to get the reminder for that task
             try{
-            Reminder reminder = dbhandler.getReminderByTid(tid);
-            
-            if(reminder!=null)valueView.setText(reminder.toString());
+            	
+	            Reminder reminder = dbhandler.getReminderByTid(tid);
+	            
+	            if(reminder!=null)valueView.setText(reminder.toString());
             
             }catch(Exception e){
             	
-            	Log.v("debugtag",e.toString());
+            	
+            	
             	
             }
             

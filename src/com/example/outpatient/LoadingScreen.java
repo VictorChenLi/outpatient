@@ -37,9 +37,6 @@ public class LoadingScreen extends Activity {
 	private ArrayList<Plan> plan_list;
 	private ArrayList<Reminder> reminder_list;
 	
-	
-	
-	
 	@Override
 	public void onBackPressed() {
 		
@@ -73,6 +70,7 @@ public class LoadingScreen extends Activity {
 			super.onPreExecute();
 			
 			loadingBar.setProgress(1);
+			
 		}
 
 		@Override
@@ -86,10 +84,10 @@ public class LoadingScreen extends Activity {
 						getInfoList();
 						getReminderList();
 						
+						loadingBar.setProgress(3);
+						
 						//store all data in Global Variables
 						GlobalVar.plan_list = plan_list;
-						
-						
 						
 						
 						//store data in the plan_task_list
@@ -114,6 +112,8 @@ public class LoadingScreen extends Activity {
 							
 						}
 						
+						loadingBar.setProgress(6);
+						
 						//store data in the plan_info_list
 						GlobalVar.plan_info_list = new HashMap<Integer, ArrayList<Info>>();
 						
@@ -136,7 +136,7 @@ public class LoadingScreen extends Activity {
 							
 						}
 						
-						
+						loadingBar.setProgress(8);
 						
 						//Store data in the task_reminder_list
 						//store data in the plan_info_list
@@ -153,6 +153,8 @@ public class LoadingScreen extends Activity {
 							
 						}
 					    
+						loadingBar.setProgress(10);
+						
 					    return "ok"; 
 					    
 					} catch (Exception e) {
@@ -201,15 +203,15 @@ public class LoadingScreen extends Activity {
 		 
 		int cursor = 0; //set cursor to 0
 		
-		InputStream input = getAssets().open("info.txt");
+		InputStream input = getAssets().open("info.csv");
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
 	    while (cursor < strArray.length){
 			int iid = 0;
 			int pid = 0;
-			String que;
-			String ans;
+			String que = "";
+			String ans = "";
 			
 			iid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); //reading iid
 			cursor++; // move to the next
@@ -217,9 +219,13 @@ public class LoadingScreen extends Activity {
 			pid = (int)Integer.parseInt(strArray[cursor].replace("\"", "")); //reading pid
 			cursor++; // move to the next
 			
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			que = strArray[cursor].replace("\"", ""); //read que
 			cursor++; // move to the next
 			
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			ans = strArray[cursor].replace("\"", "");//read que
 			cursor++; // move to the next
 			
@@ -235,24 +241,27 @@ public class LoadingScreen extends Activity {
 		 
 		int cursor = 0; //set cursor to 0
 		
-		InputStream input = getAssets().open("plan.txt");
+		InputStream input = getAssets().open("plan.csv");
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
 	    while (cursor < strArray.length){
 			int pid = 0;
-			int pType;
-			String name;
+			int pType = 0;
+			String name = "";
 			
 			pid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); 
 			cursor++; // move to the next
 			
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			pType = (int)Integer.parseInt(strArray[cursor].replace("\"", ""));
 			cursor++; // move to the next
 			
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			name = strArray[cursor].replace("\"", ""); 
 			cursor++; // move to the next
-			
 			
 			cursor++; // passed date field
 			
@@ -270,16 +279,16 @@ public class LoadingScreen extends Activity {
 		 
 		int cursor = 0; //set cursor to 0
 		
-		InputStream input = getAssets().open("task.txt");
+		InputStream input = getAssets().open("task.csv");
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
 	    while (cursor < strArray.length){
-			int tid;
-			int pid;
-			String name;
-			int taskType;
-			String description;
+			int tid = 0;
+			int pid = 0;
+			String name = "";
+			int taskType = 0;
+			String description = "";
 			
 			tid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); 
 			cursor++; // move to the next
@@ -287,14 +296,20 @@ public class LoadingScreen extends Activity {
 			pid = (int)Integer.parseInt(strArray[cursor].replace("\"", ""));
 			cursor++; // move to the next
 			
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			name = strArray[cursor].replace("\"", ""); 
 			cursor++; // move to the next
 			
 			cursor++; // pass notes
 			
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			taskType = (int)Integer.parseInt(strArray[cursor].replace("\"", "")); 
 			cursor++; // move to the next
 			
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			description = strArray[cursor].replace("\"", ""); 
 			cursor++; // move to the next
 			
@@ -315,41 +330,41 @@ public class LoadingScreen extends Activity {
 		 
 		int cursor = 0; //set cursor to 0
 		
-		InputStream input = getAssets().open("reminder.txt");
+		InputStream input = getAssets().open("reminder.csv");
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
 	    while (cursor < strArray.length){
 			int rid = 0;
 			int tid = 0;
-			long startTime;
 			int isRoutine;
-			long endTime;
-			int repeatingDays;
-			int repeatingTimes;
+			int repeatingDays = 0;
+			int repeatingTimes = 0;
 			
 			rid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); 
 			cursor++; // move to the next
 			
-			tid = (int)Integer.parseInt(strArray[cursor].replace("\"", ""));
+			tid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", ""));
 			cursor++; // move to the next
 			
-			startTime = (long)Long.parseLong(strArray[cursor].replace("\"", "")); 
 			cursor++; // move to the next
 			
-			isRoutine = (int)Integer.parseInt(strArray[cursor].replace("\"", ""));
+			isRoutine = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", ""));
 			cursor++; // move to the next
 			
-			endTime = (long)Long.parseLong(strArray[cursor].replace("\"", "")); 
 			cursor++; // move to the next
 			
-			repeatingDays = (int)Integer.parseInt(strArray[cursor].replace("\"", ""));
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
+			repeatingDays = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", ""));
 			cursor++; // move to the next
 			
-			repeatingTimes = (int)Integer.parseInt(strArray[cursor].replace("\"", ""));
+			//Error Control
+			if(!strArray[cursor].replace("\"", "").equals(""))
+			repeatingTimes = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", ""));
 			cursor++; // move to the next
 			
-			reminder_list.add(new Reminder(rid,tid,startTime,isRoutine,endTime,repeatingDays,repeatingTimes));
+			reminder_list.add(new Reminder(rid,tid,0,isRoutine,0,repeatingDays,repeatingTimes));
 			
 		}
 		

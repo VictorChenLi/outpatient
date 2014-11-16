@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.outpatient.fragment.adapters.TabsAdapter;
 import com.outpatient.notification.service.NotificationHelper;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.sysUtil.service.OutPatientService;
@@ -71,9 +72,9 @@ public class MainActivity extends FragmentActivity{
 		mTabsAdapter.addTab(bar.newTab().setText("Plan").setIcon(R.drawable.ic_launcher), PlanFragment.class, null);
         
 		startService();
-//		
-//		Intent i = new Intent(MainActivity.this, LoadingScreen.class);
-//		startActivityForResult(i, LOADING_SCREEN_RESULT);
+		
+		Intent i = new Intent(MainActivity.this, LoadingScreen.class);
+		startActivityForResult(i, LOADING_SCREEN_RESULT);
 		
     }
     

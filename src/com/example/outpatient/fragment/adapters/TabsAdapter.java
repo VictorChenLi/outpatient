@@ -1,4 +1,4 @@
-package com.example.outpatient;
+package com.example.outpatient.fragment.adapters;
 
 import java.util.ArrayList;
 
