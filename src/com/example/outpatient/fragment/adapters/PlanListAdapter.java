@@ -35,7 +35,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
         }
  
         
-        public void refreshTaskList(ArrayList<Plan> newList){
+        public void refreshPlanList(ArrayList<Plan> newList){
         	
         	planArrayList = newList;
         	notifyDataSetChanged();

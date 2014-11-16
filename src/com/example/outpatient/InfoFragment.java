@@ -46,8 +46,10 @@ public class InfoFragment extends Fragment{
 		info_listview = (ListView) rootView.findViewById(R.id.info_listview);
 		
 		 // 1. pass context and data to the custom adapter
-		infoListAdapter = new InfoListAdapter(getActivity(), generateData());
- 
+		if(GlobalVar.infoAdapter==null)
+			GlobalVar.infoAdapter = new InfoListAdapter(getActivity(), generateData());
+		infoListAdapter =GlobalVar.infoAdapter;
+		
         // 2. setListAdapter
 		info_listview.setAdapter(infoListAdapter);
       
@@ -96,6 +98,13 @@ public class InfoFragment extends Fragment{
     
     
     @Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
+
+
+	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
        
