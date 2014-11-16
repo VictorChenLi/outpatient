@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.outpatient.fragment.adapters.TabsAdapter;
 import com.outpatient.notification.service.NotificationHelper;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.sysUtil.service.OutPatientService;

@@ -6,7 +6,7 @@ public class Constant {
 	
 	public enum taskType
 	{
-		ALLDAY(1),ROUTINE(1<<1),AUTO(1<<2);
+		GENERAL(1),MEDICATION(2),APPOINTMENT(3);
 		
 		private int value=0;
 		private taskType(int value)

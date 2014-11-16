@@ -3,8 +3,8 @@ package com.outpatient.notification.service;
 import com.example.outpatient.InfoFragment;
 import com.example.outpatient.PlanFragment;
 import com.example.outpatient.R;
-import com.example.outpatient.TabsAdapter;
 import com.example.outpatient.TaskFragment;
+import com.example.outpatient.fragment.adapters.TabsAdapter;
 import com.outpatient.sysUtil.model.Constant;
 
 import android.app.ActionBar;

@@ -2,6 +2,7 @@ package com.example.outpatient;
 
 import java.util.ArrayList;
 
+import com.example.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 
@@ -30,6 +31,10 @@ public class TaskFragment extends Fragment{
 	// this is to identify receiving data update from the EditTaskActivity
 	private static final int EDIT_TASK_RESULT = 1001;
 	
+	
+	// this is to identify receiving data update from the EditTaskActivity
+	private static final int ADD_TASK_RESULT = 1005;
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
 		View rootView = inflater.inflate(R.layout.task_fragment, container, false);
@@ -43,18 +48,13 @@ public class TaskFragment extends Fragment{
         // 2. setListAdapter
 		task_listview.setAdapter(taskListAdapter);
         
-        if(addBtn==null)Log.v("debugtag","addButton is null");
-        
         // On click listener for the Add button, add tasks and then refresh the task list
         addBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				
-				Task newtask = new Task(1,1,"Eat Healthy","Haha",0,"Just eat every healthy food!",0,1416050690);
-				
-				task_list.add(newtask);
-				
-				taskListAdapter.notifyDataSetChanged();
+				Intent mIntent = new Intent(getActivity(), EditTaskActivity.class);
+				startActivityForResult(mIntent, ADD_TASK_RESULT);
 				
 			}
 		});
@@ -64,11 +64,20 @@ public class TaskFragment extends Fragment{
         {
             
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position ,long arg3) {
 				// TODO Auto-generated method stub
 				//do the stuff
-	            Intent i = new Intent(getActivity(), EditTaskActivity.class);
-	    		startActivityForResult(i, EDIT_TASK_RESULT);
+				
+				//initiate a new bundle
+				Bundle mBundle = new Bundle();
+				int TaskID = task_list.get(position).getTid();
+				mBundle.putInt("tid", TaskID);
+				
+	            Intent mIntent = new Intent(getActivity(), EditTaskActivity.class);
+	            mIntent.putExtras(mBundle);
+	            
+	    		startActivityForResult(mIntent, EDIT_TASK_RESULT);
+	    		
 			}
         });
          
@@ -99,10 +108,31 @@ public class TaskFragment extends Fragment{
     	   if(resultCode == Activity.RESULT_OK){
     		   
     		   Log.v("debugtag","successfully edited task!");
+     		   
+     		   //reload the database
+     		   task_list = (ArrayList<Task>) DBAccessImpl.getInstance(getActivity()).queryShowTaskList();
+     		   
+     		   taskListAdapter.refreshTaskList(task_list);
     		   
     	   }
     	   
        }
+    	
+    	if(requestCode == ADD_TASK_RESULT){
+     	   
+     	   // this handles the event when successfully edited a task
+     	   if(resultCode == Activity.RESULT_OK){
+     		   
+     		   Log.v("debugtag","successfully added task!");
+     		   
+     		   //reload the database
+     		   task_list = (ArrayList<Task>) DBAccessImpl.getInstance(getActivity()).queryShowTaskList();
+     		   
+     		   taskListAdapter.refreshTaskList(task_list);
+     		   
+     	   }
+     	   
+        }
     }
     
 }
