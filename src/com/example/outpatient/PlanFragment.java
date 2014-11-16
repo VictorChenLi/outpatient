@@ -2,6 +2,7 @@ package com.example.outpatient;
 
 import java.util.ArrayList;
 
+import com.example.outpatient.fragment.adapters.InfoListAdapter;
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.example.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Plan;
@@ -42,6 +43,10 @@ public class PlanFragment extends Fragment{
 		plan_listview = (ListView) rootView.findViewById(R.id.plan_listview);
 		
 		 // 1. pass context and data to the custom adapter
+		if(GlobalVar.planAdapter==null)
+			GlobalVar.planAdapter = new PlanListAdapter(getActivity(), generateData());
+		planListAdapter = GlobalVar.planAdapter;
+		
 		planListAdapter = new PlanListAdapter(getActivity(), generateData());
  
         // 2. setListAdapter
@@ -98,7 +103,7 @@ public class PlanFragment extends Fragment{
       		   //reload the database
       		   generateData();
       		   
-      		   planListAdapter.refreshTaskList(planList);
+      		   planListAdapter.refreshPlanList(planList);
       		   
       	   }
       	   

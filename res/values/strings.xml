@@ -50,4 +50,5 @@
  	<string name="snoozeReminder">The task will snooze 5 mins</string>
  	<string name="selectPlan">Please select your plan</string>
  	<string name="delete">Delete</string>
+ 	<string name="confirm">Confirm</string>
 </resources>

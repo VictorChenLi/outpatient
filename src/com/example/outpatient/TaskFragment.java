@@ -2,9 +2,11 @@ package com.example.outpatient;
 
 import java.util.ArrayList;
 
+import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.example.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
+import com.outpatient.sysUtil.model.GlobalVar;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -52,7 +54,9 @@ public class TaskFragment extends Fragment implements Callback{
 		task_listview = (ListView)rootView.findViewById(R.id.task_listview);
 		
 		 // 1. pass context and data to the custom adapter
-		taskListAdapter = new TaskListAdapter(getActivity(), generateData());
+		if(GlobalVar.taskAdapter==null)
+			GlobalVar.taskAdapter = new TaskListAdapter(getActivity(), generateData());
+		taskListAdapter = GlobalVar.taskAdapter;
  
         // 2. setListAdapter
 		task_listview.setAdapter(taskListAdapter);
@@ -167,7 +171,7 @@ public class TaskFragment extends Fragment implements Callback{
 
 			@Override
 			public boolean onCreateActionMode(ActionMode arg0, Menu menu) {
-				getActivity().getMenuInflater().inflate(R.menu.delete_menu, menu);
+				getActivity().getMenuInflater().inflate(R.menu.action_menu, menu);
                 return true;
 			}
 

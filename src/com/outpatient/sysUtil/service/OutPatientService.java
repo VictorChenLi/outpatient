@@ -8,6 +8,7 @@ import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
+import com.outpatient.sysUtil.model.GlobalVar;
 
 import android.app.Service;
 import android.content.Intent;
