@@ -83,7 +83,8 @@ public class InfoExpandingFragment extends Fragment {
         mData = new ArrayList<ExpandableListItem>();
         
     	for (int i = 0; i < currentPlans.size() ; i ++){
-
+    		
+    		if(GlobalVar.plan_info_list.get(currentPlans.get(i).getPid())!=null)
     		infoToShow.addAll(GlobalVar.plan_info_list.get(currentPlans.get(i).getPid()));
     	}
     	

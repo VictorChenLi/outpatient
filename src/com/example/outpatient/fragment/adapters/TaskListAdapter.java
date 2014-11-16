@@ -49,32 +49,38 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             ImageView flag;
         }
      
-        public View getView(int position, View view, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
             
-            if (view == null) {
+            if (convertView == null) {
             	
                 holder = new ViewHolder();
-                view = LayoutInflater.from(context).inflate(R.layout.task_item, parent, false);
-                
+
+                convertView = LayoutInflater.from(context).inflate(R.layout.task_item, parent, false);
+  
                 // Locate the TextViews in listview_item.xml
                 
-                holder.title = (TextView) view.findViewById(R.id.title);
-                holder.notion = (TextView) view.findViewById(R.id.notion);
-                holder.icon = (ImageView) view.findViewById(R.id.icon);
+                holder.title = (TextView) convertView.findViewById(R.id.title);
+                holder.notion = (TextView) convertView.findViewById(R.id.notion);
+                holder.icon = (ImageView) convertView.findViewById(R.id.icon);
                 
                 // Locate the ImageView in listview_item.xml
                 
-                holder.flag = (ImageView) view.findViewById(R.id.flag);
-                view.setTag(holder);
+                holder.flag = (ImageView) convertView.findViewById(R.id.flag);
+                convertView.setTag(holder);
             } else {
-                holder = (ViewHolder) view.getTag();
+                holder = (ViewHolder) convertView.getTag();
             }
             // Capture position and set to the TextViews
             holder.title.setText(tasksArrayList.get(position).getName());
+            
             try{
-            Reminder reminder = DBAccessImpl.getInstance(context).getReminderByTid(tasksArrayList.get(position).getTid());
-            if(reminder!=null)holder.notion.setText(reminder.toString());
+            	
+	            Reminder reminder = DBAccessImpl.getInstance(context).getReminderByTid(tasksArrayList.get(position).getTid());
+	            
+	            if(reminder!=null && reminder.toNotion()!="NOREMINDER")
+	            	holder.notion.setText(reminder.toNotion());
+            
             }catch (Exception e){}
             
             
@@ -84,7 +90,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
 //          // Capture position and set to the ImageView
 //          holder.flag.setImageResource(worldpopulationlist.get(position).getFlag());
 //            
-            return view;
+            return convertView;
         }
         
         

@@ -165,8 +165,6 @@ public class LoadingScreen extends Activity {
 		}
 
 		
-		
-		
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);

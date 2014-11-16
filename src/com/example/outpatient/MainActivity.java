@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.json.JSONArray;
@@ -22,6 +23,8 @@ import com.example.outpatient.fragment.adapters.TabsAdapter;
 import com.example.outpatient.infopage.InfoExpandingFragment;
 import com.outpatient.notification.service.NotificationHelper;
 import com.outpatient.storeCat.model.Info;
+import com.outpatient.storeCat.model.Plan;
+import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.service.OutPatientService;
 
 import android.app.Activity;
@@ -78,9 +81,9 @@ public class MainActivity extends FragmentActivity{
 		appinfo = getSharedPreferences("appinfo", Context.MODE_PRIVATE);
 		
 		mTabsAdapter = new TabsAdapter(this, pager);
-		mTabsAdapter.addTab(bar.newTab().setText("Tasks").setIcon(R.drawable.ic_launcher), TaskFragment.class, null);
-		mTabsAdapter.addTab(bar.newTab().setText("Info").setIcon(R.drawable.ic_launcher), InfoFragment.class, null);
-		mTabsAdapter.addTab(bar.newTab().setText("Plan").setIcon(R.drawable.ic_launcher), PlanFragment.class, null);
+		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.task_icon), TaskFragment.class, null);
+		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoExpandingFragment.class, null);
+		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.plan_icon), PlanFragment.class, null);
         
 		startService();
 		
@@ -125,13 +128,13 @@ public class MainActivity extends FragmentActivity{
 	        if (resultCode == RESULT_OK) {
 	        	
 
-	    			String planString = appinfo.getString("plans", "");
-	    			
+	        		ArrayList<Plan> currentPlans = (ArrayList<Plan>) DBAccessImpl.getInstance(getApplicationContext()).queryShowPlanList();
+	    				    			
 		        	// if use hasn't picked a plan, will prompt them to choose one
-		    		if(planString.equals("")){
+		    		if(currentPlans.size()==0){
 		    			
-//		    			Intent planInt = new Intent(MainActivity.this, SelectPlanActivity.class);
-//		    			startActivityForResult(planInt, SELECT_PLAN_RESULT);
+		    			Intent planInt = new Intent(MainActivity.this, SelectPlanActivity.class);
+		    			startActivityForResult(planInt, SELECT_PLAN_RESULT);
 		    			
 		    		}
 	        		

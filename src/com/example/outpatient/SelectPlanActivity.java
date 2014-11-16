@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AbsListView.MultiChoiceModeListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class SelectPlanActivity extends Activity{
 	
@@ -56,8 +57,6 @@ public class SelectPlanActivity extends Activity{
         // 2. setListAdapter
 		plan_listview.setAdapter(planListAdapter);
 		
-		plan_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		
         
         // On click listener for the Add button, add tasks and then refresh the task list
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +78,20 @@ public class SelectPlanActivity extends Activity{
 			}
 			
         });
+        
+       plan_listview.setOnItemClickListener(new OnItemClickListener()
+       {
+           
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position ,long arg3) {
+				// TODO Auto-generated method stub
+				//do the stuff
+
+				plan_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+				SelectPlanActivity.this.startActionMode(new ActionBarCallBack());
+	    		
+			}
+       });
         
      
         // set on click listener for the list items
@@ -203,5 +216,34 @@ public class SelectPlanActivity extends Activity{
 			super.onActivityResult(requestCode, resultCode, data);
 			
 		}
+		
+	    class ActionBarCallBack implements ActionMode.Callback {
+	    	 
+	        @Override
+	        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+	            // TODO Auto-generated method stub
+	            return false;
+	        }
+	 
+	        @Override
+	        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+	            // TODO Auto-generated method stub
+	            return false;
+	        }
+	 
+	        @Override
+	        public void onDestroyActionMode(ActionMode mode) {
+	            // TODO Auto-generated method stub
+	 
+	        }
+	 
+	        @Override
+	        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+	            // TODO Auto-generated method stub
+	 
+	            return false;
+	        }
+	 
+	    }
 	    
 }
