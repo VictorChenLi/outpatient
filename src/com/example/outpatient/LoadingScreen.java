@@ -155,6 +155,17 @@ public class LoadingScreen extends Activity {
 							
 						}
 						
+						
+						try
+		                {
+		                    Thread.sleep(1500);
+		                    
+		                } catch (InterruptedException e)
+		                {
+		                    e.printStackTrace();
+		                }
+						
+						
 						loadingBar.setProgress(8);
 						
 						//Store data in the task_reminder_list

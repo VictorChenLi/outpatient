@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">outpatient</string>
+    <string name="app_name">Outpatient</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     
@@ -24,7 +24,7 @@
     </string-array>
     
    <string-array name="task_type_list">
-        <item>General</item>
+        <item>General Task</item>
         <item>Medication</item>
         <item>Appointment/Contact</item>
     </string-array>

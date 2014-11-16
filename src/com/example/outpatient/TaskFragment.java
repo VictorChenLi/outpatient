@@ -89,6 +89,8 @@ public class TaskFragment extends Fragment implements Callback{
 				int TaskID = task_list.get(position).getTid();
 				mBundle.putInt("tid", TaskID);
 				
+				Log.v("debugtag","clicked="+TaskID);
+				
 	            Intent mIntent = new Intent(getActivity(), EditTaskActivity.class);
 	            mIntent.putExtras(mBundle);
 	            
