@@ -42,6 +42,9 @@ public class SelectPlanActivity extends Activity{
 	private ArrayList<Integer> selectedList;	
 	private DBAccessImpl dbAccessImpl;
     @Override
+    
+    
+    
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_plan);
@@ -184,9 +187,8 @@ public class SelectPlanActivity extends Activity{
 
 			@Override
 			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-				MenuInflater inflater = mode.getMenuInflater();
+				 MenuInflater inflater = mode.getMenuInflater();
 			      // assumes that you have "contexual.xml" menu resources
-			      inflater.inflate(R.menu.delete_menu, menu);
 			      return true;
 			}
 
@@ -194,6 +196,12 @@ public class SelectPlanActivity extends Activity{
 
     }
 	
+		@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+			
+	}
+
 		private ArrayList<Plan> generateData(){
 		    ArrayList<Plan> preSetPlanList = new ArrayList<Plan>(GlobalVar.plan_list);
 			List<Plan> savedPlanList = dbAccessImpl.queryShowPlanList();

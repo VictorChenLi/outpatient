@@ -27,11 +27,11 @@
         <TextView
             android:id="@+id/title_view"
             android:layout_height="fill_parent"
-            android:layout_width="0dp"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:padding = "15dp"
             android:layout_weight="2"
             android:textStyle="bold"
-            android:textSize="22sp"/>
+            android:textSize="24sp"/>
 
     </LinearLayout>
 
@@ -45,9 +45,7 @@
             android:id="@+id/text_view"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:gravity="center_horizontal"
+            android:textSize="20sp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingBottom="20dp"/>

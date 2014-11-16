@@ -20,12 +20,11 @@
     
     <ProgressBar
         android:id="@+id/loadingProgress"
-        style="@android:style/Widget.ProgressBar.Horizontal"
+        style="@style/ProgressBar.Outpatient"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="20dp"
-        android:minHeight="25dp"
         android:max="10"
         />
     
