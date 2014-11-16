@@ -318,11 +318,14 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 					
 					addedTask.setTaskType(typeID);
 					addedTask.setNotes(notes_edit.getText().toString());
-					
+					addedTask.setDate(Calendar.getInstance().getTimeInMillis());
+//					addedTask.setPid(pid);
 					//there is a remind
 					if(isRemind){
 						
 						if(end_date.after(start_date)){
+							
+							Log.v("debugtag",addedTask.toString());
 							
 							// insert the task to database 
 							int new_tid = DBAccessImpl.getInstance(getApplicationContext()).InsertTask(addedTask);
@@ -355,7 +358,9 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 							
 							// INSERT THE NEW REMINDER
 							DBAccessImpl.getInstance(getApplicationContext()).InsertReminder(taskReminder);
-						
+					
+							Log.v("debugtag",taskReminder.toString());
+							
 						}else{
 							
 							Toast.makeText(EditTaskActivity.this, "End Date has to be after Start Date.", Toast.LENGTH_SHORT).show();
@@ -368,10 +373,14 @@ public class EditTaskActivity extends Activity implements ICustomDateTimeListene
 						DBAccessImpl.getInstance(getApplicationContext()).InsertTask(addedTask);
 						
 						}
-					}else{
-						Toast.makeText(EditTaskActivity.this, "Please enter the task title.", Toast.LENGTH_SHORT).show();
-						}
 					
+						}	else{
+						
+						Toast.makeText(EditTaskActivity.this, "Please enter the task title.", Toast.LENGTH_SHORT).show();
+						
+						}
+						
+						Log.v("debugtag","edited task");
 						// will close this activity and lauch main activity
 						Intent resultIntent = new Intent(EditTaskActivity.this, MainActivity.class);
 						setResult(Activity.RESULT_OK, resultIntent);
