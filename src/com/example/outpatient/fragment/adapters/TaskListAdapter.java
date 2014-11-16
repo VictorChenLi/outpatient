@@ -55,7 +55,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             if (view == null) {
             	
                 holder = new ViewHolder();
-                view = inflater.inflate(R.layout.task_item, null);
+                view = LayoutInflater.from(context).inflate(R.layout.task_item, parent, false);
                 
                 // Locate the TextViews in listview_item.xml
                 

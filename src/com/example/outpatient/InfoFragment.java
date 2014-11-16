@@ -81,7 +81,8 @@ public class InfoFragment extends Fragment{
     	DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(getActivity());
     	for(Plan plan :dbAccessImpl.queryShowPlanList())
     	{
-    		infoList.addAll(GlobalVar.plan_info_list.get(plan.getPid()));
+    		if(null!=GlobalVar.plan_info_list.get(plan.getPid()))
+    			infoList.addAll(GlobalVar.plan_info_list.get(plan.getPid()));
     	}
     	return infoList;
     }
