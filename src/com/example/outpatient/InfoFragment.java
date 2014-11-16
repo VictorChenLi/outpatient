@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,12 +74,19 @@ public class InfoFragment extends Fragment{
 //        //read the plan list from the global variable 
 //    	
 //        return infoList;
+    	
+    	
     	ArrayList<Info> infoList = new ArrayList<Info>();
+    	
     	DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(getActivity());
-    	for(Plan plan :dbAccessImpl.queryShowPlanList())
-    	{
-    		infoList.addAll(GlobalVar.plan_info_list.get(plan.getPid()));
-    	}
+    	
+    	
+	    	for(Plan plan :dbAccessImpl.queryShowPlanList())
+	    	{	
+	    		if(plan!=null && GlobalVar.plan_info_list.get(plan.getPid())!=null)
+	    			infoList.addAll(GlobalVar.plan_info_list.get(plan.getPid()));
+	    	}
+	    	
     	return infoList;
     }
     
