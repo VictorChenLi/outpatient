@@ -64,7 +64,7 @@ public class DBAccessImpl implements DBAccess {
     
     public void deletTask(int tid)
     {
-    	String strSql="Delete * from [tbl_task] where tid=?";
+    	String strSql="Delete from [tbl_task] where tid=?";
     	Object[] bindArgs ={tid};
     	rdb.execSQL(strSql,bindArgs);
     }
@@ -157,7 +157,7 @@ public class DBAccessImpl implements DBAccess {
     
     public void deletReminder(int rid)
     {
-    	String strSql="Delete * from [tbl_reminder] where rid=?";
+    	String strSql="Delete from [tbl_reminder] where rid=?";
     	Object[] bindArgs ={rid};
     	rdb.execSQL(strSql,bindArgs);
     }
@@ -214,7 +214,7 @@ public class DBAccessImpl implements DBAccess {
     
     public void deletPlan(int pid)
     {
-    	String strSql="Delete * from [tbl_plan] where pid=?";
+    	String strSql="Delete from tbl_plan where pid=?";
     	Object[] bindArgs ={pid};
     	rdb.execSQL(strSql,bindArgs);
     }
@@ -295,7 +295,7 @@ public class DBAccessImpl implements DBAccess {
     }
     public void deletInfo(int iid)
     {
-    	String strSql="Delete * from [tbl_info] where iid=?";
+    	String strSql="Delete from [tbl_info] where iid=?";
     	Object[] bindArgs ={iid};
     	rdb.execSQL(strSql,bindArgs);
     }
