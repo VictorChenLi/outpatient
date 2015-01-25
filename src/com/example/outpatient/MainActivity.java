@@ -102,6 +102,16 @@ public class MainActivity extends FragmentActivity{
 		    			Intent planInt = new Intent(MainActivity.this, SelectPlanActivity.class);
 		    			startActivityForResult(planInt, SELECT_PLAN_RESULT);
 		    			
+		    		}else{
+		    			
+		    			final ActionBar bar = getActionBar();
+		        		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		        		
+		        		mTabsAdapter = new TabsAdapter(this, pager);
+		        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.task_icon), TaskFragment.class, null);
+		        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoExpandingFragment.class, null);
+		        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.plan_icon), PlanFragment.class, null);
+		                
 		    		}
 		    		
 		    		
@@ -121,7 +131,6 @@ public class MainActivity extends FragmentActivity{
 	        	
 	        		Toast.makeText(MainActivity.this, "Selected Plan!", Toast.LENGTH_LONG).show();
 	        	 
-
 	        		final ActionBar bar = getActionBar();
 	        		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	        		
