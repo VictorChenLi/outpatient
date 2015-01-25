@@ -533,9 +533,8 @@ public class EditTaskActivity extends Activity implements
 			int curPos = 0;
 			for (int i = 0; i < currentPlan.size(); i++) {
 				
-				spinnerArray.add(currentPlan.get(i).getName());
-				
 				if (currentPlan.get(i).getPid() == pid)curPos = i;
+				spinnerArray.add(currentPlan.get(i).getName());
 				
 			}
 

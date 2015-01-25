@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -52,6 +53,8 @@ public class SelectPlanActivity extends Activity{
         setContentView(R.layout.select_plan);
         
 		addBtn = (Button)findViewById(R.id.add_button);
+		addBtn.setVisibility(View.GONE);
+		
 		plan_listview = (ListView)findViewById(R.id.plan_listview);
 //		selectedList = new ArrayList<Integer>();
 		dbAccessImpl = DBAccessImpl.getInstance(this);
@@ -63,6 +66,7 @@ public class SelectPlanActivity extends Activity{
 		plan_listview.setAdapter(planListAdapter);
 		
 		flag=true;
+		
         
        plan_listview.setOnItemClickListener(new OnItemClickListener()
        {
@@ -76,8 +80,6 @@ public class SelectPlanActivity extends Activity{
 //				SelectPlanActivity.this.startActionMode(new ActionBarCallBack());
 				plan_listview.setItemChecked(position,true);
 				
-				
-	    		
 			}
        });
         
@@ -91,11 +93,28 @@ public class SelectPlanActivity extends Activity{
                // Here you can do something when items are selected/de-selected,
                // such as update the title in the CAB
 //           	Log.v("mchoice", );
-           	// Capture total checked items
-               final int checkedCount = plan_listview.getCheckedItemCount();
-               // Set the CAB title according to total checked items
-               mode.setTitle(checkedCount + " Selected");
-               selectedList[position]=checked;
+	           	// Capture total checked items
+	               final int checkedCount = plan_listview.getCheckedItemCount();
+	               // Set the CAB title according to total checked items
+	               mode.setTitle(checkedCount + " Selected");
+	               selectedList[position]=checked;
+	               
+//
+//                   plan_listview.getChildAt(position).setBackgroundColor(0x30ACEC);
+//	               plan_listview.invalidate();
+//	               Log.v("interaction","interaction");
+//               
+//            	   plan_listview.getChildAt(position).setBackgroundColor(0xFFFFFF);
+//	               plan_listview.invalidate();
+	
+	               
+	               //HARD CODE: suggest wound care when selected Post-Appendicitis Care
+//     			   if(planList.get(position).getPid()==6)Toast.makeText(SelectPlanActivity.this, R.string.recommend_wound, Toast.LENGTH_LONG).show();
+     			 TextView tv_plan_name = (TextView)plan_listview.getChildAt(position).findViewById(R.id.plan_name);
+     			 if(tv_plan_name.getText().equals("Post-Appendicitis Care"))
+     				 Toast.makeText(SelectPlanActivity.this, R.string.recommend_wound, Toast.LENGTH_LONG).show();
+	               
+	               
                // Calls toggleSelection method from ListViewAdapter Class
 //               planListAdapter.toggleSelection(position);
            		if(flag)
@@ -113,6 +132,7 @@ public class SelectPlanActivity extends Activity{
                      		   if(selectedList[i])
                      		   {
                      			   int pid = dbAccessImpl.InsertPlan(planList.get(i));
+                     			   
                      			   //save the pre-setting task list
                          		   ArrayList<Task> taskList = GlobalVar.plan_task_list.get(planList.get(i).getPid());
                          		   for(Task task:taskList)

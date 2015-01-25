@@ -80,6 +80,9 @@ public class MainActivity extends FragmentActivity{
 		//the following decided if the app runs for the first time
 		appinfo = getSharedPreferences("appinfo", Context.MODE_PRIVATE);
 		
+		Intent i = new Intent(MainActivity.this, LoadingScreen.class);
+		startActivityForResult(i, LOADING_SCREEN_RESULT);
+		
 		mTabsAdapter = new TabsAdapter(this, pager);
 		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.task_icon), TaskFragment.class, null);
 		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoExpandingFragment.class, null);
@@ -87,8 +90,6 @@ public class MainActivity extends FragmentActivity{
         
 		startService();
 		
-		Intent i = new Intent(MainActivity.this, LoadingScreen.class);
-		startActivityForResult(i, LOADING_SCREEN_RESULT);
 		
     }
     

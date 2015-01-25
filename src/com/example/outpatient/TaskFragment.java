@@ -2,6 +2,7 @@ package com.example.outpatient;
 
 import java.util.ArrayList;
 
+import com.example.outpatient.fragment.adapters.InfoListAdapter;
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.example.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Task;
@@ -36,7 +37,6 @@ public class TaskFragment extends Fragment implements Callback{
 	private TaskListAdapter taskListAdapter; 
 	private ArrayList<Task> task_list;
 	private ListView task_listview;
-	private ActionMode mActionMode;
 	
 	
 	// this is to identify receiving data update from the EditTaskActivity
@@ -57,7 +57,9 @@ public class TaskFragment extends Fragment implements Callback{
 		if(GlobalVar.taskAdapter==null)
 			GlobalVar.taskAdapter = new TaskListAdapter(getActivity(), generateData());
 		taskListAdapter = GlobalVar.taskAdapter;
- 
+		
+		taskListAdapter = new TaskListAdapter(getActivity(), generateData());
+		
         // 2. setListAdapter
 		task_listview.setAdapter(taskListAdapter);
         
@@ -103,14 +105,8 @@ public class TaskFragment extends Fragment implements Callback{
         task_listview.setOnLongClickListener(new View.OnLongClickListener() {
             // Called when the user long-clicks on someView
             public boolean onLongClick(View view) {
-                if (mActionMode != null) {
-                    return false;
-                }
-
-                // Start the CAB using the ActionMode.Callback defined above
-                mActionMode = getActivity().startActionMode(TaskFragment.this);
-                view.setSelected(true);
-                task_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+               
+            	task_listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
                 
                 return true;
             }
@@ -160,7 +156,7 @@ public class TaskFragment extends Fragment implements Callback{
             public void onDestroyActionMode(ActionMode mode) {
                 // Here you can make any necessary updates to the activity when
                 // the CAB is removed. By default, selected items are deselected/unchecked.
-            	task_listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            	
             }
 
             @Override
@@ -173,7 +169,7 @@ public class TaskFragment extends Fragment implements Callback{
 
 			@Override
 			public boolean onCreateActionMode(ActionMode arg0, Menu menu) {
-				getActivity().getMenuInflater().inflate(R.menu.action_menu, menu);
+				getActivity().getMenuInflater().inflate(R.menu.delete_menu, menu);
                 return true;
 			}
 
@@ -199,7 +195,21 @@ public class TaskFragment extends Fragment implements Callback{
     }
     
     
+    
+    
     @Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		GlobalVar.taskAdapter.refreshTaskList(this.generateData());
+		
+		
+		
+	}
+
+
+	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
        

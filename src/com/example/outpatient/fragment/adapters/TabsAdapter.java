@@ -79,12 +79,15 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		
 		mViewPager.setCurrentItem(tab.getPosition());
 		Log.v(TAG, "clicked page"+tab.getPosition());
 		Object tag = tab.getTag();
+		
 		for (int i = 0; i<mTabs.size(); i++){
 			if (mTabs.get(i) == tag){
 				mViewPager.setCurrentItem(i);
+				
 			}
 		}
 	}

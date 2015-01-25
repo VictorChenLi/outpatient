@@ -10,6 +10,7 @@ import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -33,6 +34,10 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
  
             this.context = context;
             this.tasksArrayList = itemsArrayList;
+            
+            mSelectedItemsIds = new SparseBooleanArray();
+            
+            
         }
         
         public TaskListAdapter(Context context) {
@@ -94,18 +99,39 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             // Capture position and set to the TextViews
             holder.title.setText(tasksArrayList.get(position).getName());
             
+            int taskType = tasksArrayList.get(position).getTaskType();
+            
+            Drawable general_task_icon = context.getResources().getDrawable(R.drawable.general_task);   
+            Drawable medication_task_icon= context.getResources().getDrawable(R.drawable.medication_task);   
+            Drawable appointment_task_icon= context.getResources().getDrawable(R.drawable.contact_task);
+            Drawable has_reminder= context.getResources().getDrawable(R.drawable.flag);
+            
+            if(taskType == 1)holder.icon.setBackground(medication_task_icon);
+            else if(taskType == 2)holder.icon.setBackground(general_task_icon);
+            else if(taskType == 3)holder.icon.setBackground(appointment_task_icon);
+            
+            
             try{
             	
 	            Reminder reminder = DBAccessImpl.getInstance(context).getReminderByTid(tasksArrayList.get(position).getTid());
 	            
-	            if(reminder!=null && reminder.toNotion()!="NOREMINDER")
+	            if(reminder!=null && reminder.toNotion()!="NOREMINDER"){
+	            	
+	            	// setting the text for the reminder
 	            	holder.notion.setText(reminder.toNotion());
-            
+	            	
+	            	// setting the image of the reminder
+	            	holder.flag.setBackground(has_reminder);
+	            
+	            }else {
+	            	
+	            	// setting the text for the reminder
+	            	holder.notion.setText("");
+	            	
+	            }
+	            
             }catch (Exception e){}
-            
-            
-            // haven't yet set the flags and icons
-            
+         
 //          holder.icon.setText(worldpopulationlist.get(position).getPopulation());
 //          // Capture position and set to the ImageView
 //          holder.flag.setImageResource(worldpopulationlist.get(position).getFlag());

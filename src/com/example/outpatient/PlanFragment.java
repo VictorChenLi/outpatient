@@ -46,6 +46,7 @@ public class PlanFragment extends Fragment{
 		if(GlobalVar.planAdapter==null)
 			GlobalVar.planAdapter = new PlanListAdapter(getActivity(), generateData());
 		planListAdapter = GlobalVar.planAdapter;
+		planListAdapter.notifyDataSetChanged();
 		
 		planListAdapter = new PlanListAdapter(getActivity(), generateData());
  

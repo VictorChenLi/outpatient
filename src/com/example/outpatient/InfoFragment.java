@@ -49,6 +49,9 @@ public class InfoFragment extends Fragment{
 		if(GlobalVar.infoAdapter==null)
 			GlobalVar.infoAdapter = new InfoListAdapter(getActivity(), generateData());
 		infoListAdapter =GlobalVar.infoAdapter;
+		infoListAdapter.notifyDataSetChanged();
+		
+		infoListAdapter = new InfoListAdapter(getActivity(), generateData());
 		
         // 2. setListAdapter
 		info_listview.setAdapter(infoListAdapter);

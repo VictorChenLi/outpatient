@@ -108,7 +108,6 @@ public class LoadingScreen extends Activity {
 						//store all data in Global Variables
 						GlobalVar.plan_list = plan_list;
 						
-						
 						//store data in the plan_task_list
 						GlobalVar.plan_task_list = new HashMap<Integer, ArrayList<Task>>();
 						
@@ -238,15 +237,17 @@ public class LoadingScreen extends Activity {
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
-	    while (cursor < strArray.length){
+	    while (cursor < strArray.length - 1){
 			int iid = 0;
 			int pid = 0;
 			String que = "";
 			String ans = "";
 			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			iid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); //reading iid
 			cursor++; // move to the next
 			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			pid = (int)Integer.parseInt(strArray[cursor].replace("\"", "")); //reading pid
 			cursor++; // move to the next
 			
@@ -276,11 +277,12 @@ public class LoadingScreen extends Activity {
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
-	    while (cursor < strArray.length){
+	    while (cursor < strArray.length - 1){
 			int pid = 0;
 			int pType = 0;
 			String name = "";
 			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			pid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); 
 			cursor++; // move to the next
 			
@@ -299,7 +301,6 @@ public class LoadingScreen extends Activity {
 			cursor++; // passed date isArch field
 			
 			plan_list.add(new Plan(pid,name,pType,0,0));
-			
 		}
 		
 	}
@@ -314,16 +315,18 @@ public class LoadingScreen extends Activity {
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
-	    while (cursor < strArray.length){
+	    while (cursor < strArray.length - 1){
 			int tid = 0;
 			int pid = 0;
 			String name = "";
 			int taskType = 0;
 			String description = "";
 			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			tid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); 
 			cursor++; // move to the next
 			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			pid = (int)Integer.parseInt(strArray[cursor].replace("\"", ""));
 			cursor++; // move to the next
 			
@@ -365,21 +368,27 @@ public class LoadingScreen extends Activity {
 	    String str = convertStreamToString(input);
 	    String[] strArray = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	    
-	    while (cursor < strArray.length){
+	    
+	    while (cursor < strArray.length - 1){
 			int rid = 0;
 			int tid = 0;
-			int isRoutine;
+			int isRoutine = 0;
 			int repeatingDays = 0;
 			int repeatingTimes = 0;
 			
+			Log.v("debugtag",strArray[cursor]);
+			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			rid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", "")); 
 			cursor++; // move to the next
 			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			tid = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", ""));
 			cursor++; // move to the next
 			
 			cursor++; // move to the next
 			
+			if(!strArray[cursor].replace("\"", "").equals(""))
 			isRoutine = (int)Integer.parseInt(strArray[cursor].replace("\"", "").replace("\n", "").replace("\r", ""));
 			cursor++; // move to the next
 			
@@ -396,7 +405,7 @@ public class LoadingScreen extends Activity {
 			cursor++; // move to the next
 			
 			reminder_list.add(new Reminder(rid,tid,0,isRoutine,0,repeatingDays,repeatingTimes));
-			
+			Log.v("debugtag","addedReminder="+rid);
 		}
 		
 	}
