@@ -55,11 +55,16 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 	@Override
 	public void onPageScrollStateChanged(int state) {
 		
+		Log.v(TAG, "scrolled state changed");
+		
+		
 	}
 
 
 	@Override
 	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		
+		Log.v(TAG, "haa scrolled to page="+position);
 		
 	}
 
@@ -87,7 +92,6 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 		for (int i = 0; i<mTabs.size(); i++){
 			if (mTabs.get(i) == tag){
 				mViewPager.setCurrentItem(i);
-				
 			}
 		}
 	}

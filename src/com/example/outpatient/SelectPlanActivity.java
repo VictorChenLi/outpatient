@@ -44,10 +44,8 @@ public class SelectPlanActivity extends Activity{
 	private Boolean[] selectedList;	
 	private DBAccessImpl dbAccessImpl;
 	private Boolean flag=true;
-    @Override
     
-    
-    
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_plan);
