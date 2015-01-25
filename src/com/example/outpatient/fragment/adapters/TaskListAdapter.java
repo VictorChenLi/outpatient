@@ -51,8 +51,9 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         
         public void refreshTaskList(ArrayList<Task> newList){
         	
-        	tasksArrayList = newList;
-        	notifyDataSetChanged();
+        	tasksArrayList.clear();
+        	tasksArrayList.addAll(newList);
+        	this.notifyDataSetChanged();
         }
         
         private ArrayList<Task> generateData(){

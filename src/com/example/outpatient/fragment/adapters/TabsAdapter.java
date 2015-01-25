@@ -54,13 +54,13 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 
 	@Override
 	public void onPageScrollStateChanged(int state) {
-		
+		return ;
 	}
 
 
 	@Override
 	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-		
+		return;
 	}
 
 
@@ -82,14 +82,14 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 		
 		mViewPager.setCurrentItem(tab.getPosition());
 		Log.v(TAG, "clicked page"+tab.getPosition());
-		Object tag = tab.getTag();
+//		Object tag = tab.getTag();
 		
-		for (int i = 0; i<mTabs.size(); i++){
-			if (mTabs.get(i) == tag){
-				mViewPager.setCurrentItem(i);
-				
-			}
-		}
+//		for (int i = 0; i<mTabs.size(); i++){
+//			if (mTabs.get(i) == tag){
+//				mViewPager.setCurrentItem(i);
+//				
+//			}
+//		}
 	}
 
 

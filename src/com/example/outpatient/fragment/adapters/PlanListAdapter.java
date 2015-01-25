@@ -12,6 +12,7 @@ import com.outpatient.storeCat.service.DBAccessImpl;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
         private ArrayList<Plan> planArrayList;
         private DBAccessImpl dbhandler;
         private LayoutInflater inflater;
+        private SparseBooleanArray mSelectedItemsIds;
  
         public PlanListAdapter(Context context, ArrayList<Plan> itemsArrayList) {
  
@@ -32,6 +34,9 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
  
             this.context = context;
             this.planArrayList = itemsArrayList;
+            
+            mSelectedItemsIds = new SparseBooleanArray();
+            dbhandler = DBAccessImpl.getInstance(context);
         }
         
         public PlanListAdapter(Context context) {
@@ -84,5 +89,37 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
                        
             // 5. return rowView
             return convertView;
+        }
+        
+        @Override
+        public void remove(Plan object) {
+        	planArrayList.remove(object);
+        	dbhandler.deletPlan(object.getPid());
+            notifyDataSetChanged();
+        }
+        
+        public void toggleSelection(int position) {
+            selectView(position, !mSelectedItemsIds.get(position));
+        }
+     
+        public void removeSelection() {
+            mSelectedItemsIds = new SparseBooleanArray();
+            notifyDataSetChanged();
+        }
+     
+        public void selectView(int position, boolean value) {
+            if (value)
+                mSelectedItemsIds.put(position, value);
+            else
+                mSelectedItemsIds.delete(position);
+            notifyDataSetChanged();
+        }
+     
+        public int getSelectedCount() {
+            return mSelectedItemsIds.size();
+        }
+     
+        public SparseBooleanArray getSelectedIds() {
+            return mSelectedItemsIds;
         }
 }
