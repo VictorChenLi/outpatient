@@ -94,6 +94,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
                 
                 holder.flag = (ImageView) convertView.findViewById(R.id.flag);
                 convertView.setTag(holder);
+                
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }

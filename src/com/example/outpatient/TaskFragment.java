@@ -38,10 +38,8 @@ public class TaskFragment extends Fragment implements Callback{
 	private ArrayList<Task> task_list;
 	private ListView task_listview;
 	
-	
 	// this is to identify receiving data update from the EditTaskActivity
 	public static final int EDIT_TASK_RESULT = 1001;
-	
 	
 	// this is to identify receiving data update from the EditTaskActivity
 	public static final int ADD_TASK_RESULT = 1005;
