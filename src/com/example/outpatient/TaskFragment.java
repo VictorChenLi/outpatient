@@ -84,13 +84,14 @@ public class TaskFragment extends Fragment implements Callback{
 				// TODO Auto-generated method stub
 				//do the stuff
 				
-				//initiate a new bundle
+				//initiate a new bundle to pass the tid
 				Bundle mBundle = new Bundle();
 				int TaskID = task_list.get(position).getTid();
 				mBundle.putInt("tid", TaskID);
 				
 				Log.v("debugtag","clicked="+TaskID);
 				
+				//open the edit task activity to edit the task
 	            Intent mIntent = new Intent(getActivity(), EditTaskActivity.class);
 	            mIntent.putExtras(mBundle);
 	            
