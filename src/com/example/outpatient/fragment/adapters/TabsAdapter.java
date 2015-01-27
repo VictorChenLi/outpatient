@@ -2,6 +2,8 @@ package com.example.outpatient.fragment.adapters;
 
 import java.util.ArrayList;
 
+import com.outpatient.sysUtil.model.GlobalVar;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
@@ -67,6 +69,17 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabListener, On
 	@Override
 	public void onPageSelected(int position) {
 		mActionBar.setSelectedNavigationItem(position);
+		switch(position) {
+			case 0:
+          	   GlobalVar.getTaskListAdapter(mContext).refreshTaskList();
+          	   break;
+			case 1:
+				GlobalVar.getInfoListAdapter(mContext).refreshInfoList();
+	          	break;
+			case 2:
+				GlobalVar.getPlanListAdapter(mContext).refreshPlanList();
+				break;
+		}
 		Log.v(TAG, "scrolled to page="+position);
 	}
 
