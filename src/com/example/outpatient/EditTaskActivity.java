@@ -1,6 +1,5 @@
 package com.example.outpatient;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,34 +10,21 @@ import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
-import com.outpatient.sysUtil.model.Constant;
-import com.outpatient.sysUtil.model.GlobalVar;
 import com.outpatient.sysUtil.service.DateTimePicker;
 import com.outpatient.sysUtil.service.DateTimePicker.ICustomDateTimeListener;
 
 import android.os.Bundle;
-import android.provider.ContactsContract.Contacts;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -537,8 +523,10 @@ public class EditTaskActivity extends Activity implements
 				spinnerArray.add(currentPlan.get(i).getName());
 				
 			}
-
-			task_type.setSelection(editingTask.getTaskType());
+			
+			// Important: getTaskType()-1 because it's kept 1,2,3 in database
+			// while in the spinnerArray it's referenced by 0,1,2 
+			task_type.setSelection(editingTask.getTaskType()-1);
 			notes_edit.setText(editingTask.getNotes());
 			
 			ArrayAdapter<String> plan_spinner_adapter = new ArrayAdapter<String>(
