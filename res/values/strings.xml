@@ -52,6 +52,6 @@
  	<string name="delete">Delete</string>
  	<string name="confirm">Confirm</string>
  	<string name="recommend_wound">Based on your plan, we also suggest you to select the Wound Care plan.</string>
- 	
+ 	<string name="firsttime_selectplan">You have to select certain plan to start</string>
  	
 </resources>

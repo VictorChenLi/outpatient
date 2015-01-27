@@ -2,7 +2,9 @@ package com.example.outpatient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.outpatient.storeCat.model.Info;
@@ -153,20 +155,11 @@ public class SelectPlanActivity extends Activity{
                          		   }
                      		   }
                      	   }
-                     	   List<Plan> planList = dbAccessImpl.queryShowPlanList();
-                     	   GlobalVar.planAdapter.refreshPlanList((ArrayList<Plan>) planList);
-                     	   List<Info> InfoList = new ArrayList<Info>();
-                     	   for(Plan plan : planList)
-                     	   {
-                     		   List<Info> temList = dbAccessImpl.queryInfoListByPid(plan.getPid());
-                     		   if(null!=temList&&0!=temList.size())
-                     		   {
-                     			   InfoList.addAll(temList);
-                     		   }
-                     	   }
-                     	   GlobalVar.infoAdapter.refreshList((ArrayList<Info>) InfoList);
-                     	   List<Task> taskList = dbAccessImpl.queryShowTaskList();
-                     	   GlobalVar.taskAdapter.refreshTaskList((ArrayList<Task>) taskList);
+                     	   
+                     	   // update Plan, info and task list
+                     	   GlobalVar.getPlanListAdapter(getApplicationContext()).refreshPlanList();
+                     	   GlobalVar.getInfoListAdapter(getApplicationContext()).refreshInfoList();
+                     	   GlobalVar.getTaskListAdapter(getApplicationContext()).refreshTaskList();
                      	   
                  		   Intent resultIntent = new Intent(SelectPlanActivity.this, MainActivity.class);
                  		   setResult(Activity.RESULT_OK, resultIntent);
@@ -224,22 +217,39 @@ public class SelectPlanActivity extends Activity{
 		@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-			
+		if(dbAccessImpl.queryShowPlanList().size()>0)
+		{
+			Intent resultIntent = new Intent(SelectPlanActivity.this, MainActivity.class);
+  		   	setResult(Activity.RESULT_OK, resultIntent);
+			SelectPlanActivity.this.finish();
+		}
+		else
+			Toast.makeText(SelectPlanActivity.this, R.string.firsttime_selectplan, Toast.LENGTH_LONG).show();
 	}
 
 		private ArrayList<Plan> generateData(){
-		    ArrayList<Plan> preSetPlanList = new ArrayList<Plan>(GlobalVar.plan_list);
-			List<Plan> savedPlanList = dbAccessImpl.queryShowPlanList();
+//			Set<Plan> temp = new HashSet<Plan>(GlobalVar.plan_list);
+//			Set<Plan> presettingSet = new HashSet<Plan>(GlobalVar.plan_list);
+//			Set<Plan> savedPlanSet = new HashSet<Plan>(dbAccessImpl.queryShowPlanList());
+			List<Plan> temp = new ArrayList<Plan>(GlobalVar.plan_list);
+			List<Plan> preSetPlanList = new ArrayList<Plan>(GlobalVar.plan_list);
+			List<Plan> savedPlanList = new ArrayList<Plan>(dbAccessImpl.queryShowPlanList());
 			//read the plan list from the global variable 
-			planList = GlobalVar.plan_list;
-		    for(Plan preSetPlan : preSetPlanList)
+		    for(Plan savedPlan : savedPlanList)
 		    {
-		    	for(Plan savedPlan:savedPlanList)
+		    	for(Plan preSetPlan:preSetPlanList)
 		    	{
 		    		if(savedPlan.getName().equals(preSetPlan.getName()))
-		    			planList.remove(savedPlan);
+		    		{
+		    			temp.remove(preSetPlan);
+		    			break;
+		    		}
 		    	}
 		    }
+//			temp.retainAll(savedPlanSet);
+//			presettingSet.removeAll(savedPlanSet);
+//			savedPlanSet.removeAll(temp);
+			planList = new ArrayList<Plan>(temp);
 		    selectedList = new Boolean[planList.size()];
 		    for(int i=0;i<planList.size();i++)
 		    	selectedList[i]=false;

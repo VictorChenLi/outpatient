@@ -49,6 +49,22 @@ public class Plan {
 	public Plan() {
 		super();
 	}
+	@Override
+	public boolean equals(Object o) {
+		if(o == null)                return false;
+		if (!(o instanceof Plan)) 	 return false;
+		   
+	    Plan other = (Plan) o;
+	    if(this.pid != other.pid || !this.name.equals(other.name))      return false;
+		return true;
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return this.pid;
+	}
+	
+	
 	
 	
 

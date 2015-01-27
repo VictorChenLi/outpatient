@@ -3,6 +3,8 @@ package com.outpatient.sysUtil.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.Context;
+
 import com.example.outpatient.fragment.adapters.InfoListAdapter;
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.example.outpatient.fragment.adapters.TaskListAdapter;
@@ -10,6 +12,7 @@ import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
+import com.outpatient.storeCat.service.DBAccessImpl;
 
 public class GlobalVar {
 	
@@ -25,10 +28,34 @@ public class GlobalVar {
 	//list to show reminder associated with task, key is the tid
 	public static HashMap<Integer, Reminder> task_reminder_list;
 	
-	public static InfoListAdapter infoAdapter;
+	private static InfoListAdapter infoAdapter;
 	
-	public static PlanListAdapter planAdapter;
+	private static PlanListAdapter planAdapter;
 	
-	public static TaskListAdapter taskAdapter;
+	private static TaskListAdapter taskAdapter;
+	
+	public static InfoListAdapter getInfoListAdapter(Context context)
+	{
+		if(GlobalVar.infoAdapter==null)
+			GlobalVar.infoAdapter = new InfoListAdapter(context);
+		return GlobalVar.infoAdapter;
+		
+	}
+	
+	public static PlanListAdapter getPlanListAdapter(Context context)
+	{
+		if(GlobalVar.planAdapter==null)
+			GlobalVar.planAdapter = new PlanListAdapter(context);
+		return GlobalVar.planAdapter;
+		
+	}
+	
+	public static TaskListAdapter getTaskListAdapter(Context context)
+	{
+		if(GlobalVar.taskAdapter==null)
+			GlobalVar.taskAdapter = new TaskListAdapter(context);
+		return GlobalVar.taskAdapter;
+		
+	}
 	
 }

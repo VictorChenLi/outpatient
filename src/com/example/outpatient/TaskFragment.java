@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.example.outpatient.fragment.adapters.InfoListAdapter;
 import com.example.outpatient.fragment.adapters.PlanListAdapter;
 import com.example.outpatient.fragment.adapters.TaskListAdapter;
+import com.example.outpatient.fragment.adapters.TaskListAdapter.ViewHolder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
@@ -52,11 +53,9 @@ public class TaskFragment extends Fragment implements Callback{
 		task_listview = (ListView)rootView.findViewById(R.id.task_listview);
 		
 		 // 1. pass context and data to the custom adapter
-		if(GlobalVar.taskAdapter==null)
-			GlobalVar.taskAdapter = new TaskListAdapter(getActivity(), generateData());
-		taskListAdapter = GlobalVar.taskAdapter;
+		taskListAdapter = GlobalVar.getTaskListAdapter(getActivity());
 		
-		taskListAdapter = new TaskListAdapter(getActivity(), generateData());
+//		taskListAdapter = new TaskListAdapter(getActivity(), generateData());
 		
         // 2. setListAdapter
 		task_listview.setAdapter(taskListAdapter);
@@ -86,7 +85,9 @@ public class TaskFragment extends Fragment implements Callback{
 				
 				//initiate a new bundle
 				Bundle mBundle = new Bundle();
-				int TaskID = task_list.get(position).getTid();
+//				int TaskID = task_list.get(position).getTid();
+				int TaskID = ((ViewHolder) arg1.getTag()).tid;
+				
 				mBundle.putInt("tid", TaskID);
 				
 				Log.v("debugtag","clicked="+TaskID);
@@ -178,20 +179,6 @@ public class TaskFragment extends Fragment implements Callback{
          
 		return rootView;
 	}
-	
-	
-    private ArrayList<Task> generateData(){
-        
-        //read the tasks from database and add them to the list
-        
-        dbhandler = DBAccessImpl.getInstance(getActivity());
-        
-        //query all the tasks to be shown in the task list 
-        task_list = (ArrayList<Task>) dbhandler.queryShowTaskList();
-        
-        return task_list;
-    }
-    
     
     
     
@@ -199,11 +186,7 @@ public class TaskFragment extends Fragment implements Callback{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
-		GlobalVar.taskAdapter.refreshTaskList(this.generateData());
-		
-		
-		
+		GlobalVar.getTaskListAdapter(getActivity()).refreshTaskList();
 	}
 
 
@@ -219,9 +202,7 @@ public class TaskFragment extends Fragment implements Callback{
     		   Log.v("debugtag","successfully edited task!");
      		   
      		   //reload the database
-     		   task_list = (ArrayList<Task>) DBAccessImpl.getInstance(getActivity()).queryShowTaskList();
-     		   
-     		   taskListAdapter.refreshTaskList(task_list);
+     		   taskListAdapter.refreshTaskList();
     		   
     	   }
     	   
@@ -235,9 +216,7 @@ public class TaskFragment extends Fragment implements Callback{
      		   Log.v("debugtag","successfully added task!");
      		   
      		   //reload the database
-     		   task_list = (ArrayList<Task>) DBAccessImpl.getInstance(getActivity()).queryShowTaskList();
-     		   
-     		   taskListAdapter.refreshTaskList(task_list);
+     		   taskListAdapter.refreshTaskList();
      		   
      	   }
      	   

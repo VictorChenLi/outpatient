@@ -38,13 +38,21 @@ public class InfoListAdapter extends ArrayAdapter<Info> {
         }
  
         
-        public void refreshList(ArrayList<Info> newList){
-        	
+        public void refreshInfoList(ArrayList<Info> newList){
         	infoArrayList = newList;
-        	notifyDataSetChanged();
+        	this.clear();
+     		this.addAll(newList);
+     		this.notifyDataSetChanged();
         }
         
-        private ArrayList<Info> generateData(){
+        public void refreshInfoList(){
+        	infoArrayList = this.generateData();
+        	this.clear();
+     		this.addAll(infoArrayList);
+     		this.notifyDataSetChanged();
+        }
+        
+        public ArrayList<Info> generateData(){
         	
         	
         	ArrayList<Info> infoList = new ArrayList<Info>();
