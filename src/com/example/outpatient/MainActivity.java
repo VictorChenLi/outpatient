@@ -3,7 +3,6 @@ package com.example.outpatient;
 import java.util.ArrayList;
 
 import com.example.outpatient.fragment.adapters.TabsAdapter;
-import com.example.outpatient.infopage.InfoExpandingFragment;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.service.OutPatientService;
@@ -109,7 +108,7 @@ public class MainActivity extends FragmentActivity{
 		        		
 		        		mTabsAdapter = new TabsAdapter(this, pager);
 		        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.task_icon), TaskFragment.class, null);
-		        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoExpandingFragment.class, null);
+		        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoFragment.class, null);
 		        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.plan_icon), PlanFragment.class, null);
 		                
 		    		}
@@ -136,7 +135,7 @@ public class MainActivity extends FragmentActivity{
 	        		
 	        		mTabsAdapter = new TabsAdapter(this, pager);
 	        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.task_icon), TaskFragment.class, null);
-	        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoExpandingFragment.class, null);
+	        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoFragment.class, null);
 	        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.plan_icon), PlanFragment.class, null);
 	                
 	        			

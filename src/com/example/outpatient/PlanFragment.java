@@ -48,12 +48,10 @@ public class PlanFragment extends Fragment{
 		plan_listview = (ListView) rootView.findViewById(R.id.plan_listview);
 		
 		 // 1. pass context and data to the custom adapter
-		if(GlobalVar.planAdapter==null)
-			GlobalVar.planAdapter = new PlanListAdapter(getActivity(), generateData());
-		planListAdapter = GlobalVar.planAdapter;
-		planListAdapter.notifyDataSetChanged();
-		
-		planListAdapter = new PlanListAdapter(getActivity(), generateData());
+		planListAdapter = GlobalVar.getPlanListAdapter(getActivity());
+//		planListAdapter.notifyDataSetChanged();
+//		
+//		planListAdapter = new PlanListAdapter(getActivity(), generateData());
  
         // 2. setListAdapter
 		plan_listview.setAdapter(planListAdapter);
@@ -184,10 +182,10 @@ public class PlanFragment extends Fragment{
       		   Log.v("debugtag","successfully added plan!");
       		   
       		   //reload the database
-      		   generateData();
-      		   
-      		   planListAdapter.refreshPlanList(planList);
-      		   
+//      		   generateData();
+//      		   
+//      		   planListAdapter.refreshPlanList(planList);
+      		
       	   }
       	   
          }

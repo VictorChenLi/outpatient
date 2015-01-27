@@ -48,18 +48,18 @@ public class LoadingScreen extends Activity {
 	
 	public void initGlobaAdapterl()
 	{
-		if(null==GlobalVar.infoAdapter)
-		{
-			GlobalVar.infoAdapter = new InfoListAdapter(this);
-		}
-		if(null==GlobalVar.planAdapter)
-		{
-			GlobalVar.planAdapter = new PlanListAdapter(this);
-		}
-		if(null==GlobalVar.taskAdapter)
-		{
-			GlobalVar.taskAdapter = new TaskListAdapter(this);
-		}
+//		if(null==GlobalVar.infoAdapter)
+//		{
+//			GlobalVar.infoAdapter = new InfoListAdapter(this);
+//		}
+//		if(null==GlobalVar.planAdapter)
+//		{
+//			GlobalVar.planAdapter = new PlanListAdapter(this);
+//		}
+//		if(null==GlobalVar.taskAdapter)
+//		{
+//			GlobalVar.taskAdapter = new TaskListAdapter(this);
+//		}
 	}
 
 	@Override

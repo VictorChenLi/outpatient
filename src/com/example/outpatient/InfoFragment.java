@@ -1,117 +1,105 @@
+/*
+ * Copyright (C) 2013 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.example.outpatient;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.outpatient.R;
 import com.example.outpatient.fragment.adapters.InfoListAdapter;
-import com.example.outpatient.fragment.adapters.PlanListAdapter;
+import com.example.outpatient.infopage.ExpandableListItem;
+import com.example.outpatient.infopage.ExpandingListView;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+/**
+ * This activity creates a listview whose items can be clicked to expand and show
+ * additional content.
+ *
+ * In this specific demo, each item in a listview displays an image and a corresponding
+ * title. These two items are centered in the default (collapsed) state of the listview's
+ * item. When the item is clicked, it expands to display text of some varying length.
+ * The item persists in this expanded state (even if the user scrolls away and then scrolls
+ * back to the same location) until it is clicked again, at which point the cell collapses
+ * back to its default state.
+ */
+public class InfoFragment extends Fragment {
 
-public class InfoFragment extends Fragment{
-	
+    private final int CELL_DEFAULT_HEIGHT = 100;
+
 	// shared preference used to retrieve app status
 	private SharedPreferences appinfo = null;
 	
 	private InfoListAdapter infoListAdapter; 
 	private ArrayList<Info> infoList;
 	private ListView info_listview;
-	
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-		
-		View rootView = inflater.inflate(R.layout.info_fragment, container, false);
+    private List<ExpandableListItem> mData;
+    private ExpandingListView mListView;
+    
 
-//		list_items = getResources().getStringArray(R.array.routine_list);
-//		setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list_items));
-
-		
-		info_listview = (ListView) rootView.findViewById(R.id.info_listview);
-		
-		 // 1. pass context and data to the custom adapter
-		if(GlobalVar.infoAdapter==null)
-			GlobalVar.infoAdapter = new InfoListAdapter(getActivity(), generateData());
-		infoListAdapter =GlobalVar.infoAdapter;
-		infoListAdapter.notifyDataSetChanged();
-		
-		infoListAdapter = new InfoListAdapter(getActivity(), generateData());
-		
-        // 2. setListAdapter
-		info_listview.setAdapter(infoListAdapter);
-      
-        // set on click listener for the list items
-		info_listview.setOnItemClickListener(new OnItemClickListener()
-        {
-            
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position ,long arg3) {
-				// TODO Auto-generated method stub
-				//do the stuff
-				
-			}
-        });
-         
-		return rootView;
-	}
-	
-	
-    private ArrayList<Info> generateData(){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        View rootView = inflater.inflate(R.layout.info_listfragment, container, false);
+        
+        generateData();
+        
+        infoListAdapter =GlobalVar.getInfoListAdapter(getActivity());
+        
+        mListView = (ExpandingListView)rootView.findViewById(R.id.main_list_view);
+        mListView.setAdapter(infoListAdapter);
+        mListView.setDivider(null);
+        
+        return rootView;
+    }
+    
+    
+    private void generateData(){
     	
-    	//the following decided if the app runs for the first time and show consent form
-//    	appinfo = getActivity().getSharedPreferences("appinfo", Context.MODE_PRIVATE);
-//    	String[] planString = appinfo.getString("plans", "0").split(",");
-//    	
-//    	infoList = GlobalVar.plan_info_list.get("0");
-//        
-//        //read the plan list from the global variable 
-//    	
-//        return infoList;
+    	ArrayList<Plan> currentPlans= (ArrayList<Plan>) DBAccessImpl.getInstance(getActivity()).queryShowPlanList();
     	
+    	ArrayList<Info> infoToShow = new ArrayList<Info>();
     	
-    	ArrayList<Info> infoList = new ArrayList<Info>();
-    	
-    	DBAccessImpl dbAccessImpl = DBAccessImpl.getInstance(getActivity());
-
-
-    	for(Plan plan :dbAccessImpl.queryShowPlanList())
-    	{	
-    		if(plan!=null && GlobalVar.plan_info_list.get(plan.getPid())!=null)
-    			infoList.addAll(GlobalVar.plan_info_list.get(plan.getPid()));
+        mData = new ArrayList<ExpandableListItem>();
+        
+    	for (int i = 0; i < currentPlans.size() ; i ++){
+    		
+    		if(GlobalVar.plan_info_list.get(currentPlans.get(i).getPid())!=null)
+    		infoToShow.addAll(GlobalVar.plan_info_list.get(currentPlans.get(i).getPid()));
     	}
-	    	
-    	return infoList;
-    }
-    
-    
-    @Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
-
-
-	@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	super.onActivityResult(requestCode, resultCode, data);
-       
     	
+    	infoList = infoToShow;
+    	
+    	for(int i = 0; i < infoList.size(); i++){
+    		
+    		mData.add(new ExpandableListItem(infoList.get(i).getQue(),CELL_DEFAULT_HEIGHT, infoList.get(i).getAns()));
+    		
+    	}
     }
-
+    
+    
+    
 }

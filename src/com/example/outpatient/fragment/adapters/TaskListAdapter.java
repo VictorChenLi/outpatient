@@ -50,10 +50,17 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
  
         
         public void refreshTaskList(ArrayList<Task> newList){
-        	
-        	tasksArrayList.clear();
-        	tasksArrayList.addAll(newList);
-        	this.notifyDataSetChanged();
+        	tasksArrayList = newList;
+        	this.clear();
+     		this.addAll(tasksArrayList);
+     		this.notifyDataSetChanged();
+        }
+        
+        public void refreshTaskList(){
+        	tasksArrayList = this.generateData();
+        	this.clear();
+     		this.addAll(tasksArrayList);
+     		this.notifyDataSetChanged();
         }
         
         private ArrayList<Task> generateData(){
@@ -68,7 +75,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             return task_list;
         }
         
-        private class ViewHolder {
+        public class ViewHolder {
+        	public int tid;
             TextView title;
             TextView notion;
             ImageView icon;
@@ -100,7 +108,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             }
             // Capture position and set to the TextViews
             holder.title.setText(tasksArrayList.get(position).getName());
-            
+            holder.tid = tasksArrayList.get(position).getTid();
             int taskType = tasksArrayList.get(position).getTaskType();
             
             Drawable general_task_icon = context.getResources().getDrawable(R.drawable.general_task);   
