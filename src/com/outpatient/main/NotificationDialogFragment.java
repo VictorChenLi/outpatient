@@ -1,5 +1,6 @@
-package com.example.outpatient;
+package com.outpatient.main;
 
+import com.example.outpatient.R;
 import com.outpatient.notification.service.NotificationHelper;
 
 import android.app.AlertDialog;

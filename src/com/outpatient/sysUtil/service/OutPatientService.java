@@ -2,9 +2,9 @@ package com.outpatient.sysUtil.service;
 
 import java.util.Calendar;
 
-import com.example.outpatient.fragment.adapters.InfoListAdapter;
-import com.example.outpatient.fragment.adapters.PlanListAdapter;
-import com.example.outpatient.fragment.adapters.TaskListAdapter;
+import com.outpatient.fragment.adapters.InfoListAdapter;
+import com.outpatient.fragment.adapters.PlanListAdapter;
+import com.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.notification.service.NotificationHandler;
 import com.outpatient.notification.service.NotificationMgr;
 import com.outpatient.storeCat.model.Plan;

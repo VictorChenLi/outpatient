@@ -5,10 +5,9 @@ import java.util.HashMap;
 
 import android.content.Context;
 
-import com.example.outpatient.fragment.adapters.InfoListAdapter;
-import com.example.outpatient.fragment.adapters.InfoListAdapter;
-import com.example.outpatient.fragment.adapters.PlanListAdapter;
-import com.example.outpatient.fragment.adapters.TaskListAdapter;
+import com.outpatient.fragment.adapters.InfoListAdapter;
+import com.outpatient.fragment.adapters.PlanListAdapter;
+import com.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;

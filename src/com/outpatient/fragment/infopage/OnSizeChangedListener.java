@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.outpatient.infopage;
+package com.outpatient.fragment.infopage;
 
 /**
  * A listener used to update the list data object when the corresponding expanding

@@ -3,9 +3,9 @@ package com.outpatient.notification.service;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-import com.example.outpatient.MainActivity;
-import com.example.outpatient.NotificationDialogFragment;
 import com.example.outpatient.R;
+import com.outpatient.main.MainActivity;
+import com.outpatient.main.NotificationDialogFragment;
 import com.outpatient.notification.model.RunNotificationReminder;
 import com.outpatient.notification.model.RunTask;
 import com.outpatient.storeCat.model.Reminder;

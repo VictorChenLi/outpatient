@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.outpatient.infopage;
+package com.outpatient.fragment.infopage;
 
 import android.content.Context;
 import android.util.AttributeSet;

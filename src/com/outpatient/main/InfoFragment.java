@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.outpatient;
+package com.outpatient.main;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.outpatient.R;
-import com.example.outpatient.fragment.adapters.InfoListAdapter;
-import com.example.outpatient.infopage.ExpandableListItem;
-import com.example.outpatient.infopage.ExpandingListView;
+import com.outpatient.fragment.adapters.InfoListAdapter;
+import com.outpatient.fragment.infopage.ExpandableListItem;
+import com.outpatient.fragment.infopage.ExpandingListView;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.service.DBAccessImpl;

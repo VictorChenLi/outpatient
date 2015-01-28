@@ -1,8 +1,9 @@
-package com.example.outpatient;
+package com.outpatient.main;
 
 import java.util.ArrayList;
 
-import com.example.outpatient.fragment.adapters.TabsAdapter;
+import com.example.outpatient.R;
+import com.outpatient.fragment.adapters.TabsAdapter;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.service.OutPatientService;

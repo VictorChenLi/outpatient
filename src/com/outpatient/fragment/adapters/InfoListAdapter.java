@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.outpatient.fragment.adapters;
+package com.outpatient.fragment.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,8 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.outpatient.R;
-import com.example.outpatient.infopage.ExpandableListItem;
-import com.example.outpatient.infopage.ExpandingLayout;
+import com.outpatient.fragment.infopage.ExpandableListItem;
+import com.outpatient.fragment.infopage.ExpandingLayout;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Task;

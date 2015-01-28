@@ -36,7 +36,7 @@
 
     </LinearLayout>
 
-    <com.example.outpatient.infopage.ExpandingLayout
+    <com.outpatient.fragment.infopage.ExpandingLayout
             android:id="@+id/expanding_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"

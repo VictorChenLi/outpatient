@@ -1,4 +1,4 @@
-package com.example.outpatient;
+package com.outpatient.main;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.example.outpatient.R;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;

@@ -1,10 +1,11 @@
-package com.example.outpatient;
+package com.outpatient.main;
 
 import java.util.ArrayList;
 
-import com.example.outpatient.fragment.adapters.InfoListAdapter;
-import com.example.outpatient.fragment.adapters.PlanListAdapter;
-import com.example.outpatient.fragment.adapters.TaskListAdapter;
+import com.example.outpatient.R;
+import com.outpatient.fragment.adapters.InfoListAdapter;
+import com.outpatient.fragment.adapters.PlanListAdapter;
+import com.outpatient.fragment.adapters.TaskListAdapter;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;

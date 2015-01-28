@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.outpatient.infopage;
+package com.outpatient.fragment.infopage;
 
 /**
  * This custom object is used to populate the list adapter. It contains a reference

@@ -1,4 +1,4 @@
-package com.example.outpatient;
+package com.outpatient.main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.example.outpatient.fragment.adapters.PlanListAdapter;
+import com.example.outpatient.R;
+import com.outpatient.fragment.adapters.PlanListAdapter;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;

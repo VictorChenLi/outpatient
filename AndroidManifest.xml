@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Outpatient" >
         <activity
-            android:name="com.example.outpatient.MainActivity"
+            android:name="com.outpatient.main.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,15 +38,15 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.example.outpatient.EditTaskActivity"
+            android:name="com.outpatient.main.EditTaskActivity"
             android:label="@string/app_name" >
         </activity>
          <activity
-            android:name="com.example.outpatient.SelectPlanActivity"
+            android:name="com.outpatient.main.SelectPlanActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.example.outpatient.LoadingScreen"
+            android:name="com.outpatient.main.LoadingScreen"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" 
