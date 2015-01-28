@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.outpatient.storeCat.frameWork.SQLiteHelper;
+import com.outpatient.storeCat.frameWork.UserDBHelper;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
@@ -25,19 +25,19 @@ public class DBAccessImpl implements DBAccess {
 	public Context udcontext;
 	
 	//SQLiteHelper for the user created database
-	SQLiteHelper userDB_Helper;
+	UserDBHelper userDB_Helper;
 	SQLiteDatabase user_wdb;
 	SQLiteDatabase user_rdb;
 	
 	//SQLiteHelper for the preset stored database
-	SQLiteHelper presetDB_Helper;
+	UserDBHelper presetDB_Helper;
 	SQLiteDatabase preset_wdb;
 	SQLiteDatabase preset_rdb;
 	
 	
 	private DBAccessImpl(Context context) {
     	udcontext = context;
-    	userDB_Helper = new SQLiteHelper(context,USER_DB,null,VERSION);
+    	userDB_Helper = new UserDBHelper(context,USER_DB,null,VERSION);
         user_wdb=userDB_Helper.getWritableDatabase();
         user_rdb=userDB_Helper.getReadableDatabase();
         

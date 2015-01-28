@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class SQLiteHelper extends SQLiteOpenHelper {
+public class UserDBHelper extends SQLiteOpenHelper {
 
 	public static final String TB_Info="tbl_info";
 	public static final String Iid="iid";
@@ -44,7 +44,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 	
 	
-	public SQLiteHelper(Context context,String name,CursorFactory factory, int version)
+	public UserDBHelper(Context context,String name,CursorFactory factory, int version)
 	{
 		super(context, name, factory, version);
 	}
