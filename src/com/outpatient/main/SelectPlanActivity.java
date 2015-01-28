@@ -232,6 +232,7 @@ public class SelectPlanActivity extends Activity{
 //			Set<Plan> temp = new HashSet<Plan>(GlobalVar.plan_list);
 //			Set<Plan> presettingSet = new HashSet<Plan>(GlobalVar.plan_list);
 //			Set<Plan> savedPlanSet = new HashSet<Plan>(dbAccessImpl.queryShowPlanList());
+			
 			List<Plan> temp = new ArrayList<Plan>(GlobalVar.plan_list);
 			List<Plan> preSetPlanList = new ArrayList<Plan>(GlobalVar.plan_list);
 			List<Plan> savedPlanList = new ArrayList<Plan>(dbAccessImpl.queryShowPlanList());

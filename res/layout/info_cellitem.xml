@@ -51,6 +51,6 @@
             android:paddingRight="20dp"
             android:paddingBottom="20dp"/>
 
-    </com.example.outpatient.infopage.ExpandingLayout>
+    </com.outpatient.fragment.infopage.ExpandingLayout>
 
 </LinearLayout>
