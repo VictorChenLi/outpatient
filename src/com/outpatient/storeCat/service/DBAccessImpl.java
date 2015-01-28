@@ -41,9 +41,6 @@ public class DBAccessImpl implements DBAccess {
         user_wdb=userDB_Helper.getWritableDatabase();
         user_rdb=userDB_Helper.getReadableDatabase();
         
-        
-        
-        
     }
 	
 	public static synchronized DBAccessImpl getInstance(Context context)
