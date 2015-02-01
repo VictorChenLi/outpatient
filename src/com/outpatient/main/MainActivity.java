@@ -135,6 +135,7 @@ public class MainActivity extends FragmentActivity{
 	        		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	        		
 	        		mTabsAdapter = new TabsAdapter(this, pager);
+	        		
 	        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.task_icon), TaskFragment.class, null);
 	        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.info_icon), InfoFragment.class, null);
 	        		mTabsAdapter.addTab(bar.newTab().setIcon(R.drawable.plan_icon), PlanFragment.class, null);
