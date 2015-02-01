@@ -142,8 +142,9 @@ public class InfoListAdapter extends ArrayAdapter<ExpandableListItem> {
     }
 
     /**
-     * Crops a circle out of the thumbnail photo.
+     * Crops a circle out of the thumb nail photo.
      */
+    
     public Bitmap getCroppedBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
                 Config.ARGB_8888);
