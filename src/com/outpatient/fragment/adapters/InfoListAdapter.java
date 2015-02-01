@@ -109,8 +109,8 @@ public class InfoListAdapter extends ArrayAdapter<ExpandableListItem> {
         final ExpandableListItem object = mData.get(position);
 
         if(convertView == null) {
-            LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
-            convertView = inflater.inflate(mLayoutViewResourceId, parent, false);
+            convertView = LayoutInflater.from(context).inflate(mLayoutViewResourceId, parent, false);
+
         }
 
         LinearLayout linearLayout = (LinearLayout)(convertView.findViewById(
