@@ -46,6 +46,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
  
             this.context = context;
             this.tasksArrayList = generateData();
+
+            mSelectedItemsIds = new SparseBooleanArray();
         }
  
         
@@ -84,6 +86,11 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         }
      
         public View getView(int position, View convertView, ViewGroup parent) {
+        	if(position>tasksArrayList.size())
+            {
+        		return null;
+            }
+        	
             final ViewHolder holder;
             
             if (convertView == null) {
@@ -153,6 +160,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         @Override
         public void remove(Task object) {
         	tasksArrayList.remove(object);
+        	dbhandler.ArchTask(object.getTid());
             notifyDataSetChanged();
         }
      

@@ -109,7 +109,7 @@ public class InfoListAdapter extends ArrayAdapter<ExpandableListItem> {
         final ExpandableListItem object = mData.get(position);
 
         if(convertView == null) {
-            LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+        	LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(mLayoutViewResourceId, parent, false);
         }
 
