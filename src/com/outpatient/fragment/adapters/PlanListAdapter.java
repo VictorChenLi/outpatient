@@ -89,8 +89,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
 		if (convertView == null) {
 
 			holder = new ViewHolder();
-			convertView = LayoutInflater.from(context).inflate(
-					R.layout.plan_item, parent, false);
+			convertView = LayoutInflater.from(context).inflate(R.layout.plan_item, parent, false);
 
 			// save the holder at view
 			holder.tv_planName = (TextView) convertView

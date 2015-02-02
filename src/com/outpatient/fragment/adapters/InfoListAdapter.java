@@ -109,8 +109,8 @@ public class InfoListAdapter extends ArrayAdapter<ExpandableListItem> {
         final ExpandableListItem object = mData.get(position);
 
         if(convertView == null) {
-        	LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(mLayoutViewResourceId, parent, false);
+            convertView = LayoutInflater.from(context).inflate(mLayoutViewResourceId, parent, false);
+
         }
 
         LinearLayout linearLayout = (LinearLayout)(convertView.findViewById(
@@ -142,8 +142,9 @@ public class InfoListAdapter extends ArrayAdapter<ExpandableListItem> {
     }
 
     /**
-     * Crops a circle out of the thumbnail photo.
+     * Crops a circle out of the thumb nail photo.
      */
+    
     public Bitmap getCroppedBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
                 Config.ARGB_8888);

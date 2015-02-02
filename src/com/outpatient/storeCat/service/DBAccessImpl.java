@@ -236,7 +236,7 @@ public class DBAccessImpl implements DBAccess {
     
     private List<Plan> fillPlanList(Cursor cursor)
     {
-    	List<Plan> list=new ArrayList<Plan>();
+    	List<Plan> list = new ArrayList<Plan>();
         while (cursor.moveToNext())
         	 list.add(new Plan(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getLong(3),cursor.getInt(4)));
         return list;
@@ -256,7 +256,6 @@ public class DBAccessImpl implements DBAccess {
     {
     	String strSql="Select * from [tbl_plan]";
     	Cursor cursor = user_rdb.rawQuery(strSql,null);
-        List<Plan> list=new ArrayList<Plan>();
         return fillPlanList(cursor);
     }
     
@@ -333,7 +332,6 @@ public class DBAccessImpl implements DBAccess {
     public List<Info> queryInfoListByPid(int pid)
     {
     	String strSql="Select * from [tbl_info] where pid=?";
-    	Info info =null;
     	String[] bindArgs ={String.valueOf(pid)};
     	Cursor cursor = user_rdb.rawQuery(strSql,bindArgs);
         return fillInfoList(cursor);
