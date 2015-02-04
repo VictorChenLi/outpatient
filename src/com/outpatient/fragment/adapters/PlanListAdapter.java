@@ -44,6 +44,9 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
 
 		this.context = context;
 		this.planArrayList = this.generateData();
+
+		dbhandler = DBAccessImpl.getInstance(context);
+		mSelectedItemsIds = new SparseBooleanArray();
 	}
 
 	public void refreshPlanList(ArrayList<Plan> newList) {
@@ -76,7 +79,13 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
-
+		
+//		if(position>=planArrayList.size())
+//        {
+//    		return convertView;
+//        }
+		
+		
 		if (convertView == null) {
 
 			holder = new ViewHolder();
@@ -95,7 +104,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
 		// Set the text for textView
 		holder.tv_planName.setText(planArrayList.get(position).getName());
 		holder.tv_planId.setText(String.valueOf(planArrayList.get(position)
-				.getPid()));
+				.getPid()));		
 
 		// 5. return rowView
 		return convertView;
@@ -104,7 +113,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
 	@Override
 	public void remove(Plan object) {
 		planArrayList.remove(object);
-		dbhandler.deletPlan(object.getPid());
+		dbhandler.ArchPlan(object.getPid());
 		notifyDataSetChanged();
 	}
 
@@ -132,4 +141,17 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
 	public SparseBooleanArray getSelectedIds() {
 		return mSelectedItemsIds;
 	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return planArrayList.size();
+	}
+
+	@Override
+	public Plan getItem(int position) {
+		// TODO Auto-generated method stub
+		return super.getItem(position);
+	}
+	
 }
