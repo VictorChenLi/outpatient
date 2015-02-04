@@ -12,6 +12,7 @@ import java.util.List;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Task;
+import com.outpatient.storeCat.service.DBAccessImpl;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -31,36 +32,50 @@ import android.widget.Toast;
 
 public class PresetDBHelper extends SQLiteOpenHelper {
 	
+	private static PresetDBHelper presetDBHelper = null;
+	
     private SQLiteDatabase myDataBase;
     private final Context myContext;
     private static final String DATABASE_NAME = "outpatient_preset.sqlite";
-    public final static String DATABASE_PATH = "/data/data/com.outpatient/databases/";
-    public static final int DATABASE_VERSION = 1;
-    //public static final int DATABASE_VERSION_old = 1;
-
+    private final static String DATABASE_PATH = "/data/data/com.outpatient.williamosler/databases/";
+    private static final int DATABASE_VERSION = 1;
+    
     //Constructor
     public PresetDBHelper(Context context)
     {
           super(context, DATABASE_NAME, null, DATABASE_VERSION);
-          this.myContext=context;
+          
+          this.myContext = context;
           boolean dbexist = checkDataBase();
           
-          if (dbexist) {
-              //System.out.println("Database exists");
-        	  openDatabase(); 
-          } else {
-              System.out.println("Database doesn't exist");
+          if (dbexist){
+        	  
+        	    openDatabase();
+        	  
+          	}else{
+        	  
             try {
+            	
+            	//create the database
 				createDatabase();
 				
-				//create and then open the database
+				//open the database
 				openDatabase();
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				Log.v("debugtag","createDatabase Failed!");
 			}
           }
     }
+    
+    public static synchronized PresetDBHelper getInstance(Context context)
+	{
+		if(presetDBHelper==null)
+			presetDBHelper = new PresetDBHelper(context);
+		
+		return presetDBHelper;
+	}
 
     //Create a empty database on the system
     public void createDatabase() throws IOException
@@ -79,16 +94,19 @@ public class PresetDBHelper extends SQLiteOpenHelper {
           boolean dbExist1 = checkDataBase();
           if(!dbExist1)
           {
-                this.getReadableDatabase();
+                
+        	    this.getReadableDatabase();
+                
                 try
                 {
                       this.close();    
                       copyDataBase();
                 }
+                
                 catch (IOException e)
                 {
                       throw new Error("Error copying database");
-             }
+                }
           }
     }
 
@@ -118,9 +136,11 @@ public class PresetDBHelper extends SQLiteOpenHelper {
           byte[] buffer = new byte[1024];
           int length;
           while ((length = myInput.read(buffer)) > 0)
-          {
+        	  
+          	{
                 myOutput.write(buffer, 0, length);
-          }
+          	}
+          
           myInput.close();
           myOutput.flush();
           myOutput.close();
@@ -144,7 +164,7 @@ public class PresetDBHelper extends SQLiteOpenHelper {
           myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
-    public synchronized void closeDataBase()throws SQLException
+    public synchronized void closeDatabase()throws SQLException
     {
           if(myDataBase != null)
                 myDataBase.close();
@@ -170,27 +190,24 @@ public class PresetDBHelper extends SQLiteOpenHelper {
     // read all the preset plans
     public List<Plan> getPresetPlanList(){
     	
-    	String strSql="Select * from [tbl_plan] where isArch=0";
+    	String strSql="Select * from [tbl_plan]";
     	Cursor cursor = myDataBase.rawQuery(strSql,null);
     	return fillPlanList(cursor);
-    	
     }
     
     // read all the preset information by giving a plan ID
-    public List<Info> getPresetInfoByPid(int pid){
+    public List<Info> getPresetInfoList(){
     	
-    	String strSql="Select * from [tbl_info] where pid = ?";
-    	String[] bindArgs ={String.valueOf(pid)};
-    	Cursor cursor = myDataBase.rawQuery(strSql,bindArgs);
+    	String strSql="Select * from [tbl_info]";
+    	Cursor cursor = myDataBase.rawQuery(strSql,null);
         return fillInfoList(cursor);
     }
     
     // read all the preset plans
-    public List<Task> getPresetTaskByPid(int pid){
+    public List<Task> getPresetTaskList(){
     	
-    	String strSql="Select * from [tbl_task] where pid=?";
-    	String[] bindArgs ={String.valueOf(pid)};
-    	Cursor cursor = myDataBase.rawQuery(strSql,bindArgs);
+    	String strSql="Select * from [tbl_task]";
+    	Cursor cursor = myDataBase.rawQuery(strSql,null);    	
     	return fillTaskList(cursor);
     }
     
@@ -198,7 +215,7 @@ public class PresetDBHelper extends SQLiteOpenHelper {
     {
     	List<Task> list=new ArrayList<Task>();
         while (cursor.moveToNext())
-        	 list.add(new Task(cursor.getInt(0),cursor.getInt(1),cursor.getString(2),cursor.getString(3),cursor.getInt(4),cursor.getString(5),cursor.getInt(6),cursor.getLong(7)));
+        	 list.add(new Task(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),cursor.getString(3),cursor.getString(4)));
         return list;
     }
     
@@ -206,7 +223,7 @@ public class PresetDBHelper extends SQLiteOpenHelper {
     {
     	List<Plan> list=new ArrayList<Plan>();
         while (cursor.moveToNext())
-        	 list.add(new Plan(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getLong(3),cursor.getInt(4)));
+        	 list.add(new Plan(cursor.getInt(0),cursor.getInt(1),cursor.getString(2)));
         return list;
     }
     
@@ -214,7 +231,7 @@ public class PresetDBHelper extends SQLiteOpenHelper {
     {
     	List<Info> list=new ArrayList<Info>();
         while (cursor.moveToNext())
-        	 list.add(new Info(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3)));
+        	 list.add(new Info(cursor.getInt(0),cursor.getString(2),cursor.getString(3),cursor.getInt(1)));
         return list;
     }
 

@@ -6,13 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.example.outpatient.R;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.service.DateTimePicker;
 import com.outpatient.sysUtil.service.DateTimePicker.ICustomDateTimeListener;
+import com.outpatient.williamosler.R;
 
 import android.os.Bundle;
 import android.app.Activity;

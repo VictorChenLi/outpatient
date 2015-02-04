@@ -46,6 +46,14 @@ public class Plan {
 		this.isArch = isArch;
 	}
 	
+	//overloaded constructor used by preset database
+	public Plan(int pid, int planType, String name) {
+		super();
+		this.pid = pid;
+		this.name = name;
+		this.planType = planType;
+	}
+	
 	public Plan() {
 		super();
 	}

@@ -2,11 +2,11 @@ package com.outpatient.main;
 
 import java.util.ArrayList;
 
-import com.example.outpatient.R;
 import com.outpatient.fragment.adapters.TabsAdapter;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.service.OutPatientService;
+import com.outpatient.williamosler.R;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -114,10 +114,6 @@ public class MainActivity extends FragmentActivity{
 		                
 		    		}
 		    		
-		    		
-	        		
-	        		Toast.makeText(MainActivity.this, "Load Data Succeess!", Toast.LENGTH_LONG).show();
-	        	 
 	             }else{Log.w("debugtag", "Warning: activity result not ok");}
 		} 
 		else {

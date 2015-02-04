@@ -6,14 +6,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.example.outpatient.R;
 import com.outpatient.fragment.adapters.PlanListAdapter;
+import com.outpatient.storeCat.frameWork.PresetDBHelper;
 import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
+import com.outpatient.williamosler.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -47,6 +48,7 @@ public class SelectPlanActivity extends Activity{
 	private Boolean[] selectedList;	
 	private DBAccessImpl dbAccessImpl;
 	private Boolean flag=true;
+	private PresetDBHelper presetDBAccess;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,11 @@ public class SelectPlanActivity extends Activity{
 		
 		plan_listview = (ListView)findViewById(R.id.plan_listview);
 //		selectedList = new ArrayList<Integer>();
+		
+		//initiate data access to the predefined database
+		presetDBAccess = new PresetDBHelper(getApplicationContext());
+		
+		//initiate the database access to the user database
 		dbAccessImpl = DBAccessImpl.getInstance(this);
 		
 		 // 1. pass context and data to the custom adapter

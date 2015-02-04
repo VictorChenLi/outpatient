@@ -1,7 +1,7 @@
 package com.outpatient.sysUtil.service;
 
-import com.example.outpatient.R;
 import com.outpatient.sysUtil.model.Constant.alertMusic;
+import com.outpatient.williamosler.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;

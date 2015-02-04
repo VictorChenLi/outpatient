@@ -3,7 +3,6 @@ package com.outpatient.notification.service;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-import com.example.outpatient.R;
 import com.outpatient.main.MainActivity;
 import com.outpatient.main.NotificationDialogFragment;
 import com.outpatient.notification.model.RunNotificationReminder;
@@ -13,6 +12,7 @@ import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.service.PlayAlarmMusic;
 import com.outpatient.sysUtil.service.TimeHelper;
+import com.outpatient.williamosler.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

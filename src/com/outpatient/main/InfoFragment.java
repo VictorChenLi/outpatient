@@ -27,7 +27,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.outpatient.R;
 import com.outpatient.fragment.adapters.InfoListAdapter;
 import com.outpatient.fragment.infopage.ExpandableListItem;
 import com.outpatient.fragment.infopage.ExpandingListView;
@@ -35,6 +34,7 @@ import com.outpatient.storeCat.model.Info;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
+import com.outpatient.williamosler.R;
 
 /**
  * This activity creates a listview whose items can be clicked to expand and show

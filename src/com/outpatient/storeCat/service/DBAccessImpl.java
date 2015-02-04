@@ -17,7 +17,7 @@ import android.util.Log;
 
 public class DBAccessImpl implements DBAccess {
 	
-	private static DBAccessImpl dbAccessImpl=null;
+	private static DBAccessImpl dbAccessImpl = null;
 	
 	public static final String PRESET_DB="outpatient_preset.db";
 	public static final String USER_DB="outpatient_user.db";

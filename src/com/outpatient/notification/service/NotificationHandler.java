@@ -1,6 +1,6 @@
 package com.outpatient.notification.service;
 
-import com.example.outpatient.R;
+import com.outpatient.williamosler.R;
 import com.outpatient.main.InfoFragment;
 import com.outpatient.main.PlanFragment;
 import com.outpatient.main.TaskFragment;

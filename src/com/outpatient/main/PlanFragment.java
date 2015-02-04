@@ -2,7 +2,6 @@ package com.outpatient.main;
 
 import java.util.ArrayList;
 
-import com.example.outpatient.R;
 import com.outpatient.fragment.adapters.InfoListAdapter;
 import com.outpatient.fragment.adapters.PlanListAdapter;
 import com.outpatient.fragment.adapters.TaskListAdapter;
@@ -10,6 +9,7 @@ import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
 import com.outpatient.sysUtil.model.GlobalVar;
+import com.outpatient.williamosler.R;
 
 import android.app.Activity;
 import android.content.Intent;

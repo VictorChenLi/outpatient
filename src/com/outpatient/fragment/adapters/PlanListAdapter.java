@@ -2,13 +2,11 @@ package com.outpatient.fragment.adapters;
 
 import java.util.ArrayList;
 
-import com.example.outpatient.R;
-import com.example.outpatient.R.id;
-import com.example.outpatient.R.layout;
 import com.outpatient.storeCat.model.Plan;
 import com.outpatient.storeCat.model.Reminder;
 import com.outpatient.storeCat.model.Task;
 import com.outpatient.storeCat.service.DBAccessImpl;
+import com.outpatient.williamosler.R;
 
 import android.content.Context;
 import android.util.Log;

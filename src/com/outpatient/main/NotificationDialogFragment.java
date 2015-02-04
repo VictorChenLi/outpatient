@@ -1,7 +1,7 @@
 package com.outpatient.main;
 
-import com.example.outpatient.R;
 import com.outpatient.notification.service.NotificationHelper;
+import com.outpatient.williamosler.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

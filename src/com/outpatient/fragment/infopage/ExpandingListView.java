@@ -34,7 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.example.outpatient.R;
+import com.outpatient.williamosler.R;
+
 
 /**
  * A custom listview which supports the preview of extra content corresponding to each cell

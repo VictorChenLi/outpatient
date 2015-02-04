@@ -57,6 +57,7 @@ public class Task {
 	public void setDate(long date) {
 		this.date = date;
 	}
+	
 	public Task(int tid, int pid, String name, String notes, int taskType,
 			String des, int isArch, long date) {
 		super();
@@ -69,6 +70,17 @@ public class Task {
 		this.isArch = isArch;
 		this.date = date;
 	}
+	
+	//overloaded constructor used by preset database
+	public Task(int tid, int pid, int taskType, String name, String des) {
+		super();
+		this.tid = tid;
+		this.pid = pid;
+		this.name = name;
+		this.taskType = taskType;
+		this.des = des;
+	}
+	
 	public Task() {
 		super();
 	}
